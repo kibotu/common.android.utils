@@ -9,7 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.com.common.android.utils.ui.components.HeightSquaredImageView
+        <com.common.android.utils.ui.components.HeightSquaredImageView
                 android:scaleType="fitCenter"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
