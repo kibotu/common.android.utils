@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="HorizontalClippingImageView">
+        <attr name="percentage" format="string"/>
+    </declare-styleable>
+</resources>
