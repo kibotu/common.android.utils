@@ -5,5 +5,5 @@
 	}
 		
 	dependencies {
-            compile 'com.github.kibotu:common.android.utils:SNAPSHOT'
+            compile 'com.github.kibotu:common.android.utils:0.2.1'
     }
