@@ -1,3 +1,3 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.common.android.utils">
+<manifest
+        package="com.common.android.utils">
 </manifest>
