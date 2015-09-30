@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
 
 /**
  * Created by Jan Rabe on 24/09/15.
@@ -48,12 +49,20 @@ public class DeviceExtensions {
         return dimension;
     }
 
+    public static void showKeyboard() {
+        showKeyboard(getContentRoot());
+    }
+
     public static void showKeyboard(@NotNull final View v) {
         v.requestFocus();
         final InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Service.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
+
+    public static void hideKeyboard() {
+        hideKeyboard(getContentRoot());
+    }
 
     public static void hideKeyboard(@NotNull final View v) {
         final InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
