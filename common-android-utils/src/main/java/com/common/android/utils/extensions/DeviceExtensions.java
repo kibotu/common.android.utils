@@ -1,6 +1,5 @@
-package common.android.utils.extensions;
+package com.common.android.utils.extensions;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.graphics.Point;
@@ -9,12 +8,11 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import com.adviqo.app.MainActivity;
-import common.android.utils.device.Dimension;
+import com.common.android.utils.device.Dimension;
 import org.jetbrains.annotations.NotNull;
 
 import static android.os.Build.VERSION.SDK_INT;
-import static common.android.utils.extensions.ViewExtensions.getContentRoot;
+import static com.common.android.utils.ContextHelper.getContext;
 
 /**
  * Created by Jan Rabe on 24/09/15.
@@ -26,8 +24,8 @@ public class DeviceExtensions {
     }
 
     @NotNull
-    public static Dimension getScreenDimension(@NotNull final Activity activity) {
-        final WindowManager w = activity.getWindowManager();
+    public static Dimension getScreenDimension() {
+        final WindowManager w = getContext().getWindowManager();
         final Display d = w.getDefaultDisplay();
         final DisplayMetrics metrics = new DisplayMetrics();
         d.getMetrics(metrics);
@@ -50,20 +48,15 @@ public class DeviceExtensions {
         return dimension;
     }
 
-    public static void showKeyboard() {
-        final View view = getContentRoot();
-        view.requestFocus();
-        final InputMethodManager imm = (InputMethodManager) MainActivity.currentMainActivity().getSystemService(Service.INPUT_METHOD_SERVICE);
+    public static void showKeyboard(@NotNull final View v) {
+        v.requestFocus();
+        final InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Service.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    public static void hideKeyboard() {
-        hideKeyboard(MainActivity.currentMainActivity(), getContentRoot());
-    }
 
-
-    public static void hideKeyboard(@NotNull final Context context, @NotNull final View v) {
-        final InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    public static void hideKeyboard(@NotNull final View v) {
+        final InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }

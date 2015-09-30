@@ -1,4 +1,4 @@
-package common.android.utils.interfaces;
+package com.common.android.utils.interfaces;
 
 import android.support.v7.widget.SearchView;
 import android.view.View;

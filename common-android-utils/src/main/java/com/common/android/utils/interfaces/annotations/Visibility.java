@@ -1,4 +1,4 @@
-package common.android.utils.interfaces.annotations;
+package com.common.android.utils.interfaces.annotations;
 
 import android.support.annotation.IntDef;
 

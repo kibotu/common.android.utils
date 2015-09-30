@@ -1,4 +1,4 @@
-package common.android.utils.misc;
+package com.common.android.utils.misc;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

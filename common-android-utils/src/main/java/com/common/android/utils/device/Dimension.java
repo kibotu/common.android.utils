@@ -1,4 +1,4 @@
-package common.android.utils.device;
+package com.common.android.utils.device;
 
 import android.content.Context;
 import org.jetbrains.annotations.NotNull;

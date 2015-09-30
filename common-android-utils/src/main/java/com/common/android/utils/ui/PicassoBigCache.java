@@ -1,7 +1,6 @@
-package common.android.utils.ui;
+package com.common.android.utils.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Build;
 import android.os.StatFs;
 import com.squareup.picasso.Downloader;
@@ -13,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+
+import static com.common.android.utils.ContextHelper.getContext;
 
 public enum PicassoBigCache {
 
@@ -28,23 +29,23 @@ public enum PicassoBigCache {
     private Picasso picassoInstance;
 
     @NotNull
-    static Downloader createBigCacheDownloader(@NotNull final Context ctx) {
+    static Downloader createBigCacheDownloader() {
         try {
             Class.forName("com.squareup.okhttp.OkHttpClient");
-            final File cacheDir = createDefaultCacheDir(ctx, BIG_CACHE_PATH);
+            final File cacheDir = createDefaultCacheDir(BIG_CACHE_PATH);
             final long cacheSize = calculateDiskCacheSize(cacheDir);
             final OkHttpDownloader downloader = new OkHttpDownloader(cacheDir, cacheSize);
             return downloader;
         } catch (final ClassNotFoundException e) {
-            return new UrlConnectionDownloader(ctx);
+            return new UrlConnectionDownloader(getContext().getApplicationContext());
         }
     }
 
     @Nullable
-    static File createDefaultCacheDir(@NotNull final Context context, @NotNull final String path) {
-        File cacheDir = context.getApplicationContext().getExternalCacheDir();
+    static File createDefaultCacheDir(@NotNull final String path) {
+        File cacheDir = getContext().getApplicationContext().getExternalCacheDir();
         if (cacheDir == null)
-            cacheDir = context.getApplicationContext().getCacheDir();
+            cacheDir = getContext().getApplicationContext().getCacheDir();
         final File cache = new File(cacheDir, path);
         if (!cache.exists()) {
             cache.mkdirs();
@@ -94,21 +95,17 @@ public enum PicassoBigCache {
         return size;
     }
 
-    private void init(@Nullable Context ctx) {
-        if (ctx == null) {
-            throw new IllegalStateException("Must provide context to init PicassoBigCache!"); // fail fast
-        }
-        ctx = ctx.getApplicationContext(); // need application context - activity's context could cause harm
-        final Builder builder = new Picasso.Builder(ctx);
-        builder.downloader(createBigCacheDownloader(ctx));
+    private void init() {
+        final Builder builder = new Picasso.Builder(getContext().getApplicationContext());
+        builder.downloader(createBigCacheDownloader());
         picassoInstance = builder.build();
     }
 
-    public Picasso getPicassoBigCache(final Context ctx) {
+    public Picasso getPicassoBigCache() {
         if (picassoInstance == null) {
             synchronized (INSTANCE) {
                 if (picassoInstance == null)
-                    init(ctx);
+                    init();
             }
         }
         return picassoInstance;

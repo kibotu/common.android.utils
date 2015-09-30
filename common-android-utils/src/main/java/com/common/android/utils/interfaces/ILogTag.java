@@ -1,4 +1,4 @@
-package common.android.utils.interfaces;
+package com.common.android.utils.interfaces;
 
 import org.jetbrains.annotations.NotNull;
 

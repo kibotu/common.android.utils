@@ -1,8 +1,7 @@
-package common.android.utils.extensions;
+package com.common.android.utils.extensions;
 
-import android.content.Context;
+import com.common.android.utils.misc.ListOfJson;
 import com.google.gson.Gson;
-import common.android.utils.misc.ListOfJson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
@@ -17,6 +16,8 @@ import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import static com.common.android.utils.ContextHelper.getContext;
 
 public class JSONExtensions {
 
@@ -107,8 +108,7 @@ public class JSONExtensions {
      * @param dest   Destination json.
      * @param source Source json.
      */
-    @Nullable
-    public static void merge(@NotNull final JSONObject dest, @NotNull final JSONObject source) {
+    public static void merge(@Nullable final JSONObject dest, @Nullable final JSONObject source) {
         if (dest == null || source == null) return;
         final Iterator keys = source.keys();
         while (keys.hasNext()) {
@@ -132,7 +132,7 @@ public class JSONExtensions {
      * @return Object
      */
     @Nullable
-    public static Object objectForJSON(@NotNull final Object value) {
+    public static Object objectForJSON(@Nullable final Object value) {
         if (value == null) return null;
 
         if (value instanceof Map) {
@@ -220,11 +220,11 @@ public class JSONExtensions {
     }
 
     @Nullable
-    public static JSONObject loadJsonFromAssets(@NotNull final Context context, @NotNull final String file) {
+    public static JSONObject loadJsonFromAssets(@NotNull final String file) {
         JSONObject json = null;
         try {
             final StringBuffer buffer = new StringBuffer();
-            final BufferedReader in = new BufferedReader(new InputStreamReader(context.getAssets().open(file), "UTF-8"));
+            final BufferedReader in = new BufferedReader(new InputStreamReader(getContext().getAssets().open(file), "UTF-8"));
             String str;
 
             while ((str = in.readLine()) != null) {

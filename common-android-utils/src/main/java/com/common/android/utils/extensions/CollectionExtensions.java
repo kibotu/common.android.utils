@@ -1,4 +1,4 @@
-package common.android.utils.extensions;
+package com.common.android.utils.extensions;
 
 import org.jetbrains.annotations.NotNull;
 

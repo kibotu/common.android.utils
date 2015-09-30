@@ -1,34 +1,35 @@
-package common.android.utils.extensions;
+package com.common.android.utils.extensions;
 
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.Toast;
-import com.adviqo.app.MainActivity;
-import com.adviqo.app.Settings;
-import de.questico.app.R;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import static com.common.android.utils.ContextHelper.getContext;
 
 /**
  * Created by Jan Rabe on 24/09/15.
  */
 public class ToastExtensions {
 
+    public static boolean showToastMessages = true;
+
     private ToastExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 
     public static void toast(@Nullable final String message) {
-        if (!Settings.SHOW_TOAST_MESSAGES)
+        if (!showToastMessages)
             return;
 
         if (TextUtils.isEmpty(message))
             return;
 
-        MainActivity.currentMainActivity().runOnUiThread(new Runnable() {
+        getContext().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final Toast toast = Toast.makeText(MainActivity.currentMainActivity(), message, Toast.LENGTH_LONG);
+                final Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.BOTTOM, 0, 100);
                 toast.show();
             }
@@ -36,24 +37,17 @@ public class ToastExtensions {
     }
 
 
-    public static void toast(@Nullable final int resourceId) {
-        if (!Settings.SHOW_TOAST_MESSAGES)
+    public static void toast(@StringRes final int resourceId) {
+        if (!showToastMessages)
             return;
 
-        MainActivity.currentMainActivity().runOnUiThread(new Runnable() {
+        getContext().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final Toast toast = Toast.makeText(MainActivity.currentMainActivity(), MainActivity.currentMainActivity().getText(resourceId), Toast.LENGTH_SHORT);
+                final Toast toast = Toast.makeText(getContext(), getContext().getText(resourceId), Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.BOTTOM, 0, 100);
                 toast.show();
             }
         });
-    }
-
-    public static void toast(@NotNull final Exception error) {
-        if (error.getMessage().equalsIgnoreCase("error.checkphonenumber.dedicated_anonym_phonenumber"))
-            toast(R.string.kErrorPhoneNumberAlreadyTaken);
-        else
-            toast(error.getMessage());
     }
 }

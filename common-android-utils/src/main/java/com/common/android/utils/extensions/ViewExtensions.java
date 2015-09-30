@@ -1,7 +1,6 @@
-package common.android.utils.extensions;
+package com.common.android.utils.extensions;
 
-import android.app.Activity;
-import android.content.Context;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.RawRes;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -20,12 +20,9 @@ import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
-import com.adviqo.app.MainActivity;
+import com.common.android.utils.R;
+import com.common.android.utils.ui.PicassoBigCache;
 import com.squareup.picasso.Callback;
-import common.android.utils.localization.Localization;
-import com.adviqo.app.misc.FontCache;
-import common.android.utils.ui.PicassoBigCache;
-import de.questico.app.R;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,10 +34,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.os.Build.VERSION.SDK_INT;
-import static common.android.utils.extensions.BitmapExtensions.getBitmap;
-import static common.android.utils.extensions.MathExtensions.convertDpToPixel;
-import static common.android.utils.extensions.MathExtensions.roundToInt;
-import static io.fabric.sdk.android.services.common.CommonUtils.hideKeyboard;
+import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.extensions.BitmapExtensions.getBitmap;
+import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
+import static com.common.android.utils.extensions.MathExtensions.convertDpToPixel;
+import static com.common.android.utils.extensions.MathExtensions.roundToInt;
 
 /**
  * Created by Jan Rabe on 24/09/15.
@@ -73,19 +71,19 @@ public class ViewExtensions {
     public static void loadInto(final String imageURL, final ImageView imageView) {
         PicassoBigCache
                 .INSTANCE
-                .getPicassoBigCache(MainActivity.currentMainActivity())
+                .getPicassoBigCache()
                 .load(imageURL)
                 .fit()
                 .centerCrop()
                 .into(imageView);
     }
 
-    public static void loadIntoWithPlaceholder(final String imageURL, final ImageView imageView) {
+    public static void loadIntoWithPlaceholder(final String imageURL, final ImageView imageView, @DrawableRes final int placeholderResId) {
         PicassoBigCache
                 .INSTANCE
-                .getPicassoBigCache(MainActivity.currentMainActivity())
+                .getPicassoBigCache()
                 .load(imageURL)
-                .placeholder(R.drawable.expert_image_placeholder)
+                .placeholder(placeholderResId)
                 .fit()
                 .centerCrop()
                 .into(imageView);
@@ -94,14 +92,14 @@ public class ViewExtensions {
     public static void loadInto(@DrawableRes final int resourceId, final ImageView imageView) {
         PicassoBigCache
                 .INSTANCE
-                .getPicassoBigCache(MainActivity.currentMainActivity())
+                .getPicassoBigCache()
                 .load(resourceId).into(imageView);
     }
 
     public static void loadInto(final String imageUrl, @NotNull final ImageView imageView, @DrawableRes final int placeholder, final Callback callback) {
         PicassoBigCache
                 .INSTANCE
-                .getPicassoBigCache(MainActivity.currentMainActivity())
+                .getPicassoBigCache()
                 .load(imageUrl).placeholder(placeholder)
                 .into(imageView, callback);
     }
@@ -132,20 +130,20 @@ public class ViewExtensions {
         v.setLayoutParams(params);
     }
 
-    public static void setTextSwitcherAnimation(@NotNull final Context context, @NotNull final TextSwitcher v) {
+    public static void setTextSwitcherAnimation(@NotNull final TextSwitcher v, @NotNull final Typeface typeface) {
         v.setFactory(new ViewSwitcher.ViewFactory() {
 
             @NotNull
             @Override
             public View makeView() {
-                final LayoutInflater inflater = LayoutInflater.from(context);
+                final LayoutInflater inflater = LayoutInflater.from(getContext());
                 final TextView textView = (TextView) inflater.inflate(R.layout.item_title, null);
-                textView.setTypeface(FontCache.RosarioBold.getFont());
+                textView.setTypeface(typeface);
                 return textView;
             }
         });
-        final Animation in = AnimationUtils.loadAnimation(context, R.anim.slide_in_top);
-        final Animation out = AnimationUtils.loadAnimation(context, R.anim.slide_out_bottom);
+        final Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_top);
+        final Animation out = AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_bottom);
         v.setInAnimation(in);
         v.setOutAnimation(out);
     }
@@ -256,29 +254,29 @@ public class ViewExtensions {
     }
 
     @NotNull
-    public static Drawable getScaledDrawable(final int resourceId, final int scaleInDp) {
+    public static Drawable getScaledDrawable(@DrawableRes final int resourceId, final int scaleInDp) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
-        final DisplayMetrics metrics = MainActivity.currentMainActivity().getApplicationContext().getResources().getDisplayMetrics();
+        final DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
         options.inScreenDensity = metrics.densityDpi;
         options.inTargetDensity = metrics.densityDpi;
         options.inDensity = DisplayMetrics.DENSITY_DEFAULT;
         final int px = roundToInt(convertDpToPixel(scaleInDp));
-        final Bitmap bitmap = BitmapFactory.decodeResource(MainActivity.currentMainActivity().getResources(), resourceId, options);
-        final BitmapDrawable drawable = new BitmapDrawable(MainActivity.currentMainActivity().getResources(), Bitmap.createScaledBitmap(bitmap, px, px, true));
+        final Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), resourceId, options);
+        final BitmapDrawable drawable = new BitmapDrawable(getContext().getResources(), Bitmap.createScaledBitmap(bitmap, px, px, true));
         Log.v("Scaling", "Scaling image [" + scaleInDp + "dp to " + px + "px] => [" + bitmap.getWidth() + "x" + bitmap.getHeight() + " px] to [" + drawable.getIntrinsicWidth() + "x" + drawable.getIntrinsicHeight() + " px]");
         bitmap.recycle();
         return drawable;
     }
 
     public static View getContentRoot() {
-        return MainActivity.currentMainActivity()
+        return getContext()
                 .getWindow()
                 .getDecorView()
                 .findViewById(android.R.id.content);
     }
 
-    public static void addHtmlContentToTextView(final int resourceId, @NotNull final TextView view) {
-        final InputStream inputStream = MainActivity.currentMainActivity().getResources().openRawResource(resourceId);
+    public static void addHtmlContentToTextView(@RawRes final int resourceId, @NotNull final TextView view) {
+        final InputStream inputStream = getContext().getResources().openRawResource(resourceId);
         final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         final StringBuffer body = new StringBuffer();
         String line = null;
@@ -287,7 +285,8 @@ public class ViewExtensions {
                 body.append(line);
             }
             reader.close();
-        } catch (@NotNull final IOException e) {
+        } catch (final IOException e) {
+            e.printStackTrace();
         }
         view.setText(Html.fromHtml(body.toString()));
         view.setMovementMethod(LinkMovementMethod.getInstance());
@@ -307,7 +306,7 @@ public class ViewExtensions {
         return rect;
     }
 
-    public static void hideOnLostFocus(@NotNull final Context context, @NotNull final MotionEvent event, @Nullable final View... views) {
+    public static void hideOnLostFocus(@NotNull final MotionEvent event, @Nullable final View... views) {
 
         if (views == null)
             return;
@@ -318,24 +317,24 @@ public class ViewExtensions {
             hit |= getLocationOnScreen(view).contains((int) event.getX(), (int) event.getY());
 
         if (event.getAction() == MotionEvent.ACTION_DOWN && !hit)
-            hideKeyboard(context, views[0]);
+            hideKeyboard(views[0]);
     }
 
-    public static void sendEmail(@NotNull final Context context, final String address, final String subject, final Spanned body, final int requestCode) {
+    public static void sendEmail(final String address, final String subject, final Spanned body, final int requestCode, final String popupTitle) {
         final Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", address, null));
         i.putExtra(Intent.EXTRA_SUBJECT, subject);
         i.putExtra(Intent.EXTRA_TEXT, body);
         try {
-            ((Activity) context).startActivityForResult(Intent.createChooser(i, Localization.getString(R.string.kKontaktSharePopupTitle)), requestCode);
-        } catch (@NotNull final android.content.ActivityNotFoundException ex) {
-            Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            getContext().startActivityForResult(Intent.createChooser(i, popupTitle), requestCode);
+        } catch (@NotNull final ActivityNotFoundException ex) {
+            Toast.makeText(getContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public static void showMarket(@NotNull final Context context) {
+    public static void showMarket() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        final String packageName = context.getApplicationContext().getPackageName();
+        final String packageName = getContext().getApplicationContext().getPackageName();
         intent.setData(Uri.parse("market://details?id=" + packageName));
-        context.startActivity(intent);
+        getContext().startActivity(intent);
     }
 }

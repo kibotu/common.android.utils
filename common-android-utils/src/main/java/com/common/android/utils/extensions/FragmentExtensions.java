@@ -1,29 +1,21 @@
-package common.android.utils.extensions;
+package com.common.android.utils.extensions;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import com.adviqo.app.MainActivity;
-import com.adviqo.app.ui.date.DatePickerFragment;
-import com.adviqo.app.ui.settings.SettingsWebViewFragment;
-import common.android.utils.interfaces.ICallback;
-import common.android.utils.interfaces.ICommand;
-import common.android.utils.interfaces.ILogTag;
-import common.android.utils.localization.Localization;
-import de.questico.app.R;
+import com.common.android.utils.R;
+import com.common.android.utils.interfaces.ICallback;
+import com.common.android.utils.interfaces.ICommand;
+import com.common.android.utils.interfaces.ILogTag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Date;
-
-import static io.fabric.sdk.android.services.common.CommonUtils.hideKeyboard;
+import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
 
 /**
  * Created by Jan Rabe on 29/07/15.
@@ -36,39 +28,17 @@ public class FragmentExtensions {
         throw new IllegalAccessException();
     }
 
-    public static void showTimePickerDialog(@NotNull final FragmentManager fragment, final EditText editText, final String formatter, final int titleResourceId, final Date date) {
-        final DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.setFormatter(formatter);
-        newFragment.setDate(date);
-
-        newFragment.setTitle(Localization.getString(titleResourceId));
-        newFragment.setTextView(editText);
-        newFragment.show(fragment, "datePicker");
-    }
-
     public static void addContextMenu(@NotNull final View view, @NotNull final Fragment fragment) {
         fragment.registerForContextMenu(view);
         view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(@NotNull final View v, final boolean hasFocus) {
                 if (hasFocus) {
-                    hideKeyboard(fragment.getActivity(), v);
+                    hideKeyboard(v);
                     fragment.getActivity().openContextMenu(v);
                 }
             }
         });
-    }
-
-    public static void showWebViewFragmentWithUserAgent(@NotNull final FragmentManager fragmentManager, final String url, final String title, @StringRes final int screenNameId) {
-        final SettingsWebViewFragment fragment = new SettingsWebViewFragment();
-
-        final Bundle args = new Bundle();
-        args.putString(SettingsWebViewFragment.URL, url);
-        args.putString(SettingsWebViewFragment.TITLE, title);
-        args.putInt(SettingsWebViewFragment.GA_SCREEN_NAME, screenNameId);
-        fragment.setArguments(args);
-
-        FragmentExtensions.addToBackStack(fragmentManager, fragment);
     }
 
     public static void focusView(@NotNull final View v, @NotNull final Fragment fragment) {
@@ -205,7 +175,7 @@ public class FragmentExtensions {
         Log.v(TAG, "removed: " + fragment.getClass().getSimpleName());
     }
 
-    public static void removeFragmentFadeOut(@NotNull final FragmentManager fm, @NotNull final Fragment fragment, @Nullable final ICallback onAnimationComplete) {
+    public static <T> void removeFragmentFadeOut(@NotNull final FragmentManager fm, @NotNull final Fragment fragment, @Nullable final ICallback<T> onAnimationComplete) {
         fm.beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
                 .remove(fragment).commit();
@@ -215,7 +185,7 @@ public class FragmentExtensions {
     }
 
     public static void printBackStack() {
-        final FragmentManager fm = MainActivity.currentMainActivity().getSupportFragmentManager();
+        final FragmentManager fm = getContext().getSupportFragmentManager();
 
         Log.v(TAG, "backstack count: " + fm.getBackStackEntryCount());
         for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {

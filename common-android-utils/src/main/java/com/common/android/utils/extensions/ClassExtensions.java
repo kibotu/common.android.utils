@@ -1,11 +1,11 @@
-package common.android.utils.extensions;
+package com.common.android.utils.extensions;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static common.android.utils.extensions.MathExtensions.randInt;
+import static com.common.android.utils.extensions.MathExtensions.randInt;
 
 /**
  * Created by Jan Rabe on 24/09/15.

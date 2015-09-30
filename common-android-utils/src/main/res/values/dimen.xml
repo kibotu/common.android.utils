@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="pictureWidth">83dp</dimen>
+    <dimen name="pictureheight">106dp</dimen>
+    <dimen name="outsideSpace">15dp</dimen>
+    <dimen name="smallMargin">10dp</dimen>
+    <dimen name="textFieldPadding">10dp</dimen>
+    <dimen name="marginPreisBerater">9dp</dimen>
+    <dimen name="heightBalken">2dp</dimen>
+    <dimen name="smallSpace">3dp</dimen>
+    <dimen name="mediumSpace">5dp</dimen>
+    <dimen name="middleSpace">10dp</dimen>
+    <dimen name="textSizeHuge">24sp</dimen>
+    <dimen name="textSizeTitle">18sp</dimen>
+    <dimen name="textSizeMedium">16sp</dimen>
+    <dimen name="textSizeMainText">14sp</dimen>
+
+    <dimen name="textSizePrice">12sp</dimen>
+    <dimen name="tutorialTextSize">20sp</dimen>
+
+    <dimen name="row_ratings_stars_width">120dp</dimen>
+    <dimen name="row_ratings_stars_height">21dp</dimen>
+    <dimen name="row_ratings_layout_height">24dp</dimen>
+    <dimen name="ctaButtonHeight">40dp</dimen>
+    <dimen name="ctaButtonMarginTop">30dp</dimen>
+
+    <!-- coverflow -->
+    <dimen name="cover_width">120dp</dimen>
+    <dimen name="cover_height">180dp</dimen>
+    <dimen name="iconSizeForExpertList">16dp</dimen>
+    <dimen name="bonusIconSizeForImageGallery">26dp</dimen>
+</resources>

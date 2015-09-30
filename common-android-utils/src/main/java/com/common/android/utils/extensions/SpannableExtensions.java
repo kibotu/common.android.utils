@@ -1,13 +1,13 @@
-package common.android.utils.extensions;
+package com.common.android.utils.extensions;
 
 import android.support.annotation.ColorRes;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
-import com.adviqo.app.MainActivity;
-import com.adviqo.shared.SupportedCountry;
 import org.jetbrains.annotations.NotNull;
+
+import static com.common.android.utils.ContextHelper.getContext;
 
 /**
  * Created by Jan Rabe on 24/09/15.
@@ -20,7 +20,7 @@ final public class SpannableExtensions {
 
     public static Spannable colorize(@NotNull final Spannable spannable, @ColorRes final int color) {
         final Spannable result = new SpannableString(spannable);
-        result.setSpan(new ForegroundColorSpan(MainActivity.currentMainActivity().getResources().getColor(color)), 0, result.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        result.setSpan(new ForegroundColorSpan(getContext().getResources().getColor(color)), 0, result.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return result;
     }
 
@@ -28,9 +28,5 @@ final public class SpannableExtensions {
         final Spannable result = new SpannableString(spannable);
         result.setSpan(new StrikethroughSpan(), 0, spannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return result;
-    }
-
-    public static Spannable localize(final float money) {
-        return new SpannableString(SupportedCountry.geDefaultCountry().getCurrency().format(money));
     }
 }

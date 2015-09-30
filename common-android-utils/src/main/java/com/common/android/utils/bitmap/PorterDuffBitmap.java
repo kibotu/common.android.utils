@@ -1,15 +1,14 @@
-package common.android.utils.bitmap;
+package com.common.android.utils.bitmap;
 
 import android.graphics.*;
 import android.util.Log;
 import android.view.View;
-import com.adviqo.app.MainActivity;
-import common.android.utils.device.Dimension;
+import com.common.android.utils.device.Dimension;
 import org.jetbrains.annotations.NotNull;
 
-import static common.android.utils.extensions.DeviceExtensions.getScreenDimension;
-import static common.android.utils.extensions.ViewExtensions.getContentRoot;
-import static common.android.utils.extensions.ViewExtensions.getScreenLocation;
+import static com.common.android.utils.extensions.DeviceExtensions.getScreenDimension;
+import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
+import static com.common.android.utils.extensions.ViewExtensions.getScreenLocation;
 
 /**
  * Created by Jan Rabe on 11/06/15.
@@ -31,7 +30,7 @@ public class PorterDuffBitmap {
 
     @NotNull
     public static PorterDuffBitmap createFullscreenBitmap(final int color) {
-        final Dimension dim = getScreenDimension(MainActivity.currentMainActivity());
+        final Dimension dim = getScreenDimension();
         final int topOffset = dim.height - getContentRoot().getMeasuredHeight();
         Log.v(TAG, dim.toString() + " topOffset=" + topOffset + " " + getContentRoot().getMeasuredHeight());
         final PorterDuffBitmap p = new PorterDuffBitmap(Bitmap.createBitmap(dim.width, dim.height - topOffset, Bitmap.Config.ARGB_8888), topOffset);

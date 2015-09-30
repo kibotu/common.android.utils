@@ -1,4 +1,4 @@
-package common.android.utils.input;
+package com.common.android.utils.input;
 
 import android.app.Activity;
 import android.view.GestureDetector;

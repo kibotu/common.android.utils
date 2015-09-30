@@ -1,4 +1,4 @@
-package common.android.utils.device;
+package com.common.android.utils.device;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
  * Created by Jan Rabe on 22/05/15.
  */
 public class Version {
+
     String versionName;
     int versionCode;
 

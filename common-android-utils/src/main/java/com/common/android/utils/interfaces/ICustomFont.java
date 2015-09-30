@@ -1,4 +1,4 @@
-package common.android.utils.interfaces;
+package com.common.android.utils.interfaces;
 
 /**
  * Created by Jan Rabe on 07/08/15.
