@@ -1,6 +1,8 @@
 package com.common.android.utils.extensions;
 
+import android.content.Context;
 import android.content.res.Resources;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -59,6 +61,16 @@ public class MathExtensions {
      */
     public static float convertPixelsToDp(final float px) {
         return px / (getDensityDpi() / 160f);
+    }
+
+    public static float pxToDp(@NotNull final Context context, final int px) {
+        final float pixel = px;
+        return (pixel / getDensity());
+    }
+
+    public static int dpToPx(@NotNull final Context context, final int dp) {
+        final float scale = getDensity();
+        return (int) (dp * scale + 0.5f);
     }
 
     public static int getDensityDpi() {

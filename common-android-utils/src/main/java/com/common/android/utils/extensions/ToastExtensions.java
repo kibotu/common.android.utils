@@ -36,7 +36,6 @@ public class ToastExtensions {
         });
     }
 
-
     public static void toast(@StringRes final int resourceId) {
         if (!showToastMessages)
             return;

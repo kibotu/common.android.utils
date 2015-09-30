@@ -1,9 +1,13 @@
 package com.common.android.utils.extensions;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.provider.Settings;
 import android.view.View;
 import android.view.WindowManager;
+import org.jetbrains.annotations.NotNull;
 
 import static com.common.android.utils.ContextHelper.getContext;
 
@@ -37,4 +41,15 @@ public class ActivityExtensions {
         }
     }
 
+    public static void showSettings(@NotNull final Context context) {
+        final Intent intent = new Intent(Settings.ACTION_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void showDevSettings(@NotNull final Context context) {
+        final Intent intent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 }

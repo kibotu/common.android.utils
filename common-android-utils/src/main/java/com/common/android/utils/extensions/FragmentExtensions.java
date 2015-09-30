@@ -187,9 +187,10 @@ public class FragmentExtensions {
     public static void printBackStack() {
         final FragmentManager fm = getContext().getSupportFragmentManager();
 
-        Log.v(TAG, "backstack count: " + fm.getBackStackEntryCount());
+        Log.v(TAG, "Current BackStack:  " + fm.getBackStackEntryCount());
         for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
-            Log.v(TAG, "Found fragment on STACK: id: " + fm.getBackStackEntryAt(entry).getId() + " name: " + fm.getBackStackEntryAt(entry).getName());
+            final FragmentManager.BackStackEntry stackEntry = fm.getBackStackEntryAt(entry);
+            Log.v(TAG, "[" + stackEntry.getId() + "] " + stackEntry.getName());
         }
     }
 

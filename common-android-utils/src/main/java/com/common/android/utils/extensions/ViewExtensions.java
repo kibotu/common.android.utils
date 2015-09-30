@@ -1,16 +1,18 @@
 package com.common.android.utils.extensions;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
-import android.graphics.Typeface;
+import android.content.res.Resources;
+import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.RawRes;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -19,6 +21,7 @@ import android.util.Log;
 import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.common.android.utils.R;
 import com.common.android.utils.ui.PicassoBigCache;
@@ -336,5 +339,91 @@ public class ViewExtensions {
         final String packageName = getContext().getApplicationContext().getPackageName();
         intent.setData(Uri.parse("market://details?id=" + packageName));
         getContext().startActivity(intent);
+    }
+
+    public static void setViewBackgroundWithoutResettingPadding(@NotNull final View v, @DrawableRes final int backgroundResId) {
+        final int paddingBottom = v.getPaddingBottom(), paddingLeft = v.getPaddingLeft();
+        final int paddingRight = v.getPaddingRight(), paddingTop = v.getPaddingTop();
+        v.setBackgroundResource(backgroundResId);
+        v.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+    }
+
+    public static void setViewBackgroundColorWithoutResettingPadding(@NotNull final View v, @ColorRes final int color) {
+        final int paddingBottom = v.getPaddingBottom(), paddingLeft = v.getPaddingLeft();
+        final int paddingRight = v.getPaddingRight(), paddingTop = v.getPaddingTop();
+        v.setBackgroundColor(v.getResources().getColor(color));
+        v.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+    }
+
+
+    public static void addFadeOutToText(@Nullable final TextView textView, final int galleryHeight, @ColorRes final int fromColor, @ColorRes final int toColor) {
+        if (textView == null) {
+            return;
+        }
+
+        final Resources resources = textView.getContext().getResources();
+        final Rect bounds = new Rect();
+        final Paint textPaint = textView.getPaint();
+        final CharSequence text = textView.getText();
+        textPaint.getTextBounds(text.toString(), 0, text.length(), bounds);
+        final int viewWidth = textView.getWidth();
+        final int startHeight = textView.getLineCount() > 2 ? galleryHeight / 2 : 0;
+        final int availableWidth = (int) (viewWidth - textView.getPaddingLeft() - textView.getPaddingRight() - textPaint.measureText(text.toString()));
+        if (availableWidth < 0) {
+            final Shader textShader = new LinearGradient(3 * viewWidth / 4, startHeight, viewWidth, textView.getPaint().getTextSize(),
+                    new int[]{resources.getColor(fromColor), resources.getColor(toColor)},
+                    null, Shader.TileMode.CLAMP);
+            textView.getPaint().setShader(textShader);
+        }
+    }
+
+    public static void setLayoutSize(@NotNull final View v, final int width, final int height) {
+        final ViewGroup.LayoutParams params = v.getLayoutParams();
+        params.width = width;
+        params.height = height;
+        v.post(new Runnable() {
+            @Override
+            public void run() {
+                v.setLayoutParams(params);
+            }
+        });
+    }
+
+    public static void addContextMenu(@NotNull final View view, @NotNull final Fragment fragment) {
+        fragment.registerForContextMenu(view);
+        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(@NotNull final View v, final boolean hasFocus) {
+                if (hasFocus) {
+                    hideKeyboard(v);
+                    fragment.getActivity().openContextMenu(v);
+                }
+            }
+        });
+    }
+
+    public static void focusView(@NotNull final View v, @NotNull final Fragment fragment) {
+        v.requestFocus();
+        final InputMethodManager imm = (InputMethodManager) fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    public static View getContentRoot(final Activity context) {
+        return context
+                .getWindow()
+                .getDecorView()
+                .findViewById(android.R.id.content);
+    }
+
+    public static void addLinearLayoutMargin(@NotNull final View view, final int left, final int top, final int right, final int bottom) {
+        final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(left, top, right, bottom);
+        view.setLayoutParams(layoutParams);
+    }
+
+    public static void setRelativeLayoutHeight(@NotNull final View v, final int height) {
+        final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
+        params.height = height;
+        v.setLayoutParams(params);
     }
 }
