@@ -17,7 +17,7 @@ public final class TimingTracker {
         this.builder = new HitBuilders.TimingBuilder();
     }
 
-    protected static TimingTracker from(final Tracker tracker) {
+    public static TimingTracker from(final Tracker tracker) {
         return new TimingTracker(tracker);
     }
 

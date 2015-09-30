@@ -19,7 +19,7 @@ public final class EventTracker {
         this.builder = new HitBuilders.EventBuilder();
     }
 
-    protected static EventTracker from(final Tracker tracker) {
+    public static EventTracker from(final Tracker tracker) {
         return new EventTracker(tracker);
     }
 

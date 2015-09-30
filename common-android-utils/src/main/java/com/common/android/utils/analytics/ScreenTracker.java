@@ -14,7 +14,7 @@ public final class ScreenTracker {
         this.builder = new HitBuilders.ScreenViewBuilder();
     }
 
-    protected static ScreenTracker from(final Tracker tracker, final String screenName) {
+    public static ScreenTracker from(final Tracker tracker, final String screenName) {
         return new ScreenTracker(tracker, screenName);
     }
 
