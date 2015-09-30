@@ -1,5 +1,6 @@
 package com.common.android.utils;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,20 +11,20 @@ import org.jetbrains.annotations.Nullable;
 public class ContextHelper {
 
     @Nullable
-    private static AppCompatActivity context;
+    private static FragmentActivity context;
 
     public ContextHelper() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 
     @NotNull
-    public static AppCompatActivity getContext() {
+    public static FragmentActivity getContext() {
         if (context == null)
             throw new IllegalStateException("Please call ContextHelper.setContext() when your activity starts.");
         return context;
     }
 
-    public static void setContext(@NotNull final AppCompatActivity context) {
+    public static void setContext(@NotNull final FragmentActivity context) {
         ContextHelper.context = context;
     }
 }
