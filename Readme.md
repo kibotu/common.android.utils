@@ -9,6 +9,6 @@
 	}
 		
 	dependencies {
-            compile 'com.github.kibotu:common.android.utils:<version>'
+            compile 'com.github.kibotu:common.android.utils:-SNAPSHOT'
     }
     
