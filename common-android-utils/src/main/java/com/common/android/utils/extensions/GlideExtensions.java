@@ -11,6 +11,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.common.android.utils.ui.components.SpriteImageView;
 import org.jetbrains.annotations.NotNull;
 
+import static com.common.android.utils.ContextHelper.getContext;
+
 /**
  * Created by Jan Rabe on 30/09/15.
  */
@@ -39,5 +41,9 @@ public class GlideExtensions {
                 imageView.setCoordinates((int) (amountColumns * columnWidth * density), (int) (amountRows * columnWidth * density), (int) (rowHeight * density), (int) (rowHeight * density));
             }
         };
+    }
+
+    public static void drawImageCenterCrop(@NotNull final String imageUrl, @NotNull ImageView imageView, @ColorRes int placeHolderColor) {
+        Glide.with(imageView.getContext()).load(imageUrl).placeholder(getContext().getResources().getColor(placeHolderColor)).centerCrop().into(imageView);
     }
 }

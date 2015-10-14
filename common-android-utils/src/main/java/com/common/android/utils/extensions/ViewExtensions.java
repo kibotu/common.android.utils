@@ -9,10 +9,10 @@ import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.RawRes;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -23,9 +23,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import com.common.android.utils.ContextHelper;
 import com.common.android.utils.R;
+import com.common.android.utils.interfaces.ICommand;
 import com.common.android.utils.ui.PicassoBigCache;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.os.Build.VERSION.SDK_INT;
@@ -425,5 +430,41 @@ public class ViewExtensions {
         final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
         params.height = height;
         v.setLayoutParams(params);
+    }
+
+    public static void setBackground(@NotNull final View view, @DrawableRes final int background) {
+        Picasso.with(ContextHelper.getContext()).load(background).into(new Target() {
+            @Override
+            public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
+                if (Build.VERSION.SDK_INT >= 16)
+                    view.setBackground(new BitmapDrawable(ContextHelper.getContext().getResources(), bitmap));
+                else
+                    view.setBackgroundDrawable(new BitmapDrawable(ContextHelper.getContext().getResources(), bitmap));
+
+            }
+
+            @Override
+            public void onBitmapFailed(final Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(final Drawable placeHolderDrawable) {
+
+            }
+        });
+    }
+
+    @Nullable
+    public static <T extends View> T setColor(@Nullable final T view, @ColorRes final int color) {
+        if (view == null)
+            return view;
+        view.setBackgroundColor(getContext().getResources().getColor(color));
+        return view;
+    }
+
+    public static <T extends View> void applyToAllViews(@NotNull final HashMap<Integer, T> views, @NotNull final ICommand<T> command) {
+        for (int i = 0; i < views.size(); ++i)
+            command.execute(views.get(i));
     }
 }

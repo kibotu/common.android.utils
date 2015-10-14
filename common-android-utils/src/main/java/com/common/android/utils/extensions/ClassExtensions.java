@@ -2,6 +2,8 @@ package com.common.android.utils.extensions;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -50,5 +52,33 @@ public class ClassExtensions {
         final E[] values = values(type);
         Arrays.sort(values, createNewAlphabeticalEnumComparator());
         return values;
+    }
+
+    /**
+     * Creates a new instance of a class.
+     *
+     * @param clazz Class.
+     * @param <T>   Should be class type.
+     * @return New Instance of given class.
+     * @throws IllegalArgumentException if given class has no default constructor.
+     */
+    @NotNull
+    public static <T> T newInstance(@NotNull final Class clazz) {
+        T instance = null;
+        final Constructor<T> constructor = (Constructor<T>) clazz.getConstructors()[0];
+        try {
+            instance = constructor.newInstance();
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        if (instance == null)
+            throw new IllegalArgumentException(clazz.getCanonicalName() + " has no default constructor!");
+
+        return instance;
     }
 }

@@ -1,7 +1,7 @@
 package com.common.android.utils.extensions;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -202,5 +202,18 @@ public class FragmentExtensions {
     public static void clearStack(@NotNull final FragmentManager fm) {
         fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         printBackStack();
+    }
+
+    @NotNull
+    public static <T extends Fragment> T newInstance(@NotNull final Class<T> type, @Nullable final Bundle args) {
+        final T f = ClassExtensions.newInstance(type);
+        if (args != null) {
+            f.setArguments(args);
+        }
+        return f;
+    }
+
+    public static boolean inRoot(@NotNull final FragmentManager fragmentManager) {
+        return fragmentManager.getBackStackEntryCount() == 0;
     }
 }

@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import com.common.android.utils.interfaces.ILogTag;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by Jan Rabe on 09/09/15.
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class DataBinder<T, VH extends RecyclerView.ViewHolder> implements ILogTag {
 
     @NotNull
-    private final DataBindAdapter<T> dataBindAdapter;
+    protected final DataBindAdapter<T> dataBindAdapter;
 
     public DataBinder(@NotNull final DataBindAdapter<T> dataBindAdapter) {
         this.dataBindAdapter = dataBindAdapter;
@@ -25,7 +24,7 @@ public abstract class DataBinder<T, VH extends RecyclerView.ViewHolder> implemen
         return dataBindAdapter.get(position);
     }
 
-    public abstract void bindViewHolder(@NotNull final VH viewHolder, final int position, @Nullable final IOnItemClickListener<T> IOnItemClickListener);
+    public abstract void bindViewHolder(@NotNull final VH viewHolder, final int position);
 
     @NotNull
     @Override

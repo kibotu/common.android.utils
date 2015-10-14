@@ -5,8 +5,6 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static android.support.v4.widget.DrawerLayout.*;
-
 /**
  * Created by Jan Rabe on 17/09/15.
  */

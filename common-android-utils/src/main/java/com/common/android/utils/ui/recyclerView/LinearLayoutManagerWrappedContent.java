@@ -25,7 +25,6 @@ package com.common.android.utils.ui.recyclerView;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;

@@ -2,6 +2,7 @@ package com.common.android.utils.ui.recyclerView;
 
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import com.common.android.utils.extensions.ClassExtensions;
 import org.jetbrains.annotations.NotNull;
@@ -21,8 +22,15 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final List<Pair<T, Class>> data;
 
     @Nullable
-    private IOnItemClickListener<T> IOnItemClickListener;
+    private IOnItemClickListener<T> onItemClickListener;
 
+    @Nullable
+    private IOnItemFocusChangeListener<T> onItemFocusChangeListener;
+
+    @Nullable
+    private View.OnKeyListener onKeyListener;
+
+    @NotNull
     private List<DataBinder<T, ?>> binderType;
 
     public DataBindAdapter() {
@@ -34,8 +42,31 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         binderType.add(binder);
     }
 
-    public void setOnItemClickListener(@NotNull final IOnItemClickListener<T> IOnItemClickListener) {
-        this.IOnItemClickListener = IOnItemClickListener;
+    @Nullable
+    public IOnItemClickListener<T> getOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    public void setOnItemClickListener(@Nullable final IOnItemClickListener<T> onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @Nullable
+    public IOnItemFocusChangeListener<T> getOnItemFocusChangeListener() {
+        return onItemFocusChangeListener;
+    }
+
+    public void setOnItemFocusChangeListener(@Nullable final IOnItemFocusChangeListener<T> onItemFocusChangeListener) {
+        this.onItemFocusChangeListener = onItemFocusChangeListener;
+    }
+
+    @Nullable
+    public View.OnKeyListener getOnKeyListener() {
+        return onKeyListener;
+    }
+
+    public void setOnKeyListener(@Nullable final View.OnKeyListener onKeyListener) {
+        this.onKeyListener = onKeyListener;
     }
 
     @NotNull
@@ -46,13 +77,14 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
-        getPosition(position).bindViewHolder(viewHolder, position, IOnItemClickListener);
+        getPosition(position).bindViewHolder(viewHolder, position);
     }
 
     public void add(@NotNull final T t, @NotNull final Class clazz) {
+        final int currentSize = data.size();
         data.add(new Pair<>(t, clazz));
         addIfNotExists(clazz);
-        notifyItemRangeChanged(0, data.size() - 1);
+        notifyItemRangeChanged(currentSize, data.size() - 1);
     }
 
     private void addIfNotExists(@NotNull final Class clazz) {
@@ -100,6 +132,8 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void clear() {
+        binderType.clear();
         data.clear();
+        notifyDataSetChanged();
     }
 }
