@@ -59,7 +59,7 @@ public class RemoteControlListener implements IKeyListener, View.OnKeyListener, 
     }
 
     @Nullable
-    final protected View getCurrentView() {
+    final public View getCurrentView() {
         return currentView;
     }
 
@@ -238,291 +238,291 @@ public class RemoteControlListener implements IKeyListener, View.OnKeyListener, 
         }
     }
 
-    protected boolean onSportPressed() {
+    public boolean onSportPressed() {
         return false;
     }
 
-    protected boolean onPremiumPressed() {
+    public boolean onPremiumPressed() {
         return false;
     }
 
-    protected boolean onVideoPressed() {
+    public boolean onVideoPressed() {
         return false;
     }
 
-    protected boolean onExtraPressed() {
+    public boolean onExtraPressed() {
         return false;
     }
 
-    protected boolean onRadioPressed() {
+    public boolean onRadioPressed() {
         return false;
     }
 
-    protected boolean on0_Pressed() {
+    public boolean on0_Pressed() {
         return false;
     }
 
-    protected boolean onTxtPressed() {
+    public boolean onTxtPressed() {
         return false;
     }
 
-    protected boolean on9WXYZPressed() {
+    public boolean on9WXYZPressed() {
         return false;
     }
 
-    protected boolean on8TUVPressed() {
+    public boolean on8TUVPressed() {
         return false;
     }
 
-    protected boolean on7PQRSPressed() {
+    public boolean on7PQRSPressed() {
         return false;
     }
 
-    protected boolean on6MNOPressed() {
+    public boolean on6MNOPressed() {
         return false;
     }
 
-    protected boolean on5JKLPressed() {
+    public boolean on5JKLPressed() {
         return false;
     }
 
-    protected boolean on4GHIPressed() {
+    public boolean on4GHIPressed() {
         return false;
     }
 
-    protected boolean on3DEFPressed() {
+    public boolean on3DEFPressed() {
         return false;
     }
 
-    protected boolean on2ABCPressed() {
+    public boolean on2ABCPressed() {
         return false;
     }
 
-    protected boolean on1Pressed() {
+    public boolean on1Pressed() {
         return false;
     }
 
-    protected boolean onPageDownPressed() {
+    public boolean onPageDownPressed() {
         return false;
     }
 
-    protected boolean onF5Pressed() {
+    public boolean onF5Pressed() {
         return false;
     }
 
-    protected boolean onVolumeDownPressed() {
+    public boolean onVolumeDownPressed() {
         return false;
     }
 
-    protected boolean onPageUpPressed() {
+    public boolean onPageUpPressed() {
         return false;
     }
 
-    protected boolean onVolumeMutePressed() {
+    public boolean onVolumeMutePressed() {
         return false;
     }
 
-    protected boolean onVolumeUpPressed() {
+    public boolean onVolumeUpPressed() {
         return false;
     }
 
-    protected boolean onOptionPressed() {
+    public boolean onOptionPressed() {
         return false;
     }
 
-    protected boolean onDpadDownPressed() {
+    public boolean onDpadDownPressed() {
         return false;
     }
 
-    protected boolean onTvGuidePressed() {
+    public boolean onTvGuidePressed() {
         return false;
     }
 
-    protected boolean onDpadRightPressed() {
+    public boolean onDpadRightPressed() {
         return false;
     }
 
-    protected boolean onDpadCenterPressed() {
+    public boolean onDpadCenterPressed() {
         return false;
     }
 
-    protected boolean onDpadLeftPressed() {
+    public boolean onDpadLeftPressed() {
         return false;
     }
 
-    protected boolean onDpadUpPressed() {
+    public boolean onDpadUpPressed() {
         return false;
     }
 
-    protected boolean onDpadBackPressed() {
+    public boolean onDpadBackPressed() {
         return false;
     }
 
-    protected boolean onMediaNextPressed() {
+    public boolean onMediaNextPressed() {
         return false;
     }
 
-    protected boolean onMediaPlayPausePressed() {
+    public boolean onMediaPlayPausePressed() {
         return false;
     }
 
-    protected boolean onMediaPreviousPressed() {
+    public boolean onMediaPreviousPressed() {
         return false;
     }
 
-    protected boolean onMediaFastForward() {
+    public boolean onMediaFastForward() {
         return false;
     }
 
-    protected boolean onMediaRecord() {
+    public boolean onMediaRecord() {
         return false;
     }
 
-    protected boolean onMediaRewind() {
+    public boolean onMediaRewind() {
         return false;
     }
 
-    protected boolean onSport() {
+    public boolean onSport() {
         return false;
     }
 
-    protected boolean onPremium() {
+    public boolean onPremium() {
         return false;
     }
 
-    protected boolean onVideo() {
+    public boolean onVideo() {
         return false;
     }
 
-    protected boolean onExtra() {
+    public boolean onExtra() {
         return false;
     }
 
-    protected boolean onRadio() {
+    public boolean onRadio() {
         return false;
     }
 
-    protected boolean on0_() {
+    public boolean on0_() {
         return false;
     }
 
-    protected boolean onTxt() {
+    public boolean onTxt() {
         return false;
     }
 
-    protected boolean on9WXYZ() {
+    public boolean on9WXYZ() {
         return false;
     }
 
-    protected boolean on8TUV() {
+    public boolean on8TUV() {
         return false;
     }
 
-    protected boolean on7PQRS() {
+    public boolean on7PQRS() {
         return false;
     }
 
-    protected boolean on6MNO() {
+    public boolean on6MNO() {
         return false;
     }
 
-    protected boolean on5JKL() {
+    public boolean on5JKL() {
         return false;
     }
 
-    protected boolean on4GHI() {
+    public boolean on4GHI() {
         return false;
     }
 
-    protected boolean on3DEF() {
+    public boolean on3DEF() {
         return false;
     }
 
-    protected boolean on2ABC() {
+    public boolean on2ABC() {
         return false;
     }
 
-    protected boolean on1() {
+    public boolean on1() {
         return false;
     }
 
-    protected boolean onPageDown() {
+    public boolean onPageDown() {
         return false;
     }
 
-    protected boolean onF5() {
+    public boolean onF5() {
         return false;
     }
 
-    protected boolean onVolumeDown() {
+    public boolean onVolumeDown() {
         return false;
     }
 
-    protected boolean onPageUp() {
+    public boolean onPageUp() {
         return false;
     }
 
-    protected boolean onVolumeMute() {
+    public boolean onVolumeMute() {
         return false;
     }
 
-    protected boolean onVolumeUp() {
+    public boolean onVolumeUp() {
         return false;
     }
 
-    protected boolean onOption() {
+    public boolean onOption() {
         return false;
     }
 
-    protected boolean onDpadDown() {
+    public boolean onDpadDown() {
         return false;
     }
 
-    protected boolean onTvGuide() {
+    public boolean onTvGuide() {
         return false;
     }
 
-    protected boolean onDpadRight() {
+    public boolean onDpadRight() {
         return false;
     }
 
-    protected boolean onDpadCenter() {
+    public boolean onDpadCenter() {
         return false;
     }
 
-    protected boolean onDpadLeft() {
+    public boolean onDpadLeft() {
         return false;
     }
 
-    protected boolean onDpadUp() {
+    public boolean onDpadUp() {
         return false;
     }
 
-    protected boolean onDpadBack() {
+    public boolean onDpadBack() {
         return false;
     }
 
-    protected boolean onMediaNext() {
+    public boolean onMediaNext() {
         return false;
     }
 
-    protected boolean onMediaPlayPause() {
+    public boolean onMediaPlayPause() {
         return false;
     }
 
-    protected boolean onMediaPrevious() {
+    public boolean onMediaPrevious() {
         return false;
     }
 
-    protected boolean onMediaFastForwardPressed() {
+    public boolean onMediaFastForwardPressed() {
         return false;
     }
 
-    protected boolean onMediaRecordPressed() {
+    public boolean onMediaRecordPressed() {
         return false;
     }
 
-    protected boolean onMediaRewindPressed() {
+    public boolean onMediaRewindPressed() {
         return false;
     }
 
