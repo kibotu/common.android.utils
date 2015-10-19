@@ -62,10 +62,11 @@ public class ClassExtensions {
      * @return New Instance of given class.
      * @throws IllegalArgumentException if given class has no default constructor.
      */
+    @SuppressWarnings("unchecked")
     @NotNull
-    public static <T> T newInstance(@NotNull final Class clazz) {
-        T instance = null;
-        final Constructor<T> constructor = (Constructor<T>) clazz.getConstructors()[0];
+    public static <Instance> Instance newInstance(@NotNull final Class clazz) {
+        Instance instance = null;
+        final Constructor<Instance> constructor = (Constructor<Instance>) clazz.getConstructors()[0];
         try {
             instance = constructor.newInstance();
         } catch (java.lang.InstantiationException e) {
@@ -78,6 +79,28 @@ public class ClassExtensions {
 
         if (instance == null)
             throw new IllegalArgumentException(clazz.getCanonicalName() + " has no default constructor!");
+
+        return instance;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <Instance, ConstructorParam> Instance newInstanceWith(@NotNull final Class clazz, @NotNull final ConstructorParam constructorParam) {
+        Instance instance = null;
+        try {
+            final Constructor<Instance> constructor = (Constructor<Instance>) clazz.getDeclaredConstructor(constructorParam.getClass());
+            instance = constructor.newInstance(constructorParam);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        if (instance == null)
+            throw new IllegalArgumentException(clazz.getCanonicalName() + " has no constructor with parameter: " + constructorParam.getClass().getCanonicalName());
 
         return instance;
     }

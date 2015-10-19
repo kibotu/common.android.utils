@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import com.common.android.utils.extensions.ClassExtensions;
+import com.common.android.utils.interfaces.ILogTag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,10 +17,10 @@ import java.util.List;
 /**
  * Created by Jan Rabe on 09/09/15.
  */
-public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ILogTag {
 
     @NotNull
-    private final List<Pair<T, Class>> data;
+    private final ArrayList<Pair<T, Class>> data;
 
     @Nullable
     private IOnItemClickListener<T> onItemClickListener;
@@ -80,30 +81,39 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         getPosition(position).bindViewHolder(viewHolder, position);
     }
 
-    public void add(@NotNull final T t, @NotNull final Class clazz) {
-        final int currentSize = data.size();
-        data.add(new Pair<>(t, clazz));
+    public void add(final int index, @NotNull final T t, @NotNull final Class clazz) {
+        data.add(index, new Pair<>(t, clazz));
         addIfNotExists(clazz);
-        notifyItemRangeChanged(currentSize, data.size() - 1);
+        notifyItemInserted(index);
     }
 
+    public void add(@NotNull final T t, @NotNull final Class clazz) {
+        data.add(new Pair<>(t, clazz));
+        addIfNotExists(clazz);
+        notifyItemInserted(data.size() - 1);
+    }
+
+    @SuppressWarnings("unchecked")
     private void addIfNotExists(@NotNull final Class clazz) {
-        for (final DataBinder<T, ?> aBinderType : binderType)
-            if (ClassExtensions.equals(aBinderType.getClass(), clazz))
+        for (final DataBinder<T, ?> binderType : this.binderType)
+            if (ClassExtensions.equals(binderType.getClass(), clazz))
                 return;
 
-        final Constructor<T> constr = (Constructor<T>) clazz.getConstructors()[0];
-        final DataBinder<T, ?> instance;
+        final Constructor<T> constructor = (Constructor<T>) clazz.getConstructors()[0];
+        DataBinder<T, ?> instance = null;
         try {
-            instance = (DataBinder<T, ?>) constr.newInstance(this);
+            instance = (DataBinder<T, ?>) constructor.newInstance(this);
             binderType.add(instance);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+
+        if (instance == null)
+            throw new IllegalArgumentException(clazz.getCanonicalName() + " has no constructor with parameter: " + getClass().getCanonicalName());
     }
 
     public T get(final int position) {
@@ -122,6 +132,7 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         return binderType.get(viewType);
     }
 
+
     private DataBinder getPosition(final int position) {
         return binderType.get(getItemViewType(position));
     }
@@ -135,5 +146,11 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         binderType.clear();
         data.clear();
         notifyDataSetChanged();
+    }
+
+    @NotNull
+    @Override
+    final public String tag() {
+        return getClass().getSimpleName();
     }
 }
