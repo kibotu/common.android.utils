@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.common.android.utils.ui.components.SpriteImageView;
+import jp.wasabeef.glide.transformations.CropTransformation;
 import org.jetbrains.annotations.NotNull;
 
 import static com.common.android.utils.ContextHelper.getContext;
@@ -45,5 +46,17 @@ public class GlideExtensions {
 
     public static void drawImageCenterCrop(@NotNull final String imageUrl, @NotNull ImageView imageView, @ColorRes int placeHolderColor) {
         Glide.with(imageView.getContext()).load(imageUrl).placeholder(getContext().getResources().getColor(placeHolderColor)).centerCrop().into(imageView);
+    }
+
+    public static void drawImageTopCrop(@NotNull String imageUrl, @NotNull ImageView imageView, @ColorRes int placeHolderColor, final int width, final int height) {
+        Glide.with(imageView.getContext())
+                .load(imageUrl)
+                .bitmapTransform(new CropTransformation(getContext(), width, height, CropTransformation.CropType.TOP))
+                .placeholder(placeHolderColor)
+                .into(imageView);
+    }
+
+    public static void drawImageWithFitCenterNoFading(String imageUrl, @NotNull ImageView imageView, @ColorRes int placeHolderColor) {
+        Glide.with(imageView.getContext()).load(imageUrl).dontAnimate().placeholder(imageView.getContext().getResources().getColor(placeHolderColor)).fitCenter().into(imageView);
     }
 }

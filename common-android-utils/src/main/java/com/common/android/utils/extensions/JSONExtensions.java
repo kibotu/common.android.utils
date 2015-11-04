@@ -2,8 +2,8 @@ package com.common.android.utils.extensions;
 
 import android.content.Context;
 import android.text.TextUtils;
-import com.common.android.utils.misc.ListOfJson;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
@@ -471,10 +471,6 @@ public class JSONExtensions {
         return json;
     }
 
-    public static <T> List<T> toList(@NotNull final Gson gson, final String json, final Class<T> typeClass) {
-        return gson.fromJson(json, new ListOfJson<T>(typeClass));
-    }
-
     public static JSONObject getObjectOptional(final String json) {
         JSONObject jsonObject = null;
         try {
@@ -483,5 +479,10 @@ public class JSONExtensions {
             e.printStackTrace();
         }
         return jsonObject;
+    }
+
+    public static <T> List<T> toList(@NotNull final Gson gson, @NotNull final String json) {
+        return gson.fromJson(json, new TypeToken<ArrayList<T>>() {
+        }.getType());
     }
 }

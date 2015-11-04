@@ -2,6 +2,7 @@ package com.common.android.utils.extensions;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -216,5 +217,9 @@ public class FragmentExtensions {
 
     public static boolean inRoot(@NotNull final FragmentManager fragmentManager) {
         return fragmentManager.getBackStackEntryCount() == 0;
+    }
+
+    public static Fragment currentFragment(@IdRes final int container) {
+        return getContext().getSupportFragmentManager().findFragmentById(container);
     }
 }
