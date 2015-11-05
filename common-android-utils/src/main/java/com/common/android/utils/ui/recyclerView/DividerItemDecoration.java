@@ -152,7 +152,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    private int getOrientation(@NotNull final RecyclerView parent) {
+    public int getOrientation(@NotNull final RecyclerView parent) {
         if (mOrientation == -1) {
             if (parent.getLayoutManager() instanceof LinearLayoutManager) {
                 final LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
