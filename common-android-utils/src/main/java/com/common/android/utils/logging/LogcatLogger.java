@@ -1,6 +1,7 @@
 package com.common.android.utils.logging;
 
 import android.util.Log;
+import com.common.android.utils.extensions.ToastExtensions;
 
 public class LogcatLogger implements ILogger {
 
@@ -31,6 +32,6 @@ public class LogcatLogger implements ILogger {
 
     @Override
     public void toast(final String message) {
-        toast(message);
+        ToastExtensions.toast(message);
     }
 }
