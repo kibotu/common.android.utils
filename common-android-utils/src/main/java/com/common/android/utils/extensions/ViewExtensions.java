@@ -468,5 +468,4 @@ public class ViewExtensions {
         for (int i = 0; i < views.size(); ++i)
             command.execute(views.get(i));
     }
-
 }

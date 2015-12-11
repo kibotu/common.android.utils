@@ -41,6 +41,12 @@ public class FragmentExtensions {
                 }
             }
         });
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                fragment.getActivity().openContextMenu(v);
+            }
+        });
     }
 
     public static void focusView(@NotNull final View v, @NotNull final Fragment fragment) {
@@ -93,7 +99,7 @@ public class FragmentExtensions {
         injector.execute(fragmentManager.beginTransaction())
                 .replace(R.id.fragment_container, fragment, identifier)
                 .addToBackStack(identifier)
-                .commit();
+                .commitAllowingStateLoss();
 
         printBackStack();
     }
@@ -106,7 +112,7 @@ public class FragmentExtensions {
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment, identifier)
-                .commit();
+                .commitAllowingStateLoss();
 
         printBackStack();
     }
@@ -120,7 +126,7 @@ public class FragmentExtensions {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(R.id.fragment_container, fragment, fragment.tag())
                 .addToBackStack(fragment.tag())
-                .commit();
+                .commitAllowingStateLoss();
 
         printBackStack();
     }
@@ -130,7 +136,7 @@ public class FragmentExtensions {
 
         final FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.fragment_container, fragment, fragment.tag())
-                .commit();
+                .commitAllowingStateLoss();
         printBackStack();
     }
 
@@ -144,7 +150,7 @@ public class FragmentExtensions {
         final FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.fragment_container, fragment, identifier)
                 .addToBackStack(identifier)
-                .commit();
+                .commitAllowingStateLoss();
         printBackStack();
     }
 
@@ -154,7 +160,7 @@ public class FragmentExtensions {
                 continue;
             fm.beginTransaction()
                     .remove(fragment)
-                    .commit();
+                    .commitAllowingStateLoss();
             Log.v(TAG, "remove: " + fragment.getClass().getSimpleName());
         }
         printBackStack();
@@ -166,21 +172,21 @@ public class FragmentExtensions {
                 continue;
             fm.beginTransaction()
                     .remove(fragment)
-                    .commit();
+                    .commitAllowingStateLoss();
             Log.v(TAG, "remove: " + fragment.getClass().getSimpleName());
         }
         printBackStack();
     }
 
     public static void removeFragment(@NotNull final FragmentManager fm, @NotNull final Fragment fragment) {
-        fm.beginTransaction().remove(fragment).commit();
+        fm.beginTransaction().remove(fragment).commitAllowingStateLoss();
         Log.v(TAG, "removed: " + fragment.getClass().getSimpleName());
     }
 
     public static <T> void removeFragmentFadeOut(@NotNull final FragmentManager fm, @NotNull final Fragment fragment, @Nullable final ICallback<T> onAnimationComplete) {
         fm.beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
-                .remove(fragment).commit();
+                .remove(fragment).commitAllowingStateLoss();
         Log.v(TAG, "removed: " + fragment.getClass().getSimpleName());
         if (onAnimationComplete != null)
             onAnimationComplete.onSuccess(null);

@@ -2,7 +2,6 @@ package com.common.android.utils.extensions;
 
 import android.content.Context;
 import android.text.TextUtils;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,12 +14,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Type;
+import java.util.*;
 
 import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.misc.GsonProvider.getGson;
 
 public class JSONExtensions {
 
@@ -481,8 +479,17 @@ public class JSONExtensions {
         return jsonObject;
     }
 
-    public static <T> List<T> toList(@NotNull final Gson gson, @NotNull final String json) {
-        return gson.fromJson(json, new TypeToken<ArrayList<T>>() {
-        }.getType());
+    public static <T> List<T> asList(@NotNull final String json, @NotNull final Class<T[]> type) {
+        return Arrays.asList(getGson().fromJson(json, type));
+    }
+
+    /**
+     * use {@link #asList} instead
+     */
+    @Deprecated
+    public static <T> List<T> toList(@NotNull String json) {
+        final Type listType = new TypeToken<List<T>>() {
+        }.getType();
+        return getGson().fromJson(json, listType);
     }
 }
