@@ -99,7 +99,7 @@ public class FragmentExtensions {
         injector.execute(fragmentManager.beginTransaction())
                 .replace(R.id.fragment_container, fragment, identifier)
                 .addToBackStack(identifier)
-                .commitAllowingStateLoss();
+                .commit();
 
         printBackStack();
     }
@@ -112,7 +112,7 @@ public class FragmentExtensions {
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment, identifier)
-                .commitAllowingStateLoss();
+                .commit();
 
         printBackStack();
     }
@@ -126,7 +126,7 @@ public class FragmentExtensions {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(R.id.fragment_container, fragment, fragment.tag())
                 .addToBackStack(fragment.tag())
-                .commitAllowingStateLoss();
+                .commit();
 
         printBackStack();
     }
@@ -136,7 +136,7 @@ public class FragmentExtensions {
 
         final FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.fragment_container, fragment, fragment.tag())
-                .commitAllowingStateLoss();
+                .commit();
         printBackStack();
     }
 
@@ -150,7 +150,7 @@ public class FragmentExtensions {
         final FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.fragment_container, fragment, identifier)
                 .addToBackStack(identifier)
-                .commitAllowingStateLoss();
+                .commit();
         printBackStack();
     }
 
@@ -160,7 +160,7 @@ public class FragmentExtensions {
                 continue;
             fm.beginTransaction()
                     .remove(fragment)
-                    .commitAllowingStateLoss();
+                    .commit();
             Log.v(TAG, "remove: " + fragment.getClass().getSimpleName());
         }
         printBackStack();
@@ -172,21 +172,21 @@ public class FragmentExtensions {
                 continue;
             fm.beginTransaction()
                     .remove(fragment)
-                    .commitAllowingStateLoss();
+                    .commit();
             Log.v(TAG, "remove: " + fragment.getClass().getSimpleName());
         }
         printBackStack();
     }
 
     public static void removeFragment(@NotNull final FragmentManager fm, @NotNull final Fragment fragment) {
-        fm.beginTransaction().remove(fragment).commitAllowingStateLoss();
+        fm.beginTransaction().remove(fragment).commit();
         Log.v(TAG, "removed: " + fragment.getClass().getSimpleName());
     }
 
     public static <T> void removeFragmentFadeOut(@NotNull final FragmentManager fm, @NotNull final Fragment fragment, @Nullable final ICallback<T> onAnimationComplete) {
         fm.beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
-                .remove(fragment).commitAllowingStateLoss();
+                .remove(fragment).commit();
         Log.v(TAG, "removed: " + fragment.getClass().getSimpleName());
         if (onAnimationComplete != null)
             onAnimationComplete.onSuccess(null);
