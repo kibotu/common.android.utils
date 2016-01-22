@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    
+
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
     useLibrary 'org.apache.http.legacy'
@@ -19,7 +19,7 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
             minifyEnabled false
             shrinkResources = false
         }
@@ -45,12 +45,11 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.google.code.gson:gson:2.3.1'
-    compile 'com.google.android.gms:play-services-gcm:8.3.0'
-    compile 'com.google.android.gms:play-services-ads:8.3.0'
-    compile 'com.google.android.gms:play-services-analytics:8.3.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.google.android.gms:play-services-analytics:8.4.0'
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.github.kibotu:CarouselWidget:1.0.2-SNAPSHOT'
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'jp.wasabeef:glide-transformations:1.2.1'
     compile 'com.mcxiaoke.volley:library:1.0.19@aar'
