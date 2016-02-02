@@ -1,6 +1,7 @@
 package com.common.android.utils.extensions;
 
 import com.common.android.utils.logging.Logger;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Jan Rabe on 22/10/15.
@@ -25,5 +26,9 @@ public class ThreadExtensions {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void startNewThread(@NotNull final Runnable runnable) {
+        new Thread(runnable).start();
     }
 }

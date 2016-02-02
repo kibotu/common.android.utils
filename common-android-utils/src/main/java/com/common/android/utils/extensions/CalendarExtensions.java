@@ -1,5 +1,8 @@
 package com.common.android.utils.extensions;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -20,12 +23,39 @@ public class CalendarExtensions {
     }
 
     public static Date[] getPastMonths(final int amount) {
-        final Calendar calendar = Calendar.getInstance(Locale.GERMANY);
+        final Calendar calendar = Calendar.getInstance();
         final Date[] result = new Date[amount];
         for (int i = 0; i < amount; ++i) {
             result[i] = calendar.getTime();
-            calendar.roll(Calendar.MONTH, false);
+            calendar.add(Calendar.MONTH, -1);
         }
         return result;
+    }
+
+    public static int getYear(@Nullable final Date date, @NonNull final Locale locale) {
+        if (date == null)
+            return 0;
+
+        final Calendar cal = Calendar.getInstance(locale);
+        cal.setTime(date);
+        return cal.get(Calendar.YEAR);
+    }
+
+    public static int getDay(@Nullable final Date date, @NonNull final Locale locale) {
+        if (date == null)
+            return 0;
+
+        final Calendar cal = Calendar.getInstance(locale);
+        cal.setTime(date);
+        return cal.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public static int getMonth(@Nullable final Date date, @NonNull final Locale locale) {
+        if (date == null)
+            return 0;
+
+        final Calendar cal = Calendar.getInstance(locale);
+        cal.setTime(date);
+        return cal.get(Calendar.MONTH);
     }
 }

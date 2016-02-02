@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.common.android.utils.logging.Logger;
 import com.common.android.utils.ui.components.SpriteImageView;
 import jp.wasabeef.glide.transformations.CropTransformation;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +19,8 @@ import static com.common.android.utils.ContextHelper.getContext;
  * Created by Jan Rabe on 30/09/15.
  */
 public class GlideExtensions {
+
+    private static final String TAG = GlideExtensions.class.getSimpleName();
 
     public GlideExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();
@@ -58,5 +61,15 @@ public class GlideExtensions {
 
     public static void drawImageWithFitCenterNoFading(String imageUrl, @NotNull ImageView imageView, @ColorRes int placeHolderColor) {
         Glide.with(imageView.getContext()).load(imageUrl).dontAnimate().placeholder(imageView.getContext().getResources().getColor(placeHolderColor)).fitCenter().into(imageView);
+    }
+
+    public static void topCrop(@NotNull final String url, @NotNull final ImageView image, final int width, final int height, final int imageWidth, final int imageHeight) {
+        drawImageTopCrop(url, image, R.color.bluewin_black, width, height);
+        Logger.v(TAG, String.format("[TopCrop | %dx%d | %dx%d | view %.2f | original %.2f | %s]", width, height, imageWidth, imageHeight, width / (float) height, imageWidth / (float) imageHeight, url));
+    }
+
+    public static void centerCrop(@NotNull final String url, @NotNull final ImageView image, final int width, final int height, final int imageWidth, final int imageHeight) {
+        drawImageCenterCrop(url, image, R.color.bluewin_black);
+        Logger.v(TAG, String.format("[CenterCrop | %dx%d | %dx%d | view %.2f | original %.2f | %s]", width, height, imageWidth, imageHeight, width / (float) height, imageWidth / (float) imageHeight, url));
     }
 }

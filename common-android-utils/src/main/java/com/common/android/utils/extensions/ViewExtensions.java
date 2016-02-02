@@ -14,6 +14,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.RawRes;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -456,6 +457,22 @@ public class ViewExtensions {
         });
     }
 
+    public static void smoothScroll(@android.support.annotation.Nullable final RecyclerView scrollableParent, final int dx, final int dy) {
+        if ((dx == 0 && dy == 0) || scrollableParent == null) {
+            return;
+        }
+        scrollableParent.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollableParent.smoothScrollBy(dx, dy);
+            }
+        });
+    }
+
+    public static void colorize(@NotNull final TextView text, @ColorRes final int color) {
+        text.setTextColor(ResourceExtensions.color(color));
+    }
+
     @Nullable
     public static <T extends View> T setColor(@Nullable final T view, @ColorRes final int color) {
         if (view == null)
@@ -467,5 +484,13 @@ public class ViewExtensions {
     public static <T extends View> void applyToAllViews(@NotNull final HashMap<Integer, T> views, @NotNull final ICommand<T> command) {
         for (int i = 0; i < views.size(); ++i)
             command.execute(views.get(i));
+    }
+
+    public static void setLayoutMargin(@NotNull final View view, final int left, final int top, final int right, final int bottom) {
+        final ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+            ((ViewGroup.MarginLayoutParams) layoutParams).setMargins(left, top, right, bottom);
+            view.setLayoutParams(layoutParams);
+        }
     }
 }

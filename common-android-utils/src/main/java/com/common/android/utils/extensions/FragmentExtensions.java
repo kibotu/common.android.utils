@@ -228,4 +228,5 @@ public class FragmentExtensions {
     public static Fragment currentFragment(@IdRes final int container) {
         return getContext().getSupportFragmentManager().findFragmentById(container);
     }
+
 }
