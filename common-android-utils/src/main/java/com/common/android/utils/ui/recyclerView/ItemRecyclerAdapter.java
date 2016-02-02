@@ -19,11 +19,11 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * <p>An implementation of {@link android.widget.BaseAdapter} which uses the new/bind pattern for its
  * views based on Jake Warthon work https://plus.google.com/+JakeWharton/posts (Thank you so much!)</p>
- * <p/>
+ * <p>
  * <p>The pattern new/bind consist in an abstract class with 2 methods.
  * <ul><li><code>newView</code> to implement the code to instance new list item views</li>
  * <li>bindView to implement the code of configure a concrete list item</li></ul><p>
- * <p/>
+ * <p>
  * Created by Marcos Trujillo (╯°□°）╯︵ ┻━┻ on 27/01/14.
  */
 public abstract class ItemRecyclerAdapter<T, VH extends ItemViewHolder<T>> extends RecyclerView.Adapter<VH> implements ILogTag {

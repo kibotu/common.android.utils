@@ -63,13 +63,13 @@ public class GlideExtensions {
         Glide.with(imageView.getContext()).load(imageUrl).dontAnimate().placeholder(imageView.getContext().getResources().getColor(placeHolderColor)).fitCenter().into(imageView);
     }
 
-    public static void topCrop(@NotNull final String url, @NotNull final ImageView image, final int width, final int height, final int imageWidth, final int imageHeight) {
-        drawImageTopCrop(url, image, R.color.bluewin_black, width, height);
+    public static void topCrop(@NotNull final String url, @NotNull final ImageView image, @ColorRes int placeHolderColor, final int width, final int height, final int imageWidth, final int imageHeight) {
+        drawImageTopCrop(url, image, placeHolderColor, width, height);
         Logger.v(TAG, String.format("[TopCrop | %dx%d | %dx%d | view %.2f | original %.2f | %s]", width, height, imageWidth, imageHeight, width / (float) height, imageWidth / (float) imageHeight, url));
     }
 
-    public static void centerCrop(@NotNull final String url, @NotNull final ImageView image, final int width, final int height, final int imageWidth, final int imageHeight) {
-        drawImageCenterCrop(url, image, R.color.bluewin_black);
+    public static void centerCrop(@NotNull final String url, @NotNull final ImageView image, @ColorRes int placeHolderColor, final int width, final int height, final int imageWidth, final int imageHeight) {
+        drawImageCenterCrop(url, image, placeHolderColor);
         Logger.v(TAG, String.format("[CenterCrop | %dx%d | %dx%d | view %.2f | original %.2f | %s]", width, height, imageWidth, imageHeight, width / (float) height, imageWidth / (float) imageHeight, url));
     }
 }

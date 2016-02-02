@@ -8,8 +8,8 @@ import com.common.android.utils.interfaces.ILogTag;
 
 /**
  * Created by Jan Rabe on 14/08/15.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Remote control
  * <img src="../../../../../../res/drawable/remote_picture.png" />
  * <pre>
