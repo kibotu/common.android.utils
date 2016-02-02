@@ -1,4 +1,4 @@
-[![Jitpack.io](https://img.shields.io/github/tag/kibotu/common.android.utils.svg?label=JitPack)](https://img.shields.io/github/tag/kibotu/common.android.utils.svg?label=JitPack) [![Build Status](https://travis-ci.org/kibotu/common.android.utils.svg)](https://travis-ci.org/kibotu/common.android.utils)
+[![Jitpack.io](https://jitpack.io/#kibotu/common.android.utils)](https://img.shields.io/github/tag/kibotu/common.android.utils.svg?label=JitPack) [![Build Status](https://travis-ci.org/kibotu/common.android.utils.svg)](https://travis-ci.org/kibotu/common.android.utils)
 
 # How to install
 	
