@@ -62,7 +62,7 @@ public abstract class DataBinder<T, VH extends RecyclerView.ViewHolder> implemen
         }
 
         if (instance == null)
-            throw new IllegalArgumentException(inferredClass.getClass().getCanonicalName() + " has no constructor with parameter: " + view.getClass().getCanonicalName());
+            throw new IllegalArgumentException(inferredClass.getClass().getCanonicalName() + " has no constructor with parameter: " + view.getClass().getCanonicalName() + " make sure your ViewHolder is static!");
 
         return instance;
     }
