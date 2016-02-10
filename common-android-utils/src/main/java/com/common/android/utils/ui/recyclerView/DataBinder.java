@@ -72,9 +72,14 @@ public abstract class DataBinder<T, VH extends RecyclerView.ViewHolder> implemen
     private Class<?> getGenericClass() throws ClassNotFoundException {
         if (inferredClass == null) {
             Type mySuperclass = getClass().getGenericSuperclass();
+
+            try {
             Type tType = ((ParameterizedType) mySuperclass).getActualTypeArguments()[1];
             String className = tType.toString().split(" ")[1];
             inferredClass = Class.forName(className);
+            } catch (ClassCastException e) {
+                throw new IllegalStateException("Subclassing is not supported, please override DataBinder#newViewHolder.");
+            }
         }
         return inferredClass;
     }
