@@ -1,11 +1,13 @@
 package com.common.android.utils.analytics;
 
+import android.support.annotation.NonNull;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 public final class ScreenTracker {
     private final String screenName;
     private final Tracker tracker;
+    @NonNull
     private final HitBuilders.ScreenViewBuilder builder;
 
     private ScreenTracker(final Tracker tracker, final String screenName) {
@@ -14,6 +16,7 @@ public final class ScreenTracker {
         this.builder = new HitBuilders.ScreenViewBuilder();
     }
 
+    @NonNull
     public static ScreenTracker from(final Tracker tracker, final String screenName) {
         return new ScreenTracker(tracker, screenName);
     }

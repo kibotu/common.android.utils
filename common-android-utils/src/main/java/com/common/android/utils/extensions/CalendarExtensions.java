@@ -22,6 +22,7 @@ public class CalendarExtensions {
         return cal.get(Calendar.DAY_OF_MONTH);
     }
 
+    @NonNull
     public static Date[] getPastMonths(final int amount) {
         final Calendar calendar = Calendar.getInstance();
         final Date[] result = new Date[amount];

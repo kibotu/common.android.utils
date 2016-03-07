@@ -5,13 +5,13 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -21,32 +21,32 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private boolean showFirstDivider = false;
     private boolean showLastDivider = false;
 
-    public DividerItemDecoration(@NotNull final Context context, @NotNull final AttributeSet attrs) {
+    public DividerItemDecoration(@NonNull final Context context, @NonNull final AttributeSet attrs) {
         final TypedArray a = context
                 .obtainStyledAttributes(attrs, new int[]{android.R.attr.listDivider});
         mDivider = a.getDrawable(0);
         a.recycle();
     }
 
-    public DividerItemDecoration(@NotNull final Context context, @NotNull final AttributeSet attrs, final boolean showFirstDivider,
+    public DividerItemDecoration(@NonNull final Context context, @NonNull final AttributeSet attrs, final boolean showFirstDivider,
                                  final boolean showLastDivider) {
         this(context, attrs);
         this.showFirstDivider = showFirstDivider;
         this.showLastDivider = showLastDivider;
     }
 
-    public DividerItemDecoration(@NotNull final Context context, final int resId) {
+    public DividerItemDecoration(@NonNull final Context context, final int resId) {
         mDivider = ContextCompat.getDrawable(context, resId);
     }
 
-    public DividerItemDecoration(@NotNull final Context context, final int resId, final boolean showFirstDivider,
+    public DividerItemDecoration(@NonNull final Context context, final int resId, final boolean showFirstDivider,
                                  final boolean showLastDivider) {
         this(context, resId);
         this.showFirstDivider = showFirstDivider;
         this.showLastDivider = showLastDivider;
     }
 
-    public DividerItemDecoration(@NotNull final Context context) {
+    public DividerItemDecoration(@NonNull final Context context) {
         final int[] attrs = {android.R.attr.listDivider};
         final TypedArray ta = context.obtainStyledAttributes(attrs);
         mDivider = ta.getDrawable(0);
@@ -65,8 +65,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void getItemOffsets(@NotNull final Rect outRect, @NotNull final View view, @NotNull final RecyclerView parent,
-                               @NotNull final RecyclerView.State state) {
+    public void getItemOffsets(@NonNull final Rect outRect, @NonNull final View view, @NonNull final RecyclerView parent,
+                               @NonNull final RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         if (mDivider == null) {
             return;
@@ -94,7 +94,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDrawOver(final Canvas c, @NotNull final RecyclerView parent, @NotNull final RecyclerView.State state) {
+    public void onDrawOver(final Canvas c, @NonNull final RecyclerView parent, @NonNull final RecyclerView.State state) {
         if (mDivider == null) {
             super.onDrawOver(c, parent, state);
             return;
@@ -152,7 +152,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    public int getOrientation(@NotNull final RecyclerView parent) {
+    public int getOrientation(@NonNull final RecyclerView parent) {
         if (mOrientation == -1) {
             if (parent.getLayoutManager() instanceof LinearLayoutManager) {
                 final LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
@@ -165,11 +165,13 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         return mOrientation;
     }
 
+    @NonNull
     public DividerItemDecoration showFirstDivider(final boolean showFirstDivider) {
         this.showFirstDivider = showFirstDivider;
         return this;
     }
 
+    @NonNull
     public DividerItemDecoration showLastDivider(final boolean showLastDivider) {
         this.showLastDivider = showLastDivider;
         return this;

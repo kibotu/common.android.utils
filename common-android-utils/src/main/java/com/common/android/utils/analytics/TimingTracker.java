@@ -1,5 +1,7 @@
 package com.common.android.utils.analytics;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -7,6 +9,7 @@ import java.util.Arrays;
 
 public final class TimingTracker {
     private final Tracker tracker;
+    @NonNull
     private final HitBuilders.TimingBuilder builder;
 
     private String screenName;
@@ -17,37 +20,44 @@ public final class TimingTracker {
         this.builder = new HitBuilders.TimingBuilder();
     }
 
+    @NonNull
     public static TimingTracker from(final Tracker tracker) {
         return new TimingTracker(tracker);
     }
 
+    @NonNull
     public TimingTracker screenName(final String screenName) {
         this.screenName = screenName;
         return this;
     }
 
+    @NonNull
     public TimingTracker category(final String category) {
         builder.setCategory(category);
         return this;
     }
 
+    @NonNull
     public TimingTracker variable(final String variable) {
         builder.setVariable(variable);
         return this;
     }
 
-    public TimingTracker label(final String label) {
+    @NonNull
+    public TimingTracker label(@Nullable final String label) {
         if (label != null) {
             builder.setLabel(label);
         }
         return this;
     }
 
+    @NonNull
     public TimingTracker value(final long timeInMillis) {
         builder.setValue(timeInMillis);
         return this;
     }
 
+    @NonNull
     public TimingTracker customDimension(final Dimension dimension) {
         if (dimensions == null) {
             dimensions = new Dimension[1];
@@ -61,7 +71,7 @@ public final class TimingTracker {
 
     public void track() {
         if (dimensions != null && dimensions.length > 0) {
-            for (Dimension dimension : dimensions) {
+            for (final Dimension dimension : dimensions) {
                 builder.setCustomDimension(dimension.index, dimension.value);
             }
         }

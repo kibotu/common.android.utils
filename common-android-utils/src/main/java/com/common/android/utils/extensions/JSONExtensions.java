@@ -1,10 +1,10 @@
 package com.common.android.utils.extensions;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.google.gson.reflect.TypeToken;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,11 +74,11 @@ public class JSONExtensions {
      * @return JSONObject.
      */
     @Nullable
-    public static JSONObject saveStringToJSONObject(@NotNull final String json) {
+    public static JSONObject saveStringToJSONObject(@NonNull final String json) {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(json);
-        } catch (@NotNull final JSONException e) {
+        } catch (@NonNull final JSONException e) {
             e.printStackTrace();
         }
         return jsonObject;
@@ -91,18 +91,18 @@ public class JSONExtensions {
      * @return JSONArray.
      */
     @Nullable
-    public static JSONArray saveStringToJsonArray(@NotNull final String json) {
+    public static JSONArray saveStringToJsonArray(@NonNull final String json) {
         JSONArray jsonArray = null;
         try {
             jsonArray = new JSONArray(json);
-        } catch (@NotNull final JSONException e) {
+        } catch (@NonNull final JSONException e) {
             e.printStackTrace();
         }
         return jsonArray;
     }
 
     @Nullable
-    public static JSONObject loadJsonFromAssets(@NotNull final String file) {
+    public static JSONObject loadJsonFromAssets(@NonNull final String file) {
         JSONObject json = null;
         try {
             final StringBuffer buffer = new StringBuffer();
@@ -116,27 +116,27 @@ public class JSONExtensions {
 
             json = new JSONObject(new JSONTokener(buffer.toString()));
 
-        } catch (@NotNull final Exception e) {
+        } catch (@NonNull final Exception e) {
             e.printStackTrace();
         }
         return json;
     }
 
-    @NotNull
-    public static JSONObject fromJson(@NotNull final String json) {
+    @NonNull
+    public static JSONObject fromJson(@NonNull final String json) {
         try {
             return new JSONObject(json);
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             e.printStackTrace();
         }
         return new JSONObject();
     }
 
-    @NotNull
-    public static String getString(@NotNull final JSONObject jsonObject, final String name) {
+    @NonNull
+    public static String getString(@NonNull final JSONObject jsonObject, final String name) {
         try {
             return jsonObject.getString(name);
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             e.printStackTrace();
         }
         return "";
@@ -149,8 +149,8 @@ public class JSONExtensions {
      * @return Single Json Array.
      * @throws org.json.JSONException
      */
-    @NotNull
-    public JSONArray concatArray(@NotNull final JSONArray... arguments) throws JSONException {
+    @NonNull
+    public JSONArray concatArray(@NonNull final JSONArray... arguments) throws JSONException {
         final JSONArray result = new JSONArray();
         for (final JSONArray arr : arguments) {
             for (int i = 0; i < arr.length(); i++) {
@@ -161,34 +161,35 @@ public class JSONExtensions {
     }
 
     @Nullable
-    public static JSONObject getObjectOptional(@NotNull final JSONObject object, final String name) {
+    public static JSONObject getObjectOptional(@NonNull final JSONObject object, final String name) {
         JSONObject result = null;
         try {
             result = object.getJSONObject(name);
-        } catch (final Exception ex) {
+        } catch (@NonNull final Exception ex) {
             ex.printStackTrace();
         }
         return result;
     }
 
-    public static JSONObject getObjectOptional(final JSONArray jsonArray, final int index) {
+    @Nullable
+    public static JSONObject getObjectOptional(@NonNull final JSONArray jsonArray, final int index) {
         JSONObject item = null;
         try {
             item = jsonArray.getJSONObject(index);
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             e.printStackTrace();
         }
         return item;
     }
 
     @Nullable
-    public static JSONArray getArrayOptional(@NotNull final JSONObject object, final String name) {
+    public static JSONArray getArrayOptional(@NonNull final JSONObject object, final String name) {
 
         JSONArray result = null;
 
         try {
             result = object.getJSONArray(name);
-        } catch (final Exception ex) {
+        } catch (@NonNull final Exception ex) {
             ex.printStackTrace();
         }
 
@@ -196,20 +197,20 @@ public class JSONExtensions {
     }
 
     @Nullable
-    public static JSONObject getArrayObject(@NotNull final JSONArray array, final int index) {
+    public static JSONObject getArrayObject(@NonNull final JSONArray array, final int index) {
 
         JSONObject result = null;
 
         try {
             result = array.getJSONObject(index);
-        } catch (final Exception ex) {
+        } catch (@NonNull final Exception ex) {
             ex.printStackTrace();
         }
 
         return result;
     }
 
-    @NotNull
+    @NonNull
     public static String getStringOptional(@Nullable final JSONObject object, final String name) {
         String result = "";
 
@@ -218,52 +219,52 @@ public class JSONExtensions {
 
         try {
             result = object.getString(name);
-        } catch (final Exception ex) {
+        } catch (@NonNull final Exception ex) {
             ex.printStackTrace();
         }
 
         return result;
     }
 
-    public static int getInteger(@NotNull final JSONObject object, final String name) {
+    public static int getInteger(@NonNull final JSONObject object, final String name) {
 
         int result = 0;
 
         try {
             result = object.getInt(name);
-        } catch (final Exception ex) {
+        } catch (@NonNull final Exception ex) {
             ex.printStackTrace();
         }
 
         return result;
     }
 
-    public static long getLong(@NotNull final JSONObject object, final String name) {
+    public static long getLong(@NonNull final JSONObject object, final String name) {
         long result = 0;
 
         try {
             result = object.getLong(name);
-        } catch (final Exception ex) {
+        } catch (@NonNull final Exception ex) {
             ex.printStackTrace();
         }
 
         return result;
     }
 
-    public static double getDouble(@NotNull final JSONObject object, final String name) {
+    public static double getDouble(@NonNull final JSONObject object, final String name) {
 
         double result = 0;
         try {
             result = object.getDouble(name);
-        } catch (final Exception ex) {
+        } catch (@NonNull final Exception ex) {
             ex.printStackTrace();
         }
 
         return result;
     }
 
-    @NotNull
-    public static ArrayList<Integer> getIntegerArrayList(@NotNull final JSONObject object, final String name) {
+    @NonNull
+    public static ArrayList<Integer> getIntegerArrayList(@NonNull final JSONObject object, final String name) {
 
         final ArrayList<Integer> result = new ArrayList<Integer>();
 
@@ -272,21 +273,21 @@ public class JSONExtensions {
             for (int i = 0; i < jsona.length(); i++) {
                 result.add(jsona.getInt(i));
             }
-        } catch (final Exception ex) {
+        } catch (@NonNull final Exception ex) {
             ex.printStackTrace();
         }
 
         return result;
     }
 
-    public static boolean getBoolean(@NotNull final JSONObject object, final String name) {
+    public static boolean getBoolean(@NonNull final JSONObject object, final String name) {
 
         boolean result = false;
 
         try {
             final String resultString = object.getString(name);
             result = !TextUtils.isEmpty(resultString) && (resultString.equals("true"));
-        } catch (final Exception ex) {
+        } catch (@NonNull final Exception ex) {
             ex.printStackTrace();
         }
 
@@ -300,10 +301,10 @@ public class JSONExtensions {
      * @param key Key.
      * @param val Value.
      */
-    public static void safePut(@NotNull final JSONObject obj, @NotNull final String key, @Nullable final Object val) {
+    public static void safePut(@NonNull final JSONObject obj, @NonNull final String key, @Nullable final Object val) {
         try {
             obj.put(key, objectForJSON(val));
-        } catch (@NotNull final JSONException e) {
+        } catch (@NonNull final JSONException e) {
             e.printStackTrace();
         }
     }
@@ -311,25 +312,25 @@ public class JSONExtensions {
     /**
      * Appends if key exists. Otherwise @see #safePut(org.json.JSONObject, String, Object)
      */
-    public static void safeAppendToJsonArray(@NotNull final JSONObject obj, @NotNull final String key, @Nullable final JSONArray val) {
+    public static void safeAppendToJsonArray(@NonNull final JSONObject obj, @NonNull final String key, @Nullable final JSONArray val) {
         try {
             if (!obj.has(key))
                 obj.put(key, objectForJSON(val));
             else
                 for (int i = 0; i < (val != null ? val.length() : 0); ++i)
                     obj.getJSONArray(key).put(val.get(i));
-        } catch (@NotNull final JSONException e) {
+        } catch (@NonNull final JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public static void safePutAppendString(@NotNull final JSONObject obj, @NotNull final String key, @Nullable final String val) {
+    public static void safePutAppendString(@NonNull final JSONObject obj, @NonNull final String key, @Nullable final String val) {
         try {
             if (!obj.has(key))
                 obj.put(key, objectForJSON(val));
             else
                 obj.put(key, obj.getString(key).concat(" ").concat(val));
-        } catch (@NotNull final JSONException e) {
+        } catch (@NonNull final JSONException e) {
             e.printStackTrace();
         }
     }
@@ -339,7 +340,7 @@ public class JSONExtensions {
      *
      * @see #safePut(JSONObject, String, Object)
      */
-    public static void safePutOpt(@NotNull final JSONObject obj, @NotNull final String key, @Nullable final Object val) {
+    public static void safePutOpt(@NonNull final JSONObject obj, @NonNull final String key, @Nullable final Object val) {
         if (val != null && !val.equals("")) {
             safePut(obj, key, val);
         } else {
@@ -354,7 +355,7 @@ public class JSONExtensions {
      * @return Cloned json.
      */
     @Nullable
-    public static JSONObject deepClone(@NotNull final JSONObject source) {
+    public static JSONObject deepClone(@NonNull final JSONObject source) {
         final JSONObject dest = null;
         final Iterator keys = source.keys();
         while (keys.hasNext()) {
@@ -377,7 +378,7 @@ public class JSONExtensions {
      * @param source Source json.
      */
     @Nullable
-    public static void merge(@NotNull final JSONObject dest, @NotNull final JSONObject source) {
+    public static void merge(@NonNull final JSONObject dest, @NonNull final JSONObject source) {
         if (dest == null || source == null) return;
         final Iterator keys = source.keys();
         while (keys.hasNext()) {
@@ -402,11 +403,11 @@ public class JSONExtensions {
      * @return JSONObject.
      */
     @Nullable
-    public static JSONObject parseJSONObject(@NotNull final String json) {
+    public static JSONObject parseJSONObject(@NonNull final String json) {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(json);
-        } catch (@NotNull final JSONException e) {
+        } catch (@NonNull final JSONException e) {
             e.printStackTrace();
         }
         return jsonObject;
@@ -419,18 +420,18 @@ public class JSONExtensions {
      * @return JSONArray.
      */
     @Nullable
-    public static JSONArray parseJSONArray(@NotNull final String json) {
+    public static JSONArray parseJSONArray(@NonNull final String json) {
         JSONArray jsonArray = null;
         try {
             jsonArray = new JSONArray(json);
-        } catch (@NotNull final JSONException e) {
+        } catch (@NonNull final JSONException e) {
             e.printStackTrace();
         }
         return jsonArray;
     }
 
     @Nullable
-    public static JSONObject loadJson(@NotNull final String filePath) {
+    public static JSONObject loadJson(@NonNull final String filePath) {
         JSONObject json = new JSONObject();
 
         try {
@@ -441,7 +442,7 @@ public class JSONExtensions {
                 buffer.append(line).append("\n");
             }
             json = new JSONObject(new JSONTokener(buffer.toString()));
-        } catch (@NotNull final Exception e) {
+        } catch (@NonNull final Exception e) {
             e.printStackTrace();
         }
 
@@ -449,7 +450,7 @@ public class JSONExtensions {
     }
 
     @Nullable
-    public static JSONObject loadJsonFromAssets(@NotNull final Context context, @NotNull final String file) {
+    public static JSONObject loadJsonFromAssets(@NonNull final Context context, @NonNull final String file) {
         JSONObject json = null;
         try {
             final StringBuffer buffer = new StringBuffer();
@@ -463,23 +464,24 @@ public class JSONExtensions {
 
             json = new JSONObject(new JSONTokener(buffer.toString()));
 
-        } catch (@NotNull final Exception e) {
+        } catch (@NonNull final Exception e) {
             e.printStackTrace();
         }
         return json;
     }
 
+    @Nullable
     public static JSONObject getObjectOptional(final String json) {
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(json);
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             e.printStackTrace();
         }
         return jsonObject;
     }
 
-    public static <T> List<T> asList(@NotNull final String json, @NotNull final Class<T[]> type) {
+    public static <T> List<T> asList(@NonNull final String json, @NonNull final Class<T[]> type) {
         return Arrays.asList(getGson().fromJson(json, type));
     }
 
@@ -487,7 +489,7 @@ public class JSONExtensions {
      * use {@link #asList} instead
      */
     @Deprecated
-    public static <T> List<T> toList(@NotNull String json) {
+    public static <T> List<T> toList(@NonNull final String json) {
         final Type listType = new TypeToken<List<T>>() {
         }.getType();
         return getGson().fromJson(json, listType);

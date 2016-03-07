@@ -1,7 +1,8 @@
 package com.common.android.utils.device;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Created by Jan Rabe on 23/09/15.
@@ -15,11 +16,11 @@ public class Dimension {
         this.height = height;
     }
 
-    public static String getDisplayCountry(@NotNull final Context context) {
+    public static String getDisplayCountry(@NonNull final Context context) {
         return context.getResources().getConfiguration().locale.getDisplayCountry();
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String toString() {
         return "Dimension{" +
@@ -29,7 +30,7 @@ public class Dimension {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(@Nullable final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 

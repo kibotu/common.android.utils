@@ -2,10 +2,10 @@ package com.common.android.utils.ui.components;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
@@ -18,7 +18,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         this.listener = listener;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public TimePickerDialog onCreateDialog(final Bundle savedInstanceState) {
         // Use the current time as the default values for the picker

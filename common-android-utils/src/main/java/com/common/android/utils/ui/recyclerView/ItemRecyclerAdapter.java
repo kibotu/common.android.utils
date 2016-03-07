@@ -4,14 +4,14 @@ package com.common.android.utils.ui.recyclerView;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.common.android.utils.interfaces.ILogTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.common.android.utils.interfaces.LogTag;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,32 +26,34 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * Created by Marcos Trujillo (╯°□°）╯︵ ┻━┻ on 27/01/14.
  */
-public abstract class ItemRecyclerAdapter<T, VH extends ItemViewHolder<T>> extends RecyclerView.Adapter<VH> implements ILogTag {
+public abstract class ItemRecyclerAdapter<T, VH extends ItemViewHolder<T>> extends RecyclerView.Adapter<VH> implements LogTag {
 
-    @NotNull
+    @NonNull
     protected final Context context;
-    @NotNull
+    @NonNull
     protected final List<T> dataList = Collections.synchronizedList(new ArrayList<T>());
-    @NotNull
+    @NonNull
     protected final Map<T, VH> viewHolder = new ConcurrentHashMap<>();
-    @NotNull
+    @NonNull
     private final LayoutInflater mLayoutInflater;
+    @NonNull
     private final Handler handler;
     private Runnable notifyChangeListener;
     protected OnItemClickListener<T> listener;
 
-    public ItemRecyclerAdapter(@NotNull final Context context) {
+    public ItemRecyclerAdapter(@NonNull final Context context) {
         this.context = context;
         mLayoutInflater = LayoutInflater.from(context);
         handler = new Handler(Looper.getMainLooper());
         notifyChangeListener = createNotifyDataSetChangedRunnable();
     }
 
+    @NonNull
     final public String tag() {
         return getClass().getSimpleName();
     }
 
-    public VH getViewHolder(T t) {
+    public VH getViewHolder(final T t) {
         return viewHolder.get(t);
     }
 
@@ -66,16 +68,17 @@ public abstract class ItemRecyclerAdapter<T, VH extends ItemViewHolder<T>> exten
         return position << 31 + new Random().nextInt();
     }
 
-    @NotNull
+    @NonNull
     protected LayoutInflater getLayoutInflater() {
         return mLayoutInflater;
     }
 
+    @NonNull
     @Override
     public abstract VH onCreateViewHolder(ViewGroup viewGroup, int viewType);
 
     @Override
-    public final void onBindViewHolder(@NotNull final VH vh, final int viewType) {
+    public final void onBindViewHolder(@NonNull final VH vh, final int viewType) {
         final T item = getItem(vh.getAdapterPosition());
         vh.bindItem(item, listener);
         onBindViewHolder(vh, viewType, item);
@@ -94,7 +97,7 @@ public abstract class ItemRecyclerAdapter<T, VH extends ItemViewHolder<T>> exten
         return null;
     }
 
-    public int getPosition(@NotNull final T t) {
+    public int getPosition(@NonNull final T t) {
         for (int i = 0; i < dataList.size(); i++) {
             if (dataList.get(i) == t)
                 return i;
@@ -173,7 +176,7 @@ public abstract class ItemRecyclerAdapter<T, VH extends ItemViewHolder<T>> exten
         notifyDataSetChangedPost();
     }
 
-    public boolean performClick(int position) {
+    public boolean performClick(final int position) {
         if (listener != null && position >= 0 && dataList.size() > position) {
             listener.onItemClick(getItem(position), null, position);
             return true;
@@ -185,14 +188,9 @@ public abstract class ItemRecyclerAdapter<T, VH extends ItemViewHolder<T>> exten
         handler.post(notifyChangeListener);
     }
 
-    @NotNull
+    @NonNull
     private Runnable createNotifyDataSetChangedRunnable() {
-        return new Runnable() {
-            @Override
-            public void run() {
-                ItemRecyclerAdapter.super.notifyDataSetChanged();
-            }
-        };
+        return () -> ItemRecyclerAdapter.super.notifyDataSetChanged();
     }
 
     public OnItemClickListener<T> getOnItemClickListener() {

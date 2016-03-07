@@ -2,9 +2,9 @@ package com.common.android.utils.ui.components;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by franziska.huth on 10.03.15.
@@ -14,12 +14,12 @@ public class AspectRatioImageView extends ImageView {
         super(context);
     }
 
-    public AspectRatioImageView(@NotNull final Context context, final AttributeSet attrSet) {
+    public AspectRatioImageView(@NonNull final Context context, final AttributeSet attrSet) {
         super(context, attrSet);
 
     }
 
-    public AspectRatioImageView(@NotNull final Context context, final AttributeSet attrSet, final int defStyle) {
+    public AspectRatioImageView(@NonNull final Context context, final AttributeSet attrSet, final int defStyle) {
         super(context, attrSet, defStyle);
 
     }

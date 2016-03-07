@@ -1,7 +1,7 @@
 package com.common.android.utils.logging;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import static com.common.android.utils.ContextHelper.getContext;
 
@@ -15,7 +15,7 @@ final public class Logger {
     /**
      * Logging level.
      */
-    @NotNull
+    @NonNull
     private static Level logLevel;
     /**
      * Concrete Logger.
@@ -29,7 +29,7 @@ final public class Logger {
      * @param logger - Concrete Logger.
      * @param level  - Logging level.
      */
-    private static void setLogger(@NotNull final ILogger logger, @NotNull final Level level) {
+    private static void setLogger(@NonNull final ILogger logger, @NonNull final Level level) {
         Logger.logger = logger;
         Logger.logLevel = level;
     }
@@ -39,7 +39,7 @@ final public class Logger {
      *
      * @return Currently set logging level.
      */
-    @NotNull
+    @NonNull
     public static Level getLogLevel() {
         return logLevel;
     }
@@ -49,7 +49,7 @@ final public class Logger {
      *
      * @param logLevel new logging level.
      */
-    public static void setLogLevel(@NotNull final Level logLevel) {
+    public static void setLogLevel(@NonNull final Level logLevel) {
         if (logger == null)
             setLogger(new LogcatLogger(), logLevel);
         else
@@ -62,7 +62,7 @@ final public class Logger {
      * @param level - Defined logging level.
      * @return true if logging is allowed.
      */
-    private static boolean allowLogging(@NotNull final Level level) {
+    private static boolean allowLogging(@NonNull final Level level) {
         if (logger == null)
             setLogger(new LogcatLogger(), Level.VERBOSE);
         return logLevel.compareTo(level) <= 0;
@@ -73,7 +73,7 @@ final public class Logger {
      *
      * @param message - Actual logging message.
      */
-    public static void v(@NotNull final String tag, @Nullable final String message) {
+    public static void v(@NonNull final String tag, @Nullable final String message) {
         if (allowLogging(Level.VERBOSE)) logger.verbose(tag, "" + message);
     }
 
@@ -82,7 +82,7 @@ final public class Logger {
      *
      * @param message - Actual logging message.
      */
-    public static void d(@NotNull final String tag, @Nullable final String message) {
+    public static void d(@NonNull final String tag, @Nullable final String message) {
         if (allowLogging(Level.DEBUG)) logger.debug(tag, "" + message);
     }
 
@@ -91,7 +91,7 @@ final public class Logger {
      *
      * @param message - Actual logging message.
      */
-    public static void i(@NotNull final String tag, @Nullable final String message) {
+    public static void i(@NonNull final String tag, @Nullable final String message) {
         if (allowLogging(Level.INFO)) logger.information(tag, "" + message);
     }
 
@@ -100,7 +100,7 @@ final public class Logger {
      *
      * @param message - Actual logging message.
      */
-    public static void w(@NotNull final String tag, @Nullable final String message) {
+    public static void w(@NonNull final String tag, @Nullable final String message) {
         if (allowLogging(Level.WARNING)) logger.warning(tag, "" + message);
     }
 
@@ -109,7 +109,7 @@ final public class Logger {
      *
      * @param message - Actual logging message.
      */
-    public static void e(@NotNull final String tag, @Nullable final String message) {
+    public static void e(@NonNull final String tag, @Nullable final String message) {
         if (allowLogging(Level.ERROR)) logger.error(tag, "" + message);
     }
 
@@ -148,12 +148,12 @@ final public class Logger {
      *
      * @return current set prefix tag.
      */
-    @NotNull
+    @NonNull
     public static String getTag() {
         return getContext().getClass().getSimpleName();
     }
 
-    public static void toast(@Nullable String message) {
+    public static void toast(@Nullable final String message) {
         if (allowLogging(Level.INFO)) logger.toast(message);
     }
 
@@ -162,10 +162,10 @@ final public class Logger {
      */
     public enum Level {
         VERBOSE("V"), DEBUG("D"), INFO("I"), WARNING("W"), ERROR("E"), SILENT("");
-        @NotNull
+        @NonNull
         public final String TAG;
 
-        Level(@NotNull final String tag) {
+        Level(@NonNull final String tag) {
             TAG = tag;
         }
     }

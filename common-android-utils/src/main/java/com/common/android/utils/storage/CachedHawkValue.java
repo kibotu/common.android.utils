@@ -1,25 +1,26 @@
 package com.common.android.utils.storage;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.orhanobut.hawk.Hawk;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by jan.rabe on 10/12/15.
  */
 public class CachedHawkValue<T> {
 
+    @NonNull
     private final String key;
     @Nullable
     private T cachedValue;
     private boolean isDirty;
 
-    public CachedHawkValue(@NotNull final String key) {
+    public CachedHawkValue(@NonNull final String key) {
         this.key = key;
         isDirty = true;
     }
 
-    public CachedHawkValue(@NotNull final String key, @NotNull final T value) {
+    public CachedHawkValue(@NonNull final String key, @NonNull final T value) {
         Hawk.put(key, value);
         this.key = key;
         isDirty = false;

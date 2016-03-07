@@ -60,7 +60,7 @@ public enum SoundService {
 
     private void changeVolume(final int dt) {
         final int streamMaxVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        int volume = (int) clamp(streamMaxVolume + dt, 0, streamMaxVolume);
+        final int volume = (int) clamp(streamMaxVolume + dt, 0, streamMaxVolume);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
     }
 }

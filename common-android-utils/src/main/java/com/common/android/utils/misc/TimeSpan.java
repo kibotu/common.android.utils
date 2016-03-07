@@ -1,6 +1,6 @@
 package com.common.android.utils.misc;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
 
 import java.text.MessageFormat;
 
@@ -13,7 +13,7 @@ public class TimeSpan {
      * @param timeSpan in seconds
      * @return the time as String in the format hh:mm:ss
      */
-    @NotNull
+    @NonNull
     public static String toString(final long timeSpan) {
         int timeSeconds = (int) (timeSpan / 1000);
         int timeMinutes = timeSeconds / 60;

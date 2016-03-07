@@ -1,7 +1,7 @@
 package com.common.android.utils.extensions;
 
+import android.support.annotation.NonNull;
 import com.common.android.utils.logging.Logger;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Jan Rabe on 22/10/15.
@@ -14,7 +14,7 @@ public class ThreadExtensions {
         throw new IllegalAccessException();
     }
 
-    public static void setThreadPriority(int priority) {
+    public static void setThreadPriority(final int priority) {
         Logger.v(TAG, "From thread priority: " + android.os.Process.getThreadPriority(android.os.Process.myTid()));
         android.os.Process.setThreadPriority(priority);
         Logger.v(TAG, "To thread priority: " + android.os.Process.getThreadPriority(android.os.Process.myTid()));
@@ -23,12 +23,12 @@ public class ThreadExtensions {
     public static void safeSleep(final int millisecond) {
         try {
             Thread.sleep(millisecond);
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public static void startNewThread(@NotNull final Runnable runnable) {
+    public static void startNewThread(@NonNull final Runnable runnable) {
         new Thread(runnable).start();
     }
 }

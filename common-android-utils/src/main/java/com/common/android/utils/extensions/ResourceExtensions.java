@@ -1,16 +1,19 @@
 package com.common.android.utils.extensions;
 
+import android.annotation.TargetApi;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static android.os.Build.VERSION_CODES.LOLLIPOP_MR1;
 import static com.common.android.utils.ContextHelper.getContext;
+import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 
 /**
  * Created by Jan Rabe on 27/10/15.
@@ -22,24 +25,28 @@ public class ResourceExtensions {
     }
 
     public static int dimension(@DimenRes final int resId) {
-        return (int) getContext().getResources().getDimension(resId);
+        return (int) getResources().getDimension(resId);
     }
 
     public static int color(@ColorRes final int color) {
-        return SDK_INT >= Build.VERSION_CODES.M
+        return isAtLeastVersion(Build.VERSION_CODES.M)
                 ? ContextCompat.getColor(getContext(), color)
                 : getResources().getColor(color);
     }
 
-    public static Drawable drawable(@DrawableRes int drawable) {
-        if (SDK_INT >= LOLLIPOP) {
-            return getResources().getDrawable(drawable, getContext().getTheme());
-        } else {
-            return getResources().getDrawable(drawable);
-        }
+    @Nullable
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    public static Drawable drawable(@DrawableRes final int drawable) {
+        return isAtLeastVersion(LOLLIPOP_MR1)
+                ? getResources().getDrawable(drawable, getContext().getTheme())
+                : getResources().getDrawable(drawable);
     }
 
-    private static Resources getResources() {
+    public static Resources getResources() {
         return getContext().getResources();
+    }
+
+    public static Configuration configuration() {
+        return getResources().getConfiguration();
     }
 }

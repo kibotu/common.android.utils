@@ -1,6 +1,6 @@
 package com.common.android.utils.extensions;
 
-import org.jetbrains.annotations.NotNull;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,8 +14,8 @@ public class CollectionExtensions {
         throw new IllegalAccessException();
     }
 
-    @NotNull
-    public static <T> Collection<T> intersect(@NotNull final Collection<? extends T> a, @NotNull final Collection<? extends T> b) {
+    @NonNull
+    public static <T> Collection<T> intersect(@NonNull final Collection<? extends T> a, @NonNull final Collection<? extends T> b) {
         final Collection<T> result = new ArrayList<T>();
         for (final T t : a) {
             if (b.remove(t)) result.add(t);

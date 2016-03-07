@@ -1,10 +1,10 @@
 package com.common.android.utils.extensions;
 
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.Toast;
-import org.jetbrains.annotations.Nullable;
 
 import static com.common.android.utils.ContextHelper.getContext;
 
@@ -26,13 +26,10 @@ public class ToastExtensions {
         if (TextUtils.isEmpty(message))
             return;
 
-        getContext().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                final Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.BOTTOM, 0, 100);
-                toast.show();
-            }
+        getContext().runOnUiThread(() -> {
+            final Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM, 0, 100);
+            toast.show();
         });
     }
 
@@ -40,13 +37,10 @@ public class ToastExtensions {
         if (!showToastMessages)
             return;
 
-        getContext().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                final Toast toast = Toast.makeText(getContext(), getContext().getText(resourceId), Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.BOTTOM, 0, 100);
-                toast.show();
-            }
+        getContext().runOnUiThread(() -> {
+            final Toast toast = Toast.makeText(getContext(), getContext().getText(resourceId), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.BOTTOM, 0, 100);
+            toast.show();
         });
     }
 }

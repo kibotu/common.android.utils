@@ -1,10 +1,10 @@
 package com.common.android.utils.bitmap;
 
 import android.graphics.*;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import com.common.android.utils.device.Dimension;
-import org.jetbrains.annotations.NotNull;
 
 import static com.common.android.utils.extensions.DeviceExtensions.getScreenDimension;
 import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
@@ -16,19 +16,19 @@ import static com.common.android.utils.extensions.ViewExtensions.getScreenLocati
 public class PorterDuffBitmap {
 
     public static final String TAG = PorterDuffBitmap.class.getSimpleName();
-    @NotNull
+    @NonNull
     final Bitmap bitmap;
-    @NotNull
+    @NonNull
     final Canvas canvas;
     int topOffset;
 
-    public PorterDuffBitmap(@NotNull final Bitmap bitmap, final int topOffset) {
+    public PorterDuffBitmap(@NonNull final Bitmap bitmap, final int topOffset) {
         this.bitmap = bitmap;
         canvas = new Canvas(bitmap);
         this.topOffset = topOffset;
     }
 
-    @NotNull
+    @NonNull
     public static PorterDuffBitmap createFullscreenBitmap(final int color) {
         final Dimension dim = getScreenDimension();
         final int topOffset = dim.height - getContentRoot().getMeasuredHeight();
@@ -38,13 +38,13 @@ public class PorterDuffBitmap {
         return p;
     }
 
-    public void addMask(@NotNull final View view, final int left, final int top, @NotNull final PorterDuff.Mode mode) {
+    public void addMask(@NonNull final View view, final int left, final int top, @NonNull final PorterDuff.Mode mode) {
         final int[] locations = getScreenLocation(view);
         Log.v(TAG, view.getWidth() + "x" + view.getHeight());
         drawWithPorterDuff(locations[0] + left, locations[1] + top, view.getWidth(), view.getHeight(), mode);
     }
 
-    private void drawWithPorterDuff(final int left, final int top, final int width, final int height, @NotNull final PorterDuff.Mode mode) {
+    private void drawWithPorterDuff(final int left, final int top, final int width, final int height, @NonNull final PorterDuff.Mode mode) {
         final Paint maskPaint = new Paint();
         maskPaint.setXfermode(new PorterDuffXfermode(mode));
 
@@ -58,7 +58,7 @@ public class PorterDuffBitmap {
         mask.recycle();
     }
 
-    @NotNull
+    @NonNull
     public Bitmap getBitmap() {
         return bitmap;
     }

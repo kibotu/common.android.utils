@@ -8,7 +8,7 @@ public class Size {
     private int mWidth;
     private int mHeight;
 
-    public Size(int width, int height) {
+    public Size(final int width, final int height) {
         mWidth = width;
         mHeight = height;
     }

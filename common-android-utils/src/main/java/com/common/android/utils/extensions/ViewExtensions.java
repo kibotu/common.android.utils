@@ -10,9 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.RawRes;
+import android.support.annotation.*;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -27,13 +25,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.common.android.utils.ContextHelper;
 import com.common.android.utils.R;
-import com.common.android.utils.interfaces.ICommand;
+import com.common.android.utils.interfaces.ChainableCommand;
 import com.common.android.utils.ui.PicassoBigCache;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,18 +55,18 @@ public class ViewExtensions {
         throw new IllegalAccessException();
     }
 
-    public static boolean isVisible(@NotNull final View view) {
+    public static boolean isVisible(@NonNull final View view) {
         return view.getVisibility() == View.INVISIBLE || view.getVisibility() == View.GONE;
     }
 
-    public static void toggleViewsVisibilityGone(@NotNull final View... views) {
+    public static void toggleViewsVisibilityGone(@NonNull final View... views) {
         for (final View view : views)
             view.setVisibility(view.getVisibility() == View.GONE
                     ? View.VISIBLE
                     : View.GONE);
     }
 
-    public static void toggleViewsVisibility(@NotNull final View... views) {
+    public static void toggleViewsVisibility(@NonNull final View... views) {
         for (final View view : views)
             view.setVisibility(view.getVisibility() == View.INVISIBLE
                     ? View.VISIBLE
@@ -106,7 +102,7 @@ public class ViewExtensions {
                 .load(resourceId).into(imageView);
     }
 
-    public static void loadInto(final String imageUrl, @NotNull final ImageView imageView, @DrawableRes final int placeholder, final Callback callback) {
+    public static void loadInto(final String imageUrl, @NonNull final ImageView imageView, @DrawableRes final int placeholder, final Callback callback) {
         PicassoBigCache
                 .INSTANCE
                 .getPicassoBigCache()
@@ -115,7 +111,7 @@ public class ViewExtensions {
     }
 
 
-    public static void setOneTimeGlobalLayoutListener(@NotNull final View v, @NotNull final ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener) {
+    public static void setOneTimeGlobalLayoutListener(@NonNull final View v, @NonNull final ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener) {
         v.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -130,27 +126,22 @@ public class ViewExtensions {
         });
     }
 
-    public static void flipHorizontically(@NotNull final ImageView imageView) {
-        imageView.setImageBitmap(BitmapExtensions.flipHorizontically(getBitmap(imageView)));
+    public static void flipHorizontically(@NonNull final ImageView imageView) {
+        imageView.setImageBitmap(BitmapExtensions.flipHorizontally(getBitmap(imageView)));
     }
 
-    public static void setLayoutHeight(@NotNull final View v, final int height) {
+    public static void setLayoutHeight(@NonNull final View v, final int height) {
         final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
         params.height = height;
         v.setLayoutParams(params);
     }
 
-    public static void setTextSwitcherAnimation(@NotNull final TextSwitcher v, @NotNull final Typeface typeface) {
-        v.setFactory(new ViewSwitcher.ViewFactory() {
-
-            @NotNull
-            @Override
-            public View makeView() {
-                final LayoutInflater inflater = LayoutInflater.from(getContext());
-                final TextView textView = (TextView) inflater.inflate(R.layout.item_title, null);
-                textView.setTypeface(typeface);
-                return textView;
-            }
+    public static void setTextSwitcherAnimation(@NonNull final TextSwitcher v, @NonNull final Typeface typeface) {
+        v.setFactory(() -> {
+            final LayoutInflater inflater = LayoutInflater.from(getContext());
+            final TextView textView = (TextView) inflater.inflate(R.layout.item_title, null);
+            textView.setTypeface(typeface);
+            return textView;
         });
         final Animation in = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_top);
         final Animation out = AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_bottom);
@@ -175,7 +166,7 @@ public class ViewExtensions {
     }
 
 
-    public static void setFont(@NotNull final Typeface font, @NotNull final ArrayList<View> views) {
+    public static void setFont(@NonNull final Typeface font, @NonNull final ArrayList<View> views) {
 
         final List<TextView> textViews = new ArrayList<>();
         for (final View view : views) {
@@ -196,44 +187,44 @@ public class ViewExtensions {
                 : View.GONE);
     }
 
-    public static void showViews(@NotNull final View... views) {
+    public static void showViews(@NonNull final View... views) {
         for (final View view : views)
             view.setVisibility(View.VISIBLE);
     }
 
-    public static void showViews(@NotNull final List<View> views) {
+    public static void showViews(@NonNull final List<View> views) {
         for (final View view : views)
             view.setVisibility(View.VISIBLE);
     }
 
-    public static void hideViews(@NotNull final View... views) {
+    public static void hideViews(@NonNull final View... views) {
         for (final View view : views)
             view.setVisibility(View.INVISIBLE);
     }
 
-    public static void hideViews(@NotNull final List<View> views) {
+    public static void hideViews(@NonNull final List<View> views) {
         for (final View view : views)
             view.setVisibility(View.INVISIBLE);
     }
 
-    public static void hideViewsCompletely(@NotNull final View... views) {
+    public static void hideViewsCompletely(@NonNull final View... views) {
         for (final View view : views)
             view.setVisibility(View.GONE);
     }
 
-    public static void hideViewsCompletely(@NotNull final List<View> views) {
+    public static void hideViewsCompletely(@NonNull final List<View> views) {
         for (final View view : views)
             view.setVisibility(View.GONE);
     }
 
-    @NotNull
-    public static int[] getScreenLocation(@NotNull final View view) {
+    @NonNull
+    public static int[] getScreenLocation(@NonNull final View view) {
         final int[] locations = new int[2];
         view.getLocationOnScreen(locations);
         return locations;
     }
 
-    public static void moveViewRelatively(@NotNull final View view, final int left, final int top) {
+    public static void moveViewRelatively(@NonNull final View view, final int left, final int top) {
         final int[] location = getScreenLocation(view);
         final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(left + location[0], top + location[1], 0, 0);
@@ -243,7 +234,7 @@ public class ViewExtensions {
         view.setLayoutParams(params);
     }
 
-    public static void moveView(@NotNull final View view, final int left, final int top) {
+    public static void moveView(@NonNull final View view, final int left, final int top) {
         final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(left, top, 0, 0);
         final ViewGroup.LayoutParams p = view.getLayoutParams();
@@ -252,18 +243,18 @@ public class ViewExtensions {
         view.setLayoutParams(params);
     }
 
-    public static void setFont(@NotNull final Typeface font, @NotNull final TextView... views) {
+    public static void setFont(@NonNull final Typeface font, @NonNull final TextView... views) {
         for (final TextView v : views)
             v.setTypeface(font);
     }
 
-    public static void addMargin(@NotNull final View view, final int left, final int top, final int right, final int bottom) {
+    public static void addMargin(@NonNull final View view, final int left, final int top, final int right, final int bottom) {
         final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(left, top, right, bottom);
         view.setLayoutParams(layoutParams);
     }
 
-    @NotNull
+    @NonNull
     public static Drawable getScaledDrawable(@DrawableRes final int resourceId, final int scaleInDp) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         final DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
@@ -285,7 +276,7 @@ public class ViewExtensions {
                 .findViewById(android.R.id.content);
     }
 
-    public static void addHtmlContentToTextView(@RawRes final int resourceId, @NotNull final TextView view) {
+    public static void addHtmlContentToTextView(@RawRes final int resourceId, @NonNull final TextView view) {
         final InputStream inputStream = getContext().getResources().openRawResource(resourceId);
         final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         final StringBuffer body = new StringBuffer();
@@ -295,14 +286,15 @@ public class ViewExtensions {
                 body.append(line);
             }
             reader.close();
-        } catch (final IOException e) {
+        } catch (@NonNull final IOException e) {
             e.printStackTrace();
         }
         view.setText(Html.fromHtml(body.toString()));
         view.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    public static Rect getLocationOnScreen(@NotNull final View textView) {
+    @NonNull
+    public static Rect getLocationOnScreen(@NonNull final View textView) {
         final Rect rect = new Rect();
         final int[] location = new int[2];
 
@@ -316,7 +308,7 @@ public class ViewExtensions {
         return rect;
     }
 
-    public static void hideOnLostFocus(@NotNull final MotionEvent event, @Nullable final View... views) {
+    public static void hideOnLostFocus(@NonNull final MotionEvent event, @Nullable final View... views) {
 
         if (views == null)
             return;
@@ -336,26 +328,26 @@ public class ViewExtensions {
         i.putExtra(Intent.EXTRA_TEXT, body);
         try {
             getContext().startActivityForResult(Intent.createChooser(i, popupTitle), requestCode);
-        } catch (@NotNull final ActivityNotFoundException ex) {
+        } catch (@NonNull final ActivityNotFoundException ex) {
             Toast.makeText(getContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
 
     public static void showMarket() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
         final String packageName = getContext().getApplicationContext().getPackageName();
         intent.setData(Uri.parse("market://details?id=" + packageName));
         getContext().startActivity(intent);
     }
 
-    public static void setViewBackgroundWithoutResettingPadding(@NotNull final View v, @DrawableRes final int backgroundResId) {
+    public static void setViewBackgroundWithoutResettingPadding(@NonNull final View v, @DrawableRes final int backgroundResId) {
         final int paddingBottom = v.getPaddingBottom(), paddingLeft = v.getPaddingLeft();
         final int paddingRight = v.getPaddingRight(), paddingTop = v.getPaddingTop();
         v.setBackgroundResource(backgroundResId);
         v.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
     }
 
-    public static void setViewBackgroundColorWithoutResettingPadding(@NotNull final View v, @ColorRes final int color) {
+    public static void setViewBackgroundColorWithoutResettingPadding(@NonNull final View v, @ColorRes final int color) {
         final int paddingBottom = v.getPaddingBottom(), paddingLeft = v.getPaddingLeft();
         final int paddingRight = v.getPaddingRight(), paddingTop = v.getPaddingTop();
         v.setBackgroundColor(v.getResources().getColor(color));
@@ -384,57 +376,50 @@ public class ViewExtensions {
         }
     }
 
-    public static void setLayoutSize(@NotNull final View v, final int width, final int height) {
+    public static void setLayoutSize(@NonNull final View v, final int width, final int height) {
         final ViewGroup.LayoutParams params = v.getLayoutParams();
         params.width = width;
         params.height = height;
-        v.post(new Runnable() {
-            @Override
-            public void run() {
-                v.setLayoutParams(params);
-            }
-        });
+        v.post(() -> v.setLayoutParams(params));
     }
 
-    public static void addContextMenu(@NotNull final View view, @NotNull final Fragment fragment) {
+    public static void addContextMenu(@NonNull final View view, @NonNull final Fragment fragment) {
         fragment.registerForContextMenu(view);
-        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(@NotNull final View v, final boolean hasFocus) {
-                if (hasFocus) {
-                    hideKeyboard(v);
-                    fragment.getActivity().openContextMenu(v);
-                }
+        view.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                hideKeyboard(v);
+                fragment.getActivity().openContextMenu(v);
             }
         });
+        view.setOnClickListener(v -> fragment.getActivity().openContextMenu(v));
     }
 
-    public static void focusView(@NotNull final View v, @NotNull final Fragment fragment) {
+    public static void focusView(@NonNull final View v, @NonNull final Fragment fragment) {
         v.requestFocus();
         final InputMethodManager imm = (InputMethodManager) fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    public static View getContentRoot(final Activity context) {
+    public static View getContentRoot(@NonNull final Activity context) {
         return context
                 .getWindow()
                 .getDecorView()
                 .findViewById(android.R.id.content);
     }
 
-    public static void addLinearLayoutMargin(@NotNull final View view, final int left, final int top, final int right, final int bottom) {
+    public static void addLinearLayoutMargin(@NonNull final View view, final int left, final int top, final int right, final int bottom) {
         final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(left, top, right, bottom);
         view.setLayoutParams(layoutParams);
     }
 
-    public static void setRelativeLayoutHeight(@NotNull final View v, final int height) {
+    public static void setRelativeLayoutHeight(@NonNull final View v, final int height) {
         final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
         params.height = height;
         v.setLayoutParams(params);
     }
 
-    public static void setBackground(@NotNull final View view, @DrawableRes final int background) {
+    public static void setBackground(@NonNull final View view, @DrawableRes final int background) {
         Picasso.with(ContextHelper.getContext()).load(background).into(new Target() {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, final Picasso.LoadedFrom from) {
@@ -461,15 +446,10 @@ public class ViewExtensions {
         if ((dx == 0 && dy == 0) || scrollableParent == null) {
             return;
         }
-        scrollableParent.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollableParent.smoothScrollBy(dx, dy);
-            }
-        });
+        scrollableParent.post(() -> scrollableParent.smoothScrollBy(dx, dy));
     }
 
-    public static void colorize(@NotNull final TextView text, @ColorRes final int color) {
+    public static void colorize(@NonNull final TextView text, @ColorRes final int color) {
         text.setTextColor(ResourceExtensions.color(color));
     }
 
@@ -481,16 +461,24 @@ public class ViewExtensions {
         return view;
     }
 
-    public static <T extends View> void applyToAllViews(@NotNull final HashMap<Integer, T> views, @NotNull final ICommand<T> command) {
+    public static <T extends View> void applyToAllViews(@NonNull final HashMap<Integer, T> views, @NonNull final ChainableCommand<T> chainableCommand) {
         for (int i = 0; i < views.size(); ++i)
-            command.execute(views.get(i));
+            chainableCommand.execute(views.get(i));
     }
 
-    public static void setLayoutMargin(@NotNull final View view, final int left, final int top, final int right, final int bottom) {
+    public static void setLayoutMargin(@NonNull final View view, final int left, final int top, final int right, final int bottom) {
         final ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
             ((ViewGroup.MarginLayoutParams) layoutParams).setMargins(left, top, right, bottom);
             view.setLayoutParams(layoutParams);
         }
+    }
+
+    public static View inflate(@LayoutRes final int layout, @Nullable final ViewGroup parent, final boolean attachToRoot) {
+        return getContext().getLayoutInflater().inflate(layout, parent, attachToRoot);
+    }
+
+    public static View inflate(@LayoutRes final int layout, @Nullable final ViewGroup parent) {
+        return getContext().getLayoutInflater().inflate(layout, parent, false);
     }
 }

@@ -1,8 +1,8 @@
 package com.common.android.utils.device;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.File;
 
@@ -11,13 +11,13 @@ import java.io.File;
  */
 public class Cache {
 
-    public static void deleteCache(@NotNull final Context context) {
+    public static void deleteCache(@NonNull final Context context) {
         try {
             final File dir = context.getCacheDir();
             if (dir != null && dir.isDirectory()) {
                 deleteDir(dir);
             }
-        } catch (@NotNull final Exception e) {
+        } catch (@NonNull final Exception e) {
         }
     }
 

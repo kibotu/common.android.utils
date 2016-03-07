@@ -6,11 +6,11 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by stefan.ehrhart on 27.05.15.
@@ -25,12 +25,12 @@ public class SpriteImageView extends ImageView {
         init();
     }
 
-    public SpriteImageView(@NotNull final Context context, final AttributeSet attrs) {
+    public SpriteImageView(@NonNull final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public SpriteImageView(@NotNull final Context context, final AttributeSet attrs, final int defStyleAttr) {
+    public SpriteImageView(@NonNull final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -55,7 +55,7 @@ public class SpriteImageView extends ImageView {
     }
 
     @Override
-    public void onDraw(@NotNull final Canvas canvas) {
+    public void onDraw(@NonNull final Canvas canvas) {
         // Get the destination rectangle.
         // Make any changes if needed -- like padding / scaling.
         getDrawingRect(mDestinationRect);

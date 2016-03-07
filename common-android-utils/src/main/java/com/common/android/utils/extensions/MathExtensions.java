@@ -1,8 +1,6 @@
 package com.common.android.utils.extensions;
 
-import android.content.Context;
 import android.content.res.Resources;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -29,15 +27,12 @@ public class MathExtensions {
 
         // NOTE: Usually this should be a field rather than a method
         // variable so that it is not re-seeded every call.
-        final Random rand = new Random();
 
         // nextInt is normally exclusive of the top value,
         // so add 1 to make it inclusive
-        final int randomNum = rand.nextInt((max - min) + 1) + min;
 
-        return randomNum;
+        return new Random().nextInt((max - min) + 1) + min;
     }
-
 
     public static float clamp(final float val, final float min, final float max) {
         return Math.max(min, Math.min(max, val));
@@ -63,12 +58,12 @@ public class MathExtensions {
         return px / (getDensityDpi() / 160f);
     }
 
-    public static float pxToDp(@NotNull final Context context, final int px) {
+    public static float pxToDp(final int px) {
         final float pixel = px;
         return (pixel / getDensity());
     }
 
-    public static int dpToPx(@NotNull final Context context, final int dp) {
+    public static int dpToPx(final int dp) {
         final float scale = getDensity();
         return (int) (dp * scale + 0.5f);
     }

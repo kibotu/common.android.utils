@@ -1,8 +1,8 @@
 package com.common.android.utils.scale;
 
 import android.graphics.Matrix;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Created by yqritc on 2015/06/12.
@@ -12,13 +12,13 @@ public class ScaleManager {
     private Size mViewSize;
     private Size mVideoSize;
 
-    public ScaleManager(Size viewSize, Size videoSize) {
+    public ScaleManager(final Size viewSize, final Size videoSize) {
         mViewSize = viewSize;
         mVideoSize = videoSize;
     }
 
     @Nullable
-    public Matrix getScaleMatrix(@NotNull ScalableType scalableType) {
+    public Matrix getScaleMatrix(@NonNull final ScalableType scalableType) {
         switch (scalableType) {
             case NONE:
                 return getNoScale();
@@ -82,15 +82,15 @@ public class ScaleManager {
         }
     }
 
-    @NotNull
-    private Matrix getMatrix(float sx, float sy, float px, float py) {
-        Matrix matrix = new Matrix();
+    @NonNull
+    private Matrix getMatrix(final float sx, final float sy, final float px, final float py) {
+        final Matrix matrix = new Matrix();
         matrix.setScale(sx, sy, px, py);
         return matrix;
     }
 
-    @NotNull
-    private Matrix getMatrix(float sx, float sy, @NotNull PivotPoint pivotPoint) {
+    @NonNull
+    private Matrix getMatrix(final float sx, final float sy, @NonNull final PivotPoint pivotPoint) {
         switch (pivotPoint) {
             case LEFT_TOP:
                 return getMatrix(sx, sy, 0, 0);
@@ -115,61 +115,61 @@ public class ScaleManager {
         }
     }
 
-    @NotNull
+    @NonNull
     private Matrix getNoScale() {
-        float sx = mVideoSize.getWidth() / (float) mViewSize.getWidth();
-        float sy = mVideoSize.getHeight() / (float) mViewSize.getHeight();
+        final float sx = mVideoSize.getWidth() / (float) mViewSize.getWidth();
+        final float sy = mVideoSize.getHeight() / (float) mViewSize.getHeight();
         return getMatrix(sx, sy, PivotPoint.LEFT_TOP);
     }
 
-    @NotNull
-    private Matrix getFitScale(@NotNull PivotPoint pivotPoint) {
+    @NonNull
+    private Matrix getFitScale(@NonNull final PivotPoint pivotPoint) {
         float sx = (float) mViewSize.getWidth() / mVideoSize.getWidth();
         float sy = (float) mViewSize.getHeight() / mVideoSize.getHeight();
-        float minScale = Math.min(sx, sy);
+        final float minScale = Math.min(sx, sy);
         sx = minScale / sx;
         sy = minScale / sy;
         return getMatrix(sx, sy, pivotPoint);
     }
 
-    @NotNull
+    @NonNull
     private Matrix fitXY() {
         return getMatrix(1, 1, PivotPoint.LEFT_TOP);
     }
 
-    @NotNull
+    @NonNull
     private Matrix fitStart() {
         return getFitScale(PivotPoint.LEFT_TOP);
     }
 
-    @NotNull
+    @NonNull
     private Matrix fitCenter() {
         return getFitScale(PivotPoint.CENTER);
     }
 
-    @NotNull
+    @NonNull
     private Matrix fitEnd() {
         return getFitScale(PivotPoint.RIGHT_BOTTOM);
     }
 
-    @NotNull
-    private Matrix getOriginalScale(@NotNull PivotPoint pivotPoint) {
-        float sx = mVideoSize.getWidth() / (float) mViewSize.getWidth();
-        float sy = mVideoSize.getHeight() / (float) mViewSize.getHeight();
+    @NonNull
+    private Matrix getOriginalScale(@NonNull final PivotPoint pivotPoint) {
+        final float sx = mVideoSize.getWidth() / (float) mViewSize.getWidth();
+        final float sy = mVideoSize.getHeight() / (float) mViewSize.getHeight();
         return getMatrix(sx, sy, pivotPoint);
     }
 
-    @NotNull
-    private Matrix getCropScale(@NotNull PivotPoint pivotPoint) {
+    @NonNull
+    private Matrix getCropScale(@NonNull final PivotPoint pivotPoint) {
         float sx = (float) mViewSize.getWidth() / mVideoSize.getWidth();
         float sy = (float) mViewSize.getHeight() / mVideoSize.getHeight();
-        float maxScale = Math.max(sx, sy);
+        final float maxScale = Math.max(sx, sy);
         sx = maxScale / sx;
         sy = maxScale / sy;
         return getMatrix(sx, sy, pivotPoint);
     }
 
-    @NotNull
+    @NonNull
     private Matrix startInside() {
         if (mVideoSize.getHeight() <= mViewSize.getWidth()
                 && mVideoSize.getHeight() <= mViewSize.getHeight()) {
@@ -181,7 +181,7 @@ public class ScaleManager {
         }
     }
 
-    @NotNull
+    @NonNull
     private Matrix centerInside() {
         if (mVideoSize.getHeight() <= mViewSize.getWidth()
                 && mVideoSize.getHeight() <= mViewSize.getHeight()) {
@@ -193,7 +193,7 @@ public class ScaleManager {
         }
     }
 
-    @NotNull
+    @NonNull
     private Matrix endInside() {
         if (mVideoSize.getHeight() <= mViewSize.getWidth()
                 && mVideoSize.getHeight() <= mViewSize.getHeight()) {

@@ -1,17 +1,17 @@
 package com.common.android.utils.input;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Jan Rabe on 22/04/15.
  */
 public abstract class FlingGestureHandler implements View.OnTouchListener {
 
-    @NotNull
+    @NonNull
     private final GestureDetector gestureDetector;
 
     private final int minDistance;
@@ -28,7 +28,7 @@ public abstract class FlingGestureHandler implements View.OnTouchListener {
     }
 
     @Override
-    public boolean onTouch(final View v, @NotNull final MotionEvent event) {
+    public boolean onTouch(final View v, @NonNull final MotionEvent event) {
         return !gestureDetector.onTouchEvent(event);
     }
 
@@ -43,7 +43,7 @@ public abstract class FlingGestureHandler implements View.OnTouchListener {
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
-        public boolean onFling(@NotNull final MotionEvent e1, @NotNull final MotionEvent e2, final float velocityX, final float velocityY) {
+        public boolean onFling(@NonNull final MotionEvent e1, @NonNull final MotionEvent e2, final float velocityX, final float velocityY) {
             if (e1.getX() - e2.getX() > minDistance && Math.abs(velocityX) > velocityThreshold) {
                 onRightToLeft();
                 return true;

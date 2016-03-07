@@ -1,13 +1,13 @@
 package com.common.android.utils.ui.recyclerView;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import com.common.android.utils.extensions.ClassExtensions;
-import com.common.android.utils.interfaces.ILogTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.common.android.utils.interfaces.LogTag;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -17,21 +17,21 @@ import java.util.List;
 /**
  * Created by Jan Rabe on 09/09/15.
  */
-public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ILogTag {
+public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements LogTag {
 
-    @NotNull
+    @NonNull
     private final ArrayList<Pair<T, Class>> data;
 
     @Nullable
-    private IOnItemClickListener<T> onItemClickListener;
+    private OnItemClickListener<T> onItemClickListener;
 
     @Nullable
-    private IOnItemFocusChangeListener<T> onItemFocusChangeListener;
+    private OnItemFocusChangeListener<T> onItemFocusChangeListener;
 
     @Nullable
     private View.OnKeyListener onKeyListener;
 
-    @NotNull
+    @NonNull
     private List<DataBinder<T, ?>> binderType;
 
     public DataBindAdapter() {
@@ -39,25 +39,25 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.binderType = new ArrayList<>();
     }
 
-    protected <VH extends RecyclerView.ViewHolder> void addBinder(@NotNull final DataBinder<T, VH> binder) {
+    protected <VH extends RecyclerView.ViewHolder> void addBinder(@NonNull final DataBinder<T, VH> binder) {
         binderType.add(binder);
     }
 
     @Nullable
-    public IOnItemClickListener<T> getOnItemClickListener() {
+    public OnItemClickListener<T> getOnItemClickListener() {
         return onItemClickListener;
     }
 
-    public void setOnItemClickListener(@Nullable final IOnItemClickListener<T> onItemClickListener) {
+    public void setOnItemClickListener(@Nullable final OnItemClickListener<T> onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
     @Nullable
-    public IOnItemFocusChangeListener<T> getOnItemFocusChangeListener() {
+    public OnItemFocusChangeListener<T> getOnItemFocusChangeListener() {
         return onItemFocusChangeListener;
     }
 
-    public void setOnItemFocusChangeListener(@Nullable final IOnItemFocusChangeListener<T> onItemFocusChangeListener) {
+    public void setOnItemFocusChangeListener(@Nullable final OnItemFocusChangeListener<T> onItemFocusChangeListener) {
         this.onItemFocusChangeListener = onItemFocusChangeListener;
     }
 
@@ -70,31 +70,31 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.onKeyListener = onKeyListener;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NotNull final ViewGroup parent, final int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
         return getDataBinder(viewType).newViewHolder(parent);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, final int position) {
         getPosition(position).bindViewHolder(viewHolder, position);
     }
 
-    public void add(final int index, @NotNull final T t, @NotNull final Class clazz) {
+    public void add(final int index, @NonNull final T t, @NonNull final Class clazz) {
         data.add(index, new Pair<>(t, clazz));
         addIfNotExists(clazz);
         notifyItemInserted(index);
     }
 
-    public void add(@NotNull final T t, @NotNull final Class clazz) {
+    public void add(@NonNull final T t, @NonNull final Class clazz) {
         data.add(new Pair<>(t, clazz));
         addIfNotExists(clazz);
         notifyItemInserted(data.size() - 1);
     }
 
     @SuppressWarnings("unchecked")
-    private void addIfNotExists(@NotNull final Class clazz) {
+    private void addIfNotExists(@NonNull final Class clazz) {
         for (final DataBinder<T, ?> binderType : this.binderType)
             if (ClassExtensions.equals(binderType.getClass(), clazz))
                 return;
@@ -104,11 +104,11 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         try {
             instance = (DataBinder<T, ?>) constructor.newInstance(this);
             binderType.add(instance);
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (final InstantiationException e) {
             e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (final InvocationTargetException e) {
             e.printStackTrace();
         }
 
@@ -148,7 +148,7 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-    @NotNull
+    @NonNull
     @Override
     final public String tag() {
         return getClass().getSimpleName();

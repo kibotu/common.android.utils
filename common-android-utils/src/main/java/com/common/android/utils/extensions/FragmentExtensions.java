@@ -1,23 +1,23 @@
 package com.common.android.utils.extensions;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.AnimRes;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import com.common.android.utils.BuildConfig;
 import com.common.android.utils.R;
-import com.common.android.utils.interfaces.ICallback;
-import com.common.android.utils.interfaces.ICommand;
-import com.common.android.utils.interfaces.ILogTag;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.common.android.utils.interfaces.ChainableCommand;
+import com.common.android.utils.interfaces.LogTag;
+import com.common.android.utils.interfaces.annotations.Transit;
+import com.common.android.utils.logging.Logger;
+import com.common.android.utils.ui.recyclerView.Orientation;
 
 import static com.common.android.utils.ContextHelper.getContext;
-import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
 
 /**
  * Created by Jan Rabe on 29/07/15.
@@ -26,194 +26,56 @@ public class FragmentExtensions {
 
     public static final String TAG = FragmentExtensions.class.getSimpleName();
 
+    // region setting fragment container id // TODO: 07/03/16 find a better solution to set this
+
+    @IdRes
+    public static int fragmentContainerId = R.id.fragment_container;
+
+    @IdRes
+    public static int getFragmentContainerId() {
+        return fragmentContainerId;
+    }
+
+    public static void setFragmentContainerId(@IdRes final int fragmentContainerId) {
+        FragmentExtensions.fragmentContainerId = fragmentContainerId;
+    }
+
+    // endregion
+
+    // region logging
+
+    public static boolean LOGGING_ENABLED = BuildConfig.DEBUG;
+
+    public static boolean isLoggingEnabled() {
+        return LOGGING_ENABLED;
+    }
+
+    public static void setLoggingEnabled(final boolean loggingEnabled) {
+        LOGGING_ENABLED = loggingEnabled;
+    }
+
     private FragmentExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 
-    public static void addContextMenu(@NotNull final View view, @NotNull final Fragment fragment) {
-        fragment.registerForContextMenu(view);
-        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(@NotNull final View v, final boolean hasFocus) {
-                if (hasFocus) {
-                    hideKeyboard(v);
-                    fragment.getActivity().openContextMenu(v);
-                }
-            }
-        });
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                fragment.getActivity().openContextMenu(v);
-            }
-        });
+    // endregion
+
+    // region misc
+
+    public static boolean isInRoot() {
+        return getContext().getSupportFragmentManager().getBackStackEntryCount() == 0;
     }
 
-    public static void focusView(@NotNull final View v, @NotNull final Fragment fragment) {
-        v.requestFocus();
-        final InputMethodManager imm = (InputMethodManager) fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    public static Fragment currentFragment(@IdRes final int container) {
+        return getContext().getSupportFragmentManager().findFragmentById(container);
     }
 
-    public static <T extends Fragment & ILogTag> void replaceWithFade(@Nullable final FragmentManager fragmentManager, @Nullable final T fragment) {
-        if (fragmentManager == null || fragment == null)
-            return;
-
-        replaceWithFade(fragmentManager, fragment, fragment.tag(), new ICommand<FragmentTransaction>() {
-            @Override
-            public FragmentTransaction execute(@NotNull final FragmentTransaction fragmentTransaction) {
-                return fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
+    public static Fragment currentFragment() {
+        return getContext().getSupportFragmentManager().findFragmentById(getFragmentContainerId());
     }
 
-    public static <T extends Fragment & ILogTag> void replaceSlidingHorizontallyWith(@Nullable final FragmentManager fragmentManager, @Nullable final T fragment) {
-        if (fragmentManager == null || fragment == null)
-            return;
-
-        replaceWithFade(fragmentManager, fragment, fragment.tag(), new ICommand<FragmentTransaction>() {
-            @Override
-            public FragmentTransaction execute(@NotNull final FragmentTransaction fragmentTransaction) {
-                return fragmentTransaction.setCustomAnimations(R.anim.slide_enter, R.anim.slide_exit, R.anim.slide_pop_enter, R.anim.slide_pop_exit);
-            }
-        });
-    }
-
-    public static <T extends Fragment & ILogTag> void replaceVerticallyWith(@Nullable final FragmentManager fragmentManager, @Nullable final T fragment) {
-        if (fragmentManager == null || fragment == null)
-            return;
-
-        replaceWithFade(fragmentManager, fragment, fragment.tag(), new ICommand<FragmentTransaction>() {
-            @Override
-            public FragmentTransaction execute(@NotNull final FragmentTransaction fragmentTransaction) {
-                return fragmentTransaction.setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom, R.anim.slide_in_top, R.anim.slide_out_bottom);
-            }
-        });
-    }
-
-    private static void replaceWithFade(@NotNull final FragmentManager fragmentManager, @Nullable final Fragment fragment, @NotNull final String identifier, @NotNull final ICommand<FragmentTransaction> injector) {
-        if (fragment == null)
-            return;
-
-        // inject e.g. animation into transaction
-        injector.execute(fragmentManager.beginTransaction())
-                .replace(R.id.fragment_container, fragment, identifier)
-                .addToBackStack(identifier)
-                .commit();
-
-        printBackStack();
-    }
-
-    public static <T extends Fragment & ILogTag> void replaceWithNoBackStack(@Nullable final FragmentManager fragmentManager, @Nullable final T fragment) {
-        if (fragmentManager == null || fragment == null)
-            return;
-
-        final String identifier = fragment.tag();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment, identifier)
-                .commit();
-
-        printBackStack();
-    }
-
-    public static <T extends Fragment & ILogTag> void replaceWithTransitOpen(@Nullable final FragmentManager fragmentManager, @NotNull final T fragment) {
-        if (fragmentManager == null)
-            return;
-
-        fragmentManager
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.fragment_container, fragment, fragment.tag())
-                .addToBackStack(fragment.tag())
-                .commit();
-
-        printBackStack();
-    }
-
-    public static <T extends Fragment & ILogTag> void add(@NotNull final FragmentManager fm, @NotNull final T fragment) {
-        Log.v(TAG, "add: " + fragment.tag());
-
-        final FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.fragment_container, fragment, fragment.tag())
-                .commit();
-        printBackStack();
-    }
-
-    public static <T extends Fragment & ILogTag> void addToBackStack(@NotNull final FragmentManager fm, @NotNull final T fragment) {
-        addToBackStack(fm, fragment, fragment.tag());
-    }
-
-    public static <T extends Fragment & ILogTag> void addToBackStack(@NotNull final FragmentManager fragmentManager, @NotNull final T fragment, final String identifier) {
-        Log.v(TAG, "add: " + fragment.tag());
-
-        final FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.fragment_container, fragment, identifier)
-                .addToBackStack(identifier)
-                .commit();
-        printBackStack();
-    }
-
-    public static <T extends Fragment & ILogTag> void removeFragments(@NotNull final FragmentManager fm, @NotNull final T... fragments) {
-        for (final Fragment fragment : fragments) {
-            if (fragment == null)
-                continue;
-            fm.beginTransaction()
-                    .remove(fragment)
-                    .commit();
-            Log.v(TAG, "remove: " + fragment.getClass().getSimpleName());
-        }
-        printBackStack();
-    }
-
-    public static <T extends Fragment & ILogTag> void removeFragmentsFadeOut(@NotNull final FragmentManager fm, @NotNull final T... fragments) {
-        for (final Fragment fragment : fragments) {
-            if (fragment == null)
-                continue;
-            fm.beginTransaction()
-                    .remove(fragment)
-                    .commit();
-            Log.v(TAG, "remove: " + fragment.getClass().getSimpleName());
-        }
-        printBackStack();
-    }
-
-    public static void removeFragment(@NotNull final FragmentManager fm, @NotNull final Fragment fragment) {
-        fm.beginTransaction().remove(fragment).commit();
-        Log.v(TAG, "removed: " + fragment.getClass().getSimpleName());
-    }
-
-    public static <T> void removeFragmentFadeOut(@NotNull final FragmentManager fm, @NotNull final Fragment fragment, @Nullable final ICallback<T> onAnimationComplete) {
-        fm.beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out)
-                .remove(fragment).commit();
-        Log.v(TAG, "removed: " + fragment.getClass().getSimpleName());
-        if (onAnimationComplete != null)
-            onAnimationComplete.onSuccess(null);
-    }
-
-    public static void printBackStack() {
-        final FragmentManager fm = getContext().getSupportFragmentManager();
-
-        Log.v(TAG, "Current BackStack:  " + fm.getBackStackEntryCount());
-        for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
-            final FragmentManager.BackStackEntry stackEntry = fm.getBackStackEntryAt(entry);
-            Log.v(TAG, "[" + stackEntry.getId() + "] " + stackEntry.getName());
-        }
-    }
-
-    public static void popBackStackImmediate(@NotNull final FragmentManager fm) {
-        fm.popBackStackImmediate();
-        printBackStack();
-    }
-
-    public static void clearStack(@NotNull final FragmentManager fm) {
-        fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        printBackStack();
-    }
-
-    @NotNull
-    public static <T extends Fragment> T newInstance(@NotNull final Class<T> type, @Nullable final Bundle args) {
+    @NonNull
+    public static <T extends Fragment> T newInstance(@NonNull final Class<T> type, @Nullable final Bundle args) {
         final T f = ClassExtensions.newInstance(type);
         if (args != null) {
             f.setArguments(args);
@@ -221,12 +83,255 @@ public class FragmentExtensions {
         return f;
     }
 
-    public static boolean inRoot(@NotNull final FragmentManager fragmentManager) {
-        return fragmentManager.getBackStackEntryCount() == 0;
+    public static void printBackStack() {
+        if (!LOGGING_ENABLED)
+            return;
+
+        final FragmentManager fm = getContext().getSupportFragmentManager();
+        Log.v(TAG, "Current BackStack:  " + fm.getBackStackEntryCount());
+        for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
+            final FragmentManager.BackStackEntry stackEntry = fm.getBackStackEntryAt(entry);
+            Log.v(TAG, "[" + stackEntry.getId() + "] " + stackEntry.getName());
+        }
     }
 
-    public static Fragment currentFragment(@IdRes final int container) {
-        return getContext().getSupportFragmentManager().findFragmentById(container);
+    // endregion
+
+    // region transaction type
+
+    @NonNull
+    public static <T extends Fragment & LogTag> ChainableCommand<FragmentTransaction> add(@NonNull final T fragment, @NonNull final ChainableCommand<FragmentTransaction> command) {
+        if (LOGGING_ENABLED) {
+            final Fragment currentFragment = currentFragment();
+            final String tag = currentFragment != null ? currentFragment.getClass().getSimpleName() : "[empty]";
+            Logger.v(TAG, "[add] " + tag + " with " + fragment.tag());
+        }
+        return t -> command.execute(t).add(getFragmentContainerId(), fragment, fragment.tag());
     }
+
+
+    @NonNull
+    public static <T extends Fragment & LogTag> ChainableCommand<FragmentTransaction> replace(@NonNull final T fragment, @NonNull final ChainableCommand<FragmentTransaction> command) {
+        if (LOGGING_ENABLED) {
+            final Fragment currentFragment = currentFragment();
+            final String tag = currentFragment != null ? currentFragment.getClass().getSimpleName() : "[empty]";
+            Logger.v(TAG, "[replace] " + tag + " with " + fragment.tag());
+        }
+        return t -> command.execute(t).replace(getFragmentContainerId(), fragment, fragment.tag());
+    }
+
+    @NonNull
+    public static <T extends Fragment & LogTag> ChainableCommand<FragmentTransaction> remove(@NonNull final T fragment, @NonNull final ChainableCommand<FragmentTransaction> command) {
+        if (LOGGING_ENABLED) {
+            final Fragment currentFragment = currentFragment();
+            final String tag = currentFragment != null ? currentFragment.getClass().getSimpleName() : "[empty]";
+            Logger.v(TAG, "[remove] " + tag + " with " + fragment.tag());
+        }
+        return t -> command.execute(t).remove(fragment);
+    }
+
+    // endregion
+
+    // region transaction lifecycle
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> empty() {
+        return t -> t;
+    }
+
+    public static void popBackStackImmediate() {
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[popBackStackImmediate]");
+        getContext().getSupportFragmentManager().popBackStackImmediate();
+    }
+
+    public static void popBackStack() {
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[popBackStack]");
+        getContext().getSupportFragmentManager().popBackStack();
+    }
+
+    public static void clearBackStack() {
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[clearBackStack]");
+        getContext().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> beginTransaction() {
+        FragmentExtensions.printBackStack();
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[beginTransaction]");
+        return t -> getContext().getSupportFragmentManager().beginTransaction();
+    }
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> addToBackStack(@NonNull final String tag, @NonNull final ChainableCommand<FragmentTransaction> command) {
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[addToBackStack]");
+        return t -> command.execute(t).addToBackStack(tag);
+    }
+
+    @NonNull
+    public static void commit(@NonNull final ChainableCommand<FragmentTransaction> command, @android.support.annotation.Nullable final Runnable callback) {
+        commit(command);
+        if (callback != null)
+            callback.run();
+    }
+
+    @NonNull
+    public static void commit(@NonNull final ChainableCommand<FragmentTransaction> command) {
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[commit]");
+        command.execute(null).commit(); // intended 'null' so we can decorate in arbitrary order
+        printBackStack();
+    }
+
+    // endregion
+
+    // region transition 
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> setTransition(@Transit final int transition, @NonNull final ChainableCommand<FragmentTransaction> command) {
+        return t -> command.execute(t).setTransition(transition);
+    }
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> setTransitionOpen(@NonNull final ChainableCommand<FragmentTransaction> command) {
+        return setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN, command);
+    }
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> setTransitionClose(@NonNull final ChainableCommand<FragmentTransaction> command) {
+        return setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE, command);
+    }
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> setTransitionFade(@NonNull final ChainableCommand<FragmentTransaction> command) {
+        return setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE, command);
+    }
+
+    // endregion
+
+    // region animations
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> setCustomAnimations(@AnimRes final int enter, @AnimRes final int exit, @AnimRes final int popEnter, @AnimRes final int popExit, @NonNull final ChainableCommand<FragmentTransaction> command) {
+        return t -> command.execute(t).setCustomAnimations(enter, exit, popEnter, popExit);
+    }
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> setCustomAnimations(@AnimRes final int enter, @AnimRes final int exit, @NonNull final ChainableCommand<FragmentTransaction> command) {
+        return t -> command.execute(t).setCustomAnimations(enter, exit);
+    }
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> fade(@NonNull final ChainableCommand<FragmentTransaction> command) {
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[fade]");
+        return setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out, command);
+    }
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> grow(@NonNull final ChainableCommand<FragmentTransaction> command) {
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[grow]");
+        return setCustomAnimations(R.anim.grow, R.anim.shrink, command);
+    }
+
+    @NonNull
+    public static ChainableCommand<FragmentTransaction> slide(@NonNull final Orientation orientation, @NonNull final ChainableCommand<FragmentTransaction> command) {
+        return orientation == Orientation.Horizontal
+                ? slideHorizontally(command)
+                : slideVertically(command);
+    }
+
+    @NonNull
+    private static ChainableCommand<FragmentTransaction> slideVertically(@NonNull final ChainableCommand<FragmentTransaction> command) {
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[slideVertically]");
+        return setCustomAnimations(R.anim.slide_in_top, R.anim.slide_out_bottom, R.anim.slide_in_top, R.anim.slide_out_bottom, command);
+    }
+
+    @NonNull
+    private static ChainableCommand<FragmentTransaction> slideHorizontally(@NonNull final ChainableCommand<FragmentTransaction> command) {
+        if (LOGGING_ENABLED)
+            Logger.v(TAG, "[slideHorizontally]");
+        return setCustomAnimations(R.anim.slide_enter, R.anim.slide_exit, R.anim.slide_pop_enter, R.anim.slide_pop_exit, command);
+    }
+
+    // endregion
+
+    // region convenient methods for add
+
+    public static <T extends Fragment & LogTag> void addByFading(@NonNull final T fragment) {
+        commit(add(fragment, fade(beginTransaction())));
+    }
+
+    public static <T extends Fragment & LogTag> void add(@NonNull final T fragment) {
+        commit(add(fragment, beginTransaction()));
+    }
+
+    public static <T extends Fragment & LogTag> void addToBackStackByFading(@NonNull final T fragment) {
+        commit(addToBackStack(fragment.tag(), add(fragment, fade(beginTransaction()))));
+    }
+
+    public static <T extends Fragment & LogTag> void addBySlidingHorizontally(@NonNull final T fragment) {
+        commit(add(fragment, slide(Orientation.Horizontal, beginTransaction())));
+    }
+
+    public static <T extends Fragment & LogTag> void addToBackStackBySlidingHorizontally(@NonNull final T fragment) {
+        commit(addToBackStack(fragment.tag(), add(fragment, slide(Orientation.Horizontal, beginTransaction()))));
+    }
+
+    // endregion
+
+    // region convenient methods for replace
+
+    public static <T extends Fragment & LogTag> void replace(@NonNull final T fragment) {
+        commit(replace(fragment, beginTransaction()));
+    }
+
+    public static <T extends Fragment & LogTag> void replaceBySlidingHorizontally(@NonNull final T fragment) {
+        commit(replace(fragment, slide(Orientation.Horizontal, beginTransaction())));
+    }
+
+    public static <T extends Fragment & LogTag> void replaceToBackStackBySlidingHorizontally(@NonNull final T fragment) {
+        commit(addToBackStack(fragment.tag(), replace(fragment, slide(Orientation.Horizontal, beginTransaction()))));
+    }
+
+    public static <T extends Fragment & LogTag> void replaceByFading(@NonNull final T fragment) {
+        commit(replace(fragment, fade(beginTransaction())));
+    }
+
+    public static <T extends Fragment & LogTag> void replaceToBackStackByFading(@NonNull final T fragment) {
+        commit(addToBackStack(fragment.tag(), replace(fragment, fade(beginTransaction()))));
+    }
+
+    // endregion
+
+    // region convenient methods for remove
+
+    public static <T extends Fragment & LogTag> void remove(@NonNull final T fragment) {
+        commit(remove(fragment, beginTransaction()));
+    }
+
+    public static <T extends Fragment & LogTag> void removeByFading(@NonNull final T fragment) {
+        commit(remove(fragment, fade(beginTransaction())));
+    }
+
+    public static <T extends Fragment & LogTag> void removeToBackStackByFading(@NonNull final T fragment) {
+        commit(addToBackStack(fragment.tag(), remove(fragment, fade(beginTransaction()))));
+    }
+
+    public static <T extends Fragment & LogTag> void removeBySlidingHorizontally(@NonNull final T fragment) {
+        commit(remove(fragment, slide(Orientation.Horizontal, beginTransaction())));
+    }
+
+    public static <T extends Fragment & LogTag> void removeToBackStackBySlidingHorizontally(@NonNull final T fragment) {
+        commit(addToBackStack(fragment.tag(), remove(fragment, slide(Orientation.Horizontal, beginTransaction()))));
+    }
+
+    // endregion
 
 }

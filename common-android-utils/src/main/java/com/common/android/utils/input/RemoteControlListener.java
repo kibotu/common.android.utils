@@ -1,10 +1,11 @@
 package com.common.android.utils.input;
 
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
-import com.common.android.utils.interfaces.ILogTag;
+import com.common.android.utils.interfaces.LogTag;
 
 /**
  * Created by Jan Rabe on 14/08/15.
@@ -48,11 +49,12 @@ import com.common.android.utils.interfaces.ILogTag;
  *  ----------------------------------------------------------------------------------------------------
  *  </pre>
  */
-public class RemoteControlListener implements IKeyListener, View.OnKeyListener, DialogInterface.OnKeyListener, ILogTag {
+public class RemoteControlListener implements KeyListener, View.OnKeyListener, DialogInterface.OnKeyListener, LogTag {
 
     @Nullable
     private View currentView;
 
+    @NonNull
     @Override
     final public String tag() {
         return RemoteControlListener.class.getSimpleName();
@@ -64,7 +66,7 @@ public class RemoteControlListener implements IKeyListener, View.OnKeyListener, 
     }
 
     @Override
-    final public boolean onKey(final View v, final int keyCode, final KeyEvent event) {
+    final public boolean onKey(final View v, final int keyCode, @NonNull final KeyEvent event) {
         this.currentView = v;
         return event.getAction() == KeyEvent.ACTION_DOWN
                 ? onKeyDown(keyCode, event)
@@ -72,14 +74,14 @@ public class RemoteControlListener implements IKeyListener, View.OnKeyListener, 
     }
 
     @Override
-    public boolean onKey(final DialogInterface dialog, final int keyCode, final KeyEvent event) {
+    public boolean onKey(final DialogInterface dialog, final int keyCode, @NonNull final KeyEvent event) {
         return event.getAction() == KeyEvent.ACTION_DOWN
                 ? onKeyDown(keyCode, event)
                 : event.getAction() == KeyEvent.ACTION_UP ? onKeyUp(keyCode, event) : false;
     }
 
     @Override
-    final public boolean onKeyUp(final int keyCode, final KeyEvent event) {
+    final public boolean onKeyUp(final int keyCode, @NonNull final KeyEvent event) {
         switch (event.getKeyCode()) {
             case KeyEvent.KEYCODE_MEDIA_REWIND:
                 return onMediaRewind();
@@ -159,7 +161,7 @@ public class RemoteControlListener implements IKeyListener, View.OnKeyListener, 
     }
 
     @Override
-    public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+    public boolean onKeyDown(final int keyCode, @NonNull final KeyEvent event) {
         switch (event.getKeyCode()) {
             case KeyEvent.KEYCODE_MEDIA_REWIND:
                 return onMediaRewindPressed();
@@ -527,7 +529,7 @@ public class RemoteControlListener implements IKeyListener, View.OnKeyListener, 
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(@Nullable final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -542,6 +544,7 @@ public class RemoteControlListener implements IKeyListener, View.OnKeyListener, 
         return currentView != null ? currentView.hashCode() : 0;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "RemoteControlListener{" +

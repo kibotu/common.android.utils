@@ -1,7 +1,7 @@
 package com.common.android.utils.extensions;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,14 +16,14 @@ import static android.text.TextUtils.isEmpty;
 public class ValidationExtensions {
 
 
-    public static boolean isValidDateExpirationDate(@Nullable Date date, @NotNull Locale locale) {
+    public static boolean isValidDateExpirationDate(@Nullable final Date date, @NonNull final Locale locale) {
         if (date == null)
             return false;
 
-        int creditCardYear = CalendarExtensions.getYear(date, locale);
-        int currentYear = Calendar.getInstance(locale).get(Calendar.YEAR);
-        int creditCardMonth = CalendarExtensions.getMonth(date, locale);
-        int currentMonth = Calendar.getInstance(locale).get(Calendar.MONTH);
+        final int creditCardYear = CalendarExtensions.getYear(date, locale);
+        final int currentYear = Calendar.getInstance(locale).get(Calendar.YEAR);
+        final int creditCardMonth = CalendarExtensions.getMonth(date, locale);
+        final int currentMonth = Calendar.getInstance(locale).get(Calendar.MONTH);
 
         return creditCardYear > currentYear
                 || (creditCardYear >= currentYear
@@ -48,7 +48,7 @@ public class ValidationExtensions {
 
         private final Pattern pattern;
 
-        CreditCardNumberValidator(@NotNull final String pattern) {
+        CreditCardNumberValidator(@NonNull final String pattern) {
             this.pattern = Pattern.compile(pattern);
         }
 

@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import com.common.android.utils.R;
-import org.jetbrains.annotations.NotNull;
 
 public class HorizontalClippingImageView extends HeightSquaredImageView {
 
@@ -18,17 +18,17 @@ public class HorizontalClippingImageView extends HeightSquaredImageView {
         init(null, 0);
     }
 
-    public HorizontalClippingImageView(@NotNull final Context context, @NotNull final AttributeSet attrs) {
+    public HorizontalClippingImageView(@NonNull final Context context, @NonNull final AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public HorizontalClippingImageView(@NotNull final Context context, @NotNull final AttributeSet attrs, final int defStyleAttr) {
+    public HorizontalClippingImageView(@NonNull final Context context, @NonNull final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs, defStyleAttr);
     }
 
-    private void init(@NotNull final AttributeSet attrs, final int defStyle) {
+    private void init(@NonNull final AttributeSet attrs, final int defStyle) {
         mClipRect = new Rect();
         final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.HorizontalClippingImageView, defStyle, 0);
         mPercentage = a.getFloat(R.styleable.HorizontalClippingImageView_percentage, 0);
@@ -36,7 +36,7 @@ public class HorizontalClippingImageView extends HeightSquaredImageView {
     }
 
     @Override
-    protected void onDraw(@NotNull final Canvas canvas) {
+    protected void onDraw(@NonNull final Canvas canvas) {
         canvas.getClipBounds(mClipRect);
         mClipRect.right = Math.round(mClipRect.right * getPercentage());
         canvas.clipRect(mClipRect);
