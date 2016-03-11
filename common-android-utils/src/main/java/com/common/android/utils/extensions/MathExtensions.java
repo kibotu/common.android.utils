@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * Created by Jan Rabe on 24/09/15.
  */
-final class MathExtensions {
+final public class MathExtensions {
 
     private MathExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();
