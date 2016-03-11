@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 /**
  * Created by Jan Rabe on 26/10/15.
  */
-public class RunnableExtensions {
+final public class RunnableExtensions {
 
-    public RunnableExtensions() throws IllegalAccessException {
+    private RunnableExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 

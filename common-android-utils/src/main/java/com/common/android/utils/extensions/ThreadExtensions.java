@@ -6,7 +6,7 @@ import com.common.android.utils.logging.Logger;
 /**
  * Created by Jan Rabe on 22/10/15.
  */
-public class ThreadExtensions {
+final public class ThreadExtensions {
 
     private static final String TAG = ThreadExtensions.class.getSimpleName();
 

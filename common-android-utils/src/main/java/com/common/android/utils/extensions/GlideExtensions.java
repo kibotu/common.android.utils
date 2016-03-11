@@ -18,11 +18,11 @@ import static com.common.android.utils.ContextHelper.getContext;
 /**
  * Created by Jan Rabe on 30/09/15.
  */
-public class GlideExtensions {
+final public class GlideExtensions {
 
     private static final String TAG = GlideExtensions.class.getSimpleName();
 
-    public GlideExtensions() throws IllegalAccessException {
+    private GlideExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 

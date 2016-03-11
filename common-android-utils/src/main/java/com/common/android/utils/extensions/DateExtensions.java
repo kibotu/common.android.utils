@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Created by Jan Rabe on 24/09/15.
  */
-public class DateExtensions {
+final public class DateExtensions {
 
     private DateExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();

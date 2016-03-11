@@ -9,7 +9,7 @@ import android.widget.ImageView;
 /**
  * Created by Jan Rabe on 24/09/15.
  */
-public class BitmapExtensions {
+final public class BitmapExtensions {
 
     private BitmapExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();

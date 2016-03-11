@@ -13,7 +13,7 @@ import static com.common.android.utils.extensions.MathExtensions.randInt;
 /**
  * Created by Jan Rabe on 24/09/15.
  */
-public class ClassExtensions {
+final public class ClassExtensions {
 
     private ClassExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();

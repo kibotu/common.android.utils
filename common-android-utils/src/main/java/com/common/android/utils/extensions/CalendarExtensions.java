@@ -10,7 +10,7 @@ import java.util.Locale;
 /**
  * Created by Jan Rabe on 01/10/15.
  */
-public class CalendarExtensions {
+final public class CalendarExtensions {
 
     public CalendarExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();

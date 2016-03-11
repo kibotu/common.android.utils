@@ -18,6 +18,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Pair;
 import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -27,9 +28,9 @@ import com.common.android.utils.ContextHelper;
 import com.common.android.utils.R;
 import com.common.android.utils.interfaces.ChainableCommand;
 import com.common.android.utils.ui.PicassoBigCache;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import net.kibotu.android.deviceinfo.library.misc.Callback;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,13 +44,13 @@ import static android.os.Build.VERSION.SDK_INT;
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.extensions.BitmapExtensions.getBitmap;
 import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
-import static com.common.android.utils.extensions.MathExtensions.convertDpToPixel;
+import static com.common.android.utils.extensions.MathExtensions.dpToPx;
 import static com.common.android.utils.extensions.MathExtensions.roundToInt;
 
 /**
  * Created by Jan Rabe on 24/09/15.
  */
-public class ViewExtensions {
+final public class ViewExtensions {
 
     private ViewExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();
@@ -102,7 +103,7 @@ public class ViewExtensions {
                 .load(resourceId).into(imageView);
     }
 
-    public static void loadInto(final String imageUrl, @NonNull final ImageView imageView, @DrawableRes final int placeholder, final Callback callback) {
+    public static void loadInto(final String imageUrl, @NonNull final ImageView imageView, @DrawableRes final int placeholder, final com.squareup.picasso.Callback callback) {
         PicassoBigCache
                 .INSTANCE
                 .getPicassoBigCache()
@@ -261,7 +262,7 @@ public class ViewExtensions {
         options.inScreenDensity = metrics.densityDpi;
         options.inTargetDensity = metrics.densityDpi;
         options.inDensity = DisplayMetrics.DENSITY_DEFAULT;
-        final int px = roundToInt(convertDpToPixel(scaleInDp));
+        final int px = roundToInt(dpToPx(scaleInDp));
         final Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), resourceId, options);
         final BitmapDrawable drawable = new BitmapDrawable(getContext().getResources(), Bitmap.createScaledBitmap(bitmap, px, px, true));
         Log.v("Scaling", "Scaling image [" + scaleInDp + "dp to " + px + "px] => [" + bitmap.getWidth() + "x" + bitmap.getHeight() + " px] to [" + drawable.getIntrinsicWidth() + "x" + drawable.getIntrinsicHeight() + " px]");
@@ -480,5 +481,20 @@ public class ViewExtensions {
 
     public static View inflate(@LayoutRes final int layout, @Nullable final ViewGroup parent) {
         return getContext().getLayoutInflater().inflate(layout, parent, false);
+    }
+
+    public static void getDimensionOnPreDraw(@NonNull final View view, @NonNull final Callback<Pair<Integer, Integer>> onPreDrawListener) {
+        adOneTimedOnPreDrawListener(view, v -> onPreDrawListener.onComplete(Pair.create(v.getWidth(), v.getHeight())));
+    }
+
+    public static void adOneTimedOnPreDrawListener(final View view, Callback<View> onPreDrawListener) {
+        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                onPreDrawListener.onComplete(view);
+                view.getViewTreeObserver().removeOnPreDrawListener(this);
+                return true;
+            }
+        });
     }
 }

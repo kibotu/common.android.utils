@@ -18,7 +18,7 @@ import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
 /**
  * Created by Jan Rabe on 24/09/15.
  */
-public class DeviceExtensions {
+final public class DeviceExtensions {
 
     private DeviceExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();

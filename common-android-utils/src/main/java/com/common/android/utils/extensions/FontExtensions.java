@@ -13,7 +13,11 @@ import static com.common.android.utils.extensions.ViewExtensions.setColor;
 /**
  * Created by jan.rabe on 17/12/15.
  */
-public class FontExtensions {
+final public class FontExtensions {
+
+    private FontExtensions() throws IllegalAccessException {
+        throw new IllegalAccessException();
+    }
 
     public static void applyFont(@NonNull final Typeface font, @NonNull final TextView... views) {
         for (final TextView view : views)

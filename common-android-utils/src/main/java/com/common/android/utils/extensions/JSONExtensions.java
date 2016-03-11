@@ -20,7 +20,7 @@ import java.util.*;
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.misc.GsonProvider.getGson;
 
-public class JSONExtensions {
+final public class JSONExtensions {
 
     private JSONExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();

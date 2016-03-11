@@ -7,9 +7,9 @@ import android.text.TextUtils;
 /**
  * Created by Jan Rabe on 14/10/15.
  */
-public class StringExtensions {
+final class StringExtensions {
 
-    public StringExtensions() throws IllegalAccessException {
+    private StringExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 

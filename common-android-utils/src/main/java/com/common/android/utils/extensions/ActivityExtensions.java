@@ -2,6 +2,7 @@ package com.common.android.utils.extensions;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,7 +19,7 @@ import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVer
 /**
  * Created by Jan Rabe on 24/09/15.
  */
-public class ActivityExtensions {
+final public class ActivityExtensions {
 
     private ActivityExtensions() throws IllegalAccessException {
         throw new IllegalAccessException();
@@ -108,5 +109,18 @@ public class ActivityExtensions {
         return getAppCompatActivity() != null
                 ? getAppCompatActivity().getSupportActionBar()
                 : null;
+    }
+
+    public static boolean isPackageInstalled(@NonNull final String packageName) {
+        try {
+            getContext().getPackageManager().getApplicationInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    public static String prependMarketUrl(@NonNull final String packageName) {
+        return "market://details?id=" + packageName;
     }
 }

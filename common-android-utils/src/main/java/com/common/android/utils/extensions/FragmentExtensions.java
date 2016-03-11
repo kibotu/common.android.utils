@@ -22,7 +22,7 @@ import static com.common.android.utils.ContextHelper.getContext;
 /**
  * Created by Jan Rabe on 29/07/15.
  */
-public class FragmentExtensions {
+final public class FragmentExtensions {
 
     public static final String TAG = FragmentExtensions.class.getSimpleName();
 

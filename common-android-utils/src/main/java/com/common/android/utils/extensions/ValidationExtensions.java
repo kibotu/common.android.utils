@@ -13,8 +13,11 @@ import static android.text.TextUtils.isEmpty;
 /**
  * Created by jan.rabe on 18/12/15.
  */
-public class ValidationExtensions {
+final public class ValidationExtensions {
 
+    private ValidationExtensions() throws IllegalAccessException {
+        throw new IllegalAccessException();
+    }
 
     public static boolean isValidDateExpirationDate(@Nullable final Date date, @NonNull final Locale locale) {
         if (date == null)
