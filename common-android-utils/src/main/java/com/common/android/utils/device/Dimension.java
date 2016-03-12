@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 /**
  * Created by Jan Rabe on 23/09/15.
  */
+ @Deprecated
 public class Dimension {
 
     public final int width, height;
