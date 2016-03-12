@@ -39,7 +39,6 @@ public class CachedHawkValue<T> {
     public void set(@Nullable final T value) {
         Hawk.put(key, value);
         cachedValue = value;
-        invalidate();
     }
 
     public void invalidate() {
