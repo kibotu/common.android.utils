@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+0.4.4 (2015-05-07)
+    
+    - Updated gradle wrapper to 2.13
+
 0.4.3 (2015-05-07)
     - Updated android gradle build tools to 2.1.0
     - Updated retrolambda to 3.2.5
