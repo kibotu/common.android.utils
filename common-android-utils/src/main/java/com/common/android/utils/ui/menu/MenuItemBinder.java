@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.common.android.utils.R;
 import com.common.android.utils.ui.BaseViewHolder;
-import com.common.android.utils.ui.recyclerView.DataBindAdapter;
+import com.common.android.utils.ui.recyclerView.PresenterAdapter;
 import com.common.android.utils.ui.recyclerView.DataBinder;
 
 import static com.common.android.utils.ContextHelper.getContext;
@@ -21,8 +21,8 @@ import static com.common.android.utils.ContextHelper.getContext;
  */
 public class MenuItemBinder extends DataBinder<MenuItem, MenuItemBinder.ViewHolder> {
 
-    public MenuItemBinder(@NonNull final DataBindAdapter<MenuItem> dataBindAdapter) {
-        super(dataBindAdapter);
+    public MenuItemBinder(@NonNull final PresenterAdapter<MenuItem> presenterAdapter) {
+        super(presenterAdapter);
     }
 
     @NonNull

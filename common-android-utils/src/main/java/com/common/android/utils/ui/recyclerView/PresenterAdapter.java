@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Jan Rabe on 09/09/15.
  */
-public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements LogTag {
+public class PresenterAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements LogTag {
 
     @NonNull
     private final ArrayList<Pair<T, Class>> data;
@@ -33,14 +33,15 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     private View.OnKeyListener onKeyListener;
 
     @NonNull
-    private List<DataBinder<T, ?>> binderType;
+    private List<Presenter<T, ?>> binderType;
+    public RecyclerView recyclerView;
 
-    public DataBindAdapter() {
+    public PresenterAdapter() {
         this.data = new ArrayList<>();
         this.binderType = new ArrayList<>();
     }
 
-    protected <VH extends RecyclerView.ViewHolder> void addBinder(@NonNull final DataBinder<T, VH> binder) {
+    protected <VH extends RecyclerView.ViewHolder> void addBinder(@NonNull final Presenter<T, VH> binder) {
         binderType.add(binder);
     }
 
@@ -74,12 +75,12 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
-        return getDataBinder(viewType).newViewHolder(parent);
+        return getDataBinder(viewType).onCreateViewHolder(parent);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, final int position) {
-        getPosition(position).bindViewHolder(viewHolder, position);
+        getPosition(position).bindViewHolder(viewHolder, get(position), position);
     }
 
     public void add(final int index, @NonNull final T t, @NonNull final Class clazz) {
@@ -96,14 +97,14 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @SuppressWarnings("unchecked")
     private void addIfNotExists(@NonNull final Class clazz) {
-        for (final DataBinder<T, ?> binderType : this.binderType)
+        for (final Presenter<T, ?> binderType : this.binderType)
             if (ClassExtensions.equals(binderType.getClass(), clazz))
                 return;
 
         final Constructor<T> constructor = (Constructor<T>) clazz.getConstructors()[0];
-        DataBinder<T, ?> instance = null;
+        Presenter<T, ?> instance = null;
         try {
-            instance = (DataBinder<T, ?>) constructor.newInstance(this);
+            instance = (Presenter<T, ?>) constructor.newInstance(this);
             binderType.add(instance);
         } catch (final IllegalAccessException e) {
             e.printStackTrace();
@@ -129,12 +130,12 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         return 0;
     }
 
-    private DataBinder<T, ? extends RecyclerView.ViewHolder> getDataBinder(final int viewType) {
+    private Presenter<T, ? extends RecyclerView.ViewHolder> getDataBinder(final int viewType) {
         return binderType.get(viewType);
     }
 
 
-    private DataBinder getPosition(final int position) {
+    private Presenter getPosition(final int position) {
         return binderType.get(getItemViewType(position));
     }
 
@@ -149,9 +150,22 @@ public class DataBindAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
+    public void removeAllViews() {
+        if (recyclerView != null)
+            recyclerView.removeAllViews();
+    }
+
     @NonNull
     @Override
     final public String tag() {
         return getClass().getSimpleName();
+    }
+
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+    }
+
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 }

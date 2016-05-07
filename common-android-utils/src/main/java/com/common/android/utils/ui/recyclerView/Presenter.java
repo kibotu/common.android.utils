@@ -10,17 +10,17 @@ import com.common.android.utils.interfaces.LogTag;
 /**
  * Created by Jan Rabe on 09/09/15.
  */
-public abstract class DataBinder<T, VH extends RecyclerView.ViewHolder> implements LogTag, LayoutProvider {
+public abstract class Presenter<T, VH extends RecyclerView.ViewHolder> implements LogTag, LayoutProvider {
 
     @NonNull
-    protected final DataBindAdapter<T> dataBindAdapter;
+    protected final PresenterAdapter<T> presenterAdapter;
 
-    public DataBinder(@NonNull final DataBindAdapter<T> dataBindAdapter) {
-        this.dataBindAdapter = dataBindAdapter;
+    public Presenter(@NonNull final PresenterAdapter<T> presenterAdapter) {
+        this.presenterAdapter = presenterAdapter;
     }
 
     @NonNull
-    protected VH newViewHolder(@NonNull final ViewGroup parent) {
+    protected VH onCreateViewHolder(@NonNull final ViewGroup parent) {
         return createViewHolder(getLayout(), parent);
     }
 
@@ -28,17 +28,14 @@ public abstract class DataBinder<T, VH extends RecyclerView.ViewHolder> implemen
     protected abstract VH createViewHolder(int layout, ViewGroup parent);
 
     final public T get(final int position) {
-        return dataBindAdapter.get(position);
+        return presenterAdapter.get(position);
     }
 
-    public abstract void bindViewHolder(@NonNull final VH viewHolder, final int position);
+    public abstract void bindViewHolder(@NonNull final VH viewHolder, T item, final int position);
 
     @NonNull
     @Override
-    final public String tag() {
+    public String tag() {
         return getClass().getSimpleName();
     }
-
-
-    // endregion
 }

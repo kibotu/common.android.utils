@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.common.android.utils.R;
-import com.common.android.utils.ui.recyclerView.DataBindAdapter;
+import com.common.android.utils.ui.recyclerView.PresenterAdapter;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class MainMenu implements IMainMenu {
 
     ActionbarBaseViewHolder actionbarViewHolder;
 
-    DataBindAdapter<MenuItem> adapter;
+    PresenterAdapter<MenuItem> adapter;
 
     public MainMenu() {
         ButterKnife.bind(this, getContentRoot());
@@ -68,7 +68,7 @@ public class MainMenu implements IMainMenu {
         list = (RecyclerView) getContentRoot().findViewById(R.id.main_menu_list);
         toolbar = (Toolbar) getContentRoot().findViewById(R.id.toolbar);
 
-        adapter = new DataBindAdapter<>();
+        adapter = new PresenterAdapter<>();
         list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         list.setAdapter(adapter);
 
