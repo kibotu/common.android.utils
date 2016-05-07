@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,11 +14,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import static com.common.android.utils.ContextHelper.getContext;
-import static com.common.android.utils.misc.GsonProvider.getGson;
 
 final public class JSONExtensions {
 
@@ -479,19 +480,5 @@ final public class JSONExtensions {
             e.printStackTrace();
         }
         return jsonObject;
-    }
-
-    public static <T> List<T> asList(@NonNull final String json, @NonNull final Class<T[]> type) {
-        return Arrays.asList(getGson().fromJson(json, type));
-    }
-
-    /**
-     * use {@link #asList} instead
-     */
-    @Deprecated
-    public static <T> List<T> toList(@NonNull final String json) {
-        final Type listType = new TypeToken<List<T>>() {
-        }.getType();
-        return getGson().fromJson(json, listType);
     }
 }

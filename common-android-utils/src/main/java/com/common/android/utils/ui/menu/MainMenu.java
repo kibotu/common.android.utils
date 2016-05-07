@@ -15,7 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
-import butterknife.ButterKnife;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -23,6 +23,8 @@ import com.common.android.utils.R;
 import com.common.android.utils.ui.recyclerView.DataBindAdapter;
 
 import java.util.List;
+
+import butterknife.ButterKnife;
 
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.extensions.ActivityExtensions.getAppCompatActivity;

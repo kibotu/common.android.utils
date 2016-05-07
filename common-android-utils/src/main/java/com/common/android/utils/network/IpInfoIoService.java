@@ -1,6 +1,7 @@
 package com.common.android.utils.network;
 
 import android.support.annotation.NonNull;
+
 import com.common.android.utils.network.model.IpInfoResponseModel;
 import com.orhanobut.wasp.Callback;
 import com.orhanobut.wasp.WaspRequest;

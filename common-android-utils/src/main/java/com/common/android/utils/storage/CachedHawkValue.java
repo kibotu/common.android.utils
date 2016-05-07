@@ -2,6 +2,7 @@ package com.common.android.utils.storage;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.orhanobut.hawk.Hawk;
 
 /**

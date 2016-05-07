@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
+
 import com.common.android.utils.R;
 
 public class StarsView extends RelativeLayout {

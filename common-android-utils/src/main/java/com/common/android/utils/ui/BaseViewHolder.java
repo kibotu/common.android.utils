@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
+
 import com.common.android.utils.interfaces.LogTag;
+
+import butterknife.ButterKnife;
 
 import static com.common.android.utils.extensions.ViewExtensions.inflate;
 

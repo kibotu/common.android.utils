@@ -2,6 +2,7 @@ package com.common.android.utils.extensions;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import com.common.android.utils.logging.Logger;
 
 /**

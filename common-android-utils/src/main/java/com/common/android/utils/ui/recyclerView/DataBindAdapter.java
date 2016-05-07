@@ -6,6 +6,7 @@ import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.common.android.utils.extensions.ClassExtensions;
 import com.common.android.utils.interfaces.LogTag;
 

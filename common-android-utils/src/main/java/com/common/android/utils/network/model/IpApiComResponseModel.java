@@ -2,6 +2,7 @@ package com.common.android.utils.network.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -93,15 +94,19 @@ public class IpApiComResponseModel {
         if (as != null ? !as.equals(that.as) : that.as != null) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (country != null ? !country.equals(that.country) : that.country != null) return false;
-        if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null) return false;
+        if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null)
+            return false;
         if (isp != null ? !isp.equals(that.isp) : that.isp != null) return false;
-        if (longitude != null ? !longitude.equals(that.longitude) : that.longitude != null) return false;
+        if (longitude != null ? !longitude.equals(that.longitude) : that.longitude != null)
+            return false;
         if (org != null ? !org.equals(that.org) : that.org != null) return false;
         if (query != null ? !query.equals(that.query) : that.query != null) return false;
         if (region != null ? !region.equals(that.region) : that.region != null) return false;
-        if (regionName != null ? !regionName.equals(that.regionName) : that.regionName != null) return false;
+        if (regionName != null ? !regionName.equals(that.regionName) : that.regionName != null)
+            return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (timezone != null ? !timezone.equals(that.timezone) : that.timezone != null) return false;
+        if (timezone != null ? !timezone.equals(that.timezone) : that.timezone != null)
+            return false;
         return zip != null ? zip.equals(that.zip) : that.zip == null;
 
     }

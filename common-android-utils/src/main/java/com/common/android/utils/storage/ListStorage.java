@@ -3,6 +3,7 @@ package com.common.android.utils.storage;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+
 import com.common.android.utils.interfaces.StorageProvider;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

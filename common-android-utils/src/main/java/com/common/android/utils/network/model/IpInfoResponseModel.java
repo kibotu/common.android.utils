@@ -57,7 +57,8 @@ public class IpInfoResponseModel {
         final IpInfoResponseModel that = (IpInfoResponseModel) o;
 
         if (ip != null ? !ip.equals(that.ip) : that.ip != null) return false;
-        if (hostname != null ? !hostname.equals(that.hostname) : that.hostname != null) return false;
+        if (hostname != null ? !hostname.equals(that.hostname) : that.hostname != null)
+            return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (region != null ? !region.equals(that.region) : that.region != null) return false;
         if (country != null ? !country.equals(that.country) : that.country != null) return false;

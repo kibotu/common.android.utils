@@ -26,3 +26,22 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
+-dontoptimize
+-dontobfuscate
+
+-keep public class com.google.common.base.** {
+    public *;
+}
+
+-keep public class com.google.common.collect.** {
+    public *;
+}
+
+-keep public class com.google.common.primitives.** {
+    public *;
+}
+
+-keep public class com.google.common.util.** {
+    public *;
+}

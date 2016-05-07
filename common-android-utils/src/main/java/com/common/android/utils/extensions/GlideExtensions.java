@@ -5,12 +5,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.common.android.utils.logging.Logger;
 import com.common.android.utils.ui.components.SpriteImageView;
+
 import jp.wasabeef.glide.transformations.CropTransformation;
 
 import static com.common.android.utils.ContextHelper.getContext;

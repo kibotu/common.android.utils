@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static com.common.android.utils.ContextHelper.getContext;
-import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 
 /**
  * Created by Jan Rabe on 24/09/15.
@@ -26,7 +26,7 @@ final public class ActivityExtensions {
     }
 
     public static void enableImmersiveMode() {
-        if (!isAtLeastVersion(KITKAT))
+        if (SDK_INT < KITKAT)
             return;
 
         final Window window = getContext().getWindow();

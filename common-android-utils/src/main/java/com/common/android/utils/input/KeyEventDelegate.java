@@ -3,7 +3,6 @@ package com.common.android.utils.input;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
-import com.common.android.utils.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.List;

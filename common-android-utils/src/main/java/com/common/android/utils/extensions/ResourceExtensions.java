@@ -6,12 +6,16 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.*;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
+import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.LOLLIPOP_MR1;
 import static com.common.android.utils.ContextHelper.getContext;
-import static net.kibotu.android.deviceinfo.library.version.Version.isAtLeastVersion;
 
 /**
  * Created by Jan Rabe on 27/10/15.
@@ -27,7 +31,7 @@ final public class ResourceExtensions {
     }
 
     public static int color(@ColorRes final int color) {
-        return isAtLeastVersion(Build.VERSION_CODES.M)
+        return SDK_INT >= Build.VERSION_CODES.M
                 ? ContextCompat.getColor(getContext(), color)
                 : getResources().getColor(color);
     }
@@ -35,7 +39,7 @@ final public class ResourceExtensions {
     @Nullable
     @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     public static Drawable drawable(@DrawableRes final int drawable) {
-        return isAtLeastVersion(LOLLIPOP_MR1)
+        return SDK_INT >= LOLLIPOP_MR1
                 ? getResources().getDrawable(drawable, getContext().getTheme())
                 : getResources().getDrawable(drawable);
     }
@@ -56,7 +60,7 @@ final public class ResourceExtensions {
      * resource was found.  (0 is not a valid resource ID.)
      */
     @DrawableRes
-    public static int getDrawableIdByName( @NonNull final String drawable) {
+    public static int getDrawableIdByName(@NonNull final String drawable) {
         return getContext().getResources().getIdentifier(drawable, "drawable", getContext().getPackageName());
     }
 

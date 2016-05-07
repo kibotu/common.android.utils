@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+
 import com.common.android.utils.R;
 
 public class HorizontalClippingImageView extends HeightSquaredImageView {

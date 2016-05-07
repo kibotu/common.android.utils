@@ -1,6 +1,7 @@
 package com.common.android.utils.misc;
 
 import android.support.annotation.NonNull;
+
 import com.google.gson.Gson;
 
 /**

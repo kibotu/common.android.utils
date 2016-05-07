@@ -2,6 +2,7 @@ package com.common.android.utils.network.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -83,10 +84,14 @@ public class FreeGeoIpResponseModel {
         if (Double.compare(that.longitude, longitude) != 0) return false;
         if (metroCode != that.metroCode) return false;
         if (ip != null ? !ip.equals(that.ip) : that.ip != null) return false;
-        if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null) return false;
-        if (countryName != null ? !countryName.equals(that.countryName) : that.countryName != null) return false;
-        if (regionCode != null ? !regionCode.equals(that.regionCode) : that.regionCode != null) return false;
-        if (regionName != null ? !regionName.equals(that.regionName) : that.regionName != null) return false;
+        if (countryCode != null ? !countryCode.equals(that.countryCode) : that.countryCode != null)
+            return false;
+        if (countryName != null ? !countryName.equals(that.countryName) : that.countryName != null)
+            return false;
+        if (regionCode != null ? !regionCode.equals(that.regionCode) : that.regionCode != null)
+            return false;
+        if (regionName != null ? !regionName.equals(that.regionName) : that.regionName != null)
+            return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (zipCode != null ? !zipCode.equals(that.zipCode) : that.zipCode != null) return false;
         return timeZone != null ? timeZone.equals(that.timeZone) : that.timeZone == null;

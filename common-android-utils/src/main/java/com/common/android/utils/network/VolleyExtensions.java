@@ -1,6 +1,7 @@
 package com.common.android.utils.network;
 
 import android.support.annotation.Nullable;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;

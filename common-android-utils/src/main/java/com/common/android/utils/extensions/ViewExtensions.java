@@ -5,12 +5,23 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.*;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RawRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -19,18 +30,28 @@ import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Pair;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.common.android.utils.ContextHelper;
 import com.common.android.utils.R;
 import com.common.android.utils.interfaces.ChainableCommand;
+import com.common.android.utils.interfaces.Command;
 import com.common.android.utils.ui.PicassoBigCache;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import net.kibotu.android.deviceinfo.library.misc.Callback;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -483,15 +504,15 @@ final public class ViewExtensions {
         return getContext().getLayoutInflater().inflate(layout, parent, false);
     }
 
-    public static void getDimensionOnPreDraw(@NonNull final View view, @NonNull final Callback<Pair<Integer, Integer>> onPreDrawListener) {
-        adOneTimedOnPreDrawListener(view, v -> onPreDrawListener.onComplete(Pair.create(v.getWidth(), v.getHeight())));
+    public static void getDimensionOnPreDraw(@NonNull final View view, @NonNull final Command<Pair<Integer, Integer>> onPreDrawListener) {
+        adOneTimedOnPreDrawListener(view, v -> onPreDrawListener.execute(Pair.create(v.getWidth(), v.getHeight())));
     }
 
-    public static void adOneTimedOnPreDrawListener(final View view, Callback<View> onPreDrawListener) {
+    public static void adOneTimedOnPreDrawListener(final View view, Command<View> onPreDrawListener) {
         view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                onPreDrawListener.onComplete(view);
+                onPreDrawListener.execute(view);
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
                 return true;
             }
