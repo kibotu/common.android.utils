@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+0.4.5 (2015-05-09)
+    
+    - Removed retundant ItemRecyclerAdapter; please use Presenter / PresenterAdapter 
+    - added Butterknife compiler
+
 0.4.4 (2015-05-07)
     
     - Updated gradle wrapper to 2.13
