@@ -86,13 +86,11 @@ public class PresenterAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewH
     public void add(final int index, @NonNull final T t, @NonNull final Class clazz) {
         data.add(index, new Pair<>(t, clazz));
         addIfNotExists(clazz);
-        notifyItemInserted(index);
     }
 
     public void add(@NonNull final T t, @NonNull final Class clazz) {
         data.add(new Pair<>(t, clazz));
         addIfNotExists(clazz);
-        notifyItemInserted(data.size() - 1);
     }
 
     @SuppressWarnings("unchecked")
