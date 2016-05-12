@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+0.4.6 (2015-05-12)
+
+    - fixed bug in presenteradapter when adding items
+
 0.4.5 (2015-05-09)
     
     - Removed retundant ItemRecyclerAdapter; please use Presenter / PresenterAdapter 
