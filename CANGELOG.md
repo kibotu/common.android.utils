@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+0.4.7 (2015-05-12)
+    
+    - non appcompat app support
+
 0.4.6 (2015-05-12)
 
     - fixed bug in presenteradapter when adding items
