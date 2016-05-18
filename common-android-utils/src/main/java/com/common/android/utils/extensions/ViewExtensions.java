@@ -62,6 +62,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static android.os.Build.VERSION.SDK_INT;
+import static com.common.android.utils.ContextHelper.getActivity;
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.extensions.BitmapExtensions.getBitmap;
 import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
@@ -292,7 +293,7 @@ final public class ViewExtensions {
     }
 
     public static View getContentRoot() {
-        return getContext()
+        return getActivity()
                 .getWindow()
                 .getDecorView()
                 .findViewById(android.R.id.content);
@@ -349,7 +350,7 @@ final public class ViewExtensions {
         i.putExtra(Intent.EXTRA_SUBJECT, subject);
         i.putExtra(Intent.EXTRA_TEXT, body);
         try {
-            getContext().startActivityForResult(Intent.createChooser(i, popupTitle), requestCode);
+            getActivity().startActivityForResult(Intent.createChooser(i, popupTitle), requestCode);
         } catch (@NonNull final ActivityNotFoundException ex) {
             Toast.makeText(getContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
@@ -497,11 +498,11 @@ final public class ViewExtensions {
     }
 
     public static View inflate(@LayoutRes final int layout, @Nullable final ViewGroup parent, final boolean attachToRoot) {
-        return getContext().getLayoutInflater().inflate(layout, parent, attachToRoot);
+        return getActivity().getLayoutInflater().inflate(layout, parent, attachToRoot);
     }
 
     public static View inflate(@LayoutRes final int layout, @Nullable final ViewGroup parent) {
-        return getContext().getLayoutInflater().inflate(layout, parent, false);
+        return getActivity().getLayoutInflater().inflate(layout, parent, false);
     }
 
     public static void getDimensionOnPreDraw(@NonNull final View view, @NonNull final Command<Pair<Integer, Integer>> onPreDrawListener) {

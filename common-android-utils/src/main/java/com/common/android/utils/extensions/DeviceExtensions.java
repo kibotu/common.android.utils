@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.common.android.utils.device.Dimension;
 
 import static android.os.Build.VERSION.SDK_INT;
+import static com.common.android.utils.ContextHelper.getActivity;
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
 
@@ -27,7 +28,7 @@ final public class DeviceExtensions {
 
     @NonNull
     public static Dimension getScreenDimension() {
-        final WindowManager w = getContext().getWindowManager();
+        final WindowManager w = getActivity().getWindowManager();
         final Display d = w.getDefaultDisplay();
         final DisplayMetrics metrics = new DisplayMetrics();
         d.getMetrics(metrics);

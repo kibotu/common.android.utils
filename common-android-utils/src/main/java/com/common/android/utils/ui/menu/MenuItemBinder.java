@@ -14,6 +14,7 @@ import com.common.android.utils.ui.BaseViewHolder;
 import com.common.android.utils.ui.recyclerView.Presenter;
 import com.common.android.utils.ui.recyclerView.PresenterAdapter;
 
+import static com.common.android.utils.ContextHelper.getAppCompatActivity;
 import static com.common.android.utils.ContextHelper.getContext;
 
 /**
@@ -46,7 +47,7 @@ public class MenuItemBinder extends Presenter<MenuItem, MenuItemBinder.ViewHolde
 
         viewHolder.itemView.setOnClickListener(v -> {
             final Fragment fragment = item.getFragment();
-            getContext().getSupportFragmentManager()
+            getAppCompatActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack(fragment.getTag())

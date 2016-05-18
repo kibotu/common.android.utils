@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
+import static com.common.android.utils.ContextHelper.getActivity;
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.extensions.ActivityExtensions.getAppCompatActivity;
 import static com.common.android.utils.extensions.ActivityExtensions.getSupportActionBar;
@@ -102,7 +103,7 @@ public class MainMenu implements IMainMenu {
         if (drawerToggle != null)
             return this;
 
-        drawerToggle = new ActionBarDrawerToggle(getContext(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
+        drawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(final View drawerView) {
                 super.onDrawerOpened(drawerView);

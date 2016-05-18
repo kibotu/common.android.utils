@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentActivity;
 
 import java.util.List;
 
-import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.ContextHelper.getAppCompatActivity;
 
 /**
  * Created by Nyaruhodo on 20.02.2016.
@@ -18,7 +18,7 @@ public class MainMenuProvider {
 
     @NonNull
     public static IMainMenu provide() {
-        final FragmentActivity context = getContext();
+        final FragmentActivity context = getAppCompatActivity();
         return context instanceof IMenuProvider
                 ? ((IMenuProvider) context).getMainMenu()
                 : stub;
