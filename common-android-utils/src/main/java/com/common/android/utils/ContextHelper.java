@@ -23,9 +23,8 @@ public class ContextHelper {
         throw new IllegalAccessException();
     }
 
-    public void init(@NonNull final Application application) {
+    public static void init(@NonNull final Application application) {
         ContextHelper.application = application;
-
         application.registerActivityLifecycleCallbacks(createActivityLifecycleCallbacks());
     }
 
@@ -57,7 +56,7 @@ public class ContextHelper {
                 : null;
     }
 
-    private Application.ActivityLifecycleCallbacks createActivityLifecycleCallbacks() {
+    private static Application.ActivityLifecycleCallbacks createActivityLifecycleCallbacks() {
         return new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
