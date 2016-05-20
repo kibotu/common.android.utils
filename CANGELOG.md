@@ -1,24 +1,28 @@
 Changelog
 ---------
 
-0.4.7 (2015-05-12)
+0.4.8
+    
+    - fixed wrong context helper activity cast
+    
+0.4.7
     
     - non appcompat app support
 
-0.4.6 (2015-05-12)
+0.4.6
 
     - fixed bug in presenteradapter when adding items
 
-0.4.5 (2015-05-09)
+0.4.5
     
     - Removed retundant ItemRecyclerAdapter; please use Presenter / PresenterAdapter 
     - added Butterknife compiler
 
-0.4.4 (2015-05-07)
+0.4.4
     
     - Updated gradle wrapper to 2.13
 
-0.4.3 (2015-05-07)
+0.4.3
 
     - Updated android gradle build tools to 2.1.0
     - Updated retrolambda to 3.2.5

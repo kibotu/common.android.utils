@@ -52,7 +52,7 @@ public class ContextHelper {
     @Nullable
     public static Activity getActivity() {
         return context instanceof Activity
-                ? (AppCompatActivity) context
+                ? (Activity) context
                 : null;
     }
 
