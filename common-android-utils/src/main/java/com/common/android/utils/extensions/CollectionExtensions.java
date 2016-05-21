@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by Jan Rabe on 24/09/15.
@@ -32,5 +33,9 @@ final public class CollectionExtensions {
         return isEmpty(collection)
                 ? 0
                 : collection.size();
+    }
+
+    public static boolean isEmpty(@Nullable Map<?, ?> map) {
+        return map == null || map.isEmpty();
     }
 }
