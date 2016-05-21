@@ -1,5 +1,17 @@
 package com.common.android.utils.extensions;
 
+import android.support.annotation.ColorRes;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.TextView;
+
+import com.common.android.utils.R;
+
+import static android.text.TextUtils.isEmpty;
+import static com.common.android.utils.extensions.ResourceExtensions.color;
+import static com.common.android.utils.extensions.ViewExtensions.getContentRoot;
+
 public class SnackbarExtensions {
 
     private static Snackbar createSnackbar(String message, @ColorRes final int bgColor, @ColorRes final int textColor) {
