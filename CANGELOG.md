@@ -1,22 +1,32 @@
 Changelog
 ---------
 
-0.4.8
+0.5.0
+
+    - Moved menu to https://github.com/kibotu/MaterialMenu
+    - Moved presenter to https://github.com/kibotu/RecyclerViewPresenter
+    - Added toast and snackbar convenient methods
+
+0.4.9
     
-    - fixed wrong context helper activity cast
+    - Fixed wrong context helper activity cast
+    
+0.4.8 
+    
+    - Context helper static init
     
 0.4.7
     
-    - non appcompat app support
+    - Non appcompat app support
 
 0.4.6
 
-    - fixed bug in presenteradapter when adding items
+    - Fixed bug in presenteradapter when adding items
 
 0.4.5
     
     - Removed retundant ItemRecyclerAdapter; please use Presenter / PresenterAdapter 
-    - added Butterknife compiler
+    - Added Butterknife compiler
 
 0.4.4
     
