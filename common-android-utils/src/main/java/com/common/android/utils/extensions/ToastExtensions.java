@@ -1,6 +1,5 @@
 package com.common.android.utils.extensions;
 
-import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -12,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.common.android.utils.ContextHelper;
+import com.common.android.utils.R;
+
+import static android.text.TextUtils.isEmpty;
 import static com.common.android.utils.ContextHelper.getActivity;
 import static com.common.android.utils.ContextHelper.getContext;
 import static com.common.android.utils.extensions.ResourceExtensions.color;
@@ -53,8 +56,7 @@ final public class ToastExtensions {
         });
     }
 
-
-    private static Toast createToast(@Nullable String message, @ColorRes final int bgColor, @ColorRes final int textColor) {
+    private static Toast createCustomToast(@Nullable String message, @ColorRes final int bgColor, @ColorRes final int textColor) {
 
         final ViewHolder viewHolder = new ViewHolder(R.layout.custom_toast, (ViewGroup) ViewExtensions.getContentRoot());
         viewHolder.text.setText(message);
@@ -85,21 +87,21 @@ final public class ToastExtensions {
 
     public static void showSuccessToast(@Nullable final String message) {
         if (!isEmpty(message))
-            createToast(message, R.color.success, R.color.black).show();
+            createCustomToast(message, R.color.success, R.color.black).show();
     }
 
     public static void showInfoToast(@Nullable final String message) {
         if (!isEmpty(message))
-            createToast(message, R.color.info, R.color.black).show();
+            createCustomToast(message, R.color.info, R.color.black).show();
     }
 
     public static void showWarningToast(@Nullable final String message) {
         if (!isEmpty(message))
-            createToast(message, R.color.warning, R.color.black).show();
+            createCustomToast(message, R.color.warning, R.color.black).show();
     }
 
     public static void showDangerToast(@Nullable final String message) {
         if (!isEmpty(message))
-            createToast(message, R.color.danger, R.color.black).show();
+            createCustomToast(message, R.color.danger, R.color.black).show();
     }
 }

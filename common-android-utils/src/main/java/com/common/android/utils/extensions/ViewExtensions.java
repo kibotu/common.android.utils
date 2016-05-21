@@ -532,7 +532,7 @@ final public class ViewExtensions {
     }
 
     public static void clearFocus() {
-        final View currentFocus = getContext().getCurrentFocus();
+        final View currentFocus = getActivity().getCurrentFocus();
         if (currentFocus != null)
             currentFocus.clearFocus();
     }
