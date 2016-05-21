@@ -9,11 +9,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.ColorRes;
@@ -38,17 +40,21 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.common.android.utils.ContextHelper;
 import com.common.android.utils.R;
 import com.common.android.utils.interfaces.ChainableCommand;
 import com.common.android.utils.interfaces.Command;
+import com.common.android.utils.interfaces.MediaDimensions;
 import com.common.android.utils.ui.PicassoBigCache;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -78,7 +84,7 @@ final public class ViewExtensions {
         throw new IllegalAccessException();
     }
 
-    public static boolean isVisible(@NonNull final View view) {
+    public static boolean isInvisibleOrGone(@NonNull final View view) {
         return view.getVisibility() == View.INVISIBLE || view.getVisibility() == View.GONE;
     }
 
@@ -518,5 +524,57 @@ final public class ViewExtensions {
                 return true;
             }
         });
+    }
+
+
+    public static boolean isVisible(@Nullable final View view) {
+        return view != null && view.getVisibility() == View.VISIBLE;
+    }
+
+    public static void clearFocus() {
+        final View currentFocus = getContext().getCurrentFocus();
+        if (currentFocus != null)
+            currentFocus.clearFocus();
+    }
+
+    public static void colorizeProgressBar(@NonNull final ProgressBar progressBar, @ColorRes final int progressDrawable, @ColorRes final int indeterminateDrawable) {
+        progressBar.getProgressDrawable().setColorFilter(ResourceExtensions.color(progressDrawable), PorterDuff.Mode.SRC_IN);
+        progressBar.getIndeterminateDrawable().setColorFilter(ResourceExtensions.color(indeterminateDrawable), PorterDuff.Mode.SRC_IN);
+    }
+
+    public static void setSize(@NonNull final View searchIcon, final int widthInDp, final int heightInDp) {
+        final ViewGroup.LayoutParams params = searchIcon.getLayoutParams();
+        params.width = dpToPx(widthInDp);
+        params.height = dpToPx(heightInDp);
+        searchIcon.setLayoutParams(params);
+    }
+
+
+    /**
+     * Example for handling resizing content for overscan.  Typically you won't need to resize when
+     * using the Leanback support library.
+     */
+    public void overScan(Activity activity, VideoView videoView) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int w = (int) (metrics.widthPixels * MediaDimensions.MEDIA_WIDTH);
+        int h = (int) (metrics.heightPixels * MediaDimensions.MEDIA_HEIGHT);
+        int marginLeft = (int) (metrics.widthPixels * MediaDimensions.MEDIA_LEFT_MARGIN);
+        int marginTop = (int) (metrics.heightPixels * MediaDimensions.MEDIA_TOP_MARGIN);
+        int marginRight = (int) (metrics.widthPixels * MediaDimensions.MEDIA_RIGHT_MARGIN);
+        int marginBottom = (int) (metrics.heightPixels * MediaDimensions.MEDIA_BOTTOM_MARGIN);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(w, h);
+        lp.setMargins(marginLeft, marginTop, marginRight, marginBottom);
+        videoView.setLayoutParams(lp);
+    }
+
+    public static long getDuration(String videoUrl) {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            mmr.setDataSource(videoUrl, new HashMap<String, String>());
+        } else {
+            mmr.setDataSource(videoUrl);
+        }
+        return Long.parseLong(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
     }
 }

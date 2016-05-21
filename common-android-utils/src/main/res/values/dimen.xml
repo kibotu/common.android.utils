@@ -32,4 +32,8 @@
     <dimen name="cover_height">180dp</dimen>
     <dimen name="iconSizeForExpertList">16dp</dimen>
     <dimen name="bonusIconSizeForImageGallery">26dp</dimen>
+
+
+    <dimen name="space_15">15dp</dimen>
+    <dimen name="space_10">10dp</dimen>
 </resources>

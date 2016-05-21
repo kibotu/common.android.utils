@@ -1,2 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <color name="success">#5cb85c</color>
+    <color name="info">#5bc0de</color>
+    <color name="warning">#f0ad4e</color>
+    <color name="danger">#d9534f</color>
+
+    <color name="black">#000</color>
+    <color name="gray_darker">#222</color>
+    <color name="gray_dark">#333</color>
+    <color name="gray">#555</color>
+    <color name="gray_light">#777</color>
+    <color name="gray_lighter">#eee</color>
+    <color name="white">#fff</color>
+
+</resources>
