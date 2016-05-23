@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+0.5.2
+
+    - added java doc plugin
+
 0.5.1
 
     - added amazon remote control listener
