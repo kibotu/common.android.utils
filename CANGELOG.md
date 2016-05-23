@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+0.5.4
+
+    fixed visibility api
+
 0.5.3
 
     - jitpack way of adding javadoc

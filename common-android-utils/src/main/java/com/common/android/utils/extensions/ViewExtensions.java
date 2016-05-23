@@ -87,14 +87,20 @@ final public class ViewExtensions {
     // region visibility
 
     public static void showViews(final boolean isShown, @Nullable final View... views) {
-        if (views == null)
-            return;
-
-        for (final View view : views)
-            view.setVisibility(View.VISIBLE);
+        if (isShown)
+            showViews(views);
+        else
+            hideViews(views);
     }
 
     public static void showViews(final boolean isShown, @Nullable final List<View> views) {
+        if (isShown)
+            showViews(views);
+        else
+            hideViews(views);
+    }
+
+    public static void showViews(@Nullable final View... views) {
         if (views == null)
             return;
 
@@ -102,7 +108,30 @@ final public class ViewExtensions {
             view.setVisibility(View.VISIBLE);
     }
 
-    public static void hideViews(final boolean isShown, @Nullable final View... views) {
+    public static void showViews(@Nullable final List<View> views) {
+        if (views == null)
+            return;
+
+        for (final View view : views)
+            view.setVisibility(View.VISIBLE);
+    }
+
+    public static void hideViews(final boolean isHidden, @Nullable final View... views) {
+        if (isHidden)
+            hideViews(views);
+        else
+            showViews(views);
+
+    }
+
+    public static void hideViews(final boolean isHidden, @Nullable final List<View> views) {
+        if (isHidden)
+            hideViews(views);
+        else
+            showViews(views);
+    }
+
+    public static void hideViews(@Nullable final View... views) {
         if (views == null)
             return;
 
@@ -110,7 +139,7 @@ final public class ViewExtensions {
             view.setVisibility(View.INVISIBLE);
     }
 
-    public static void hideViews(final boolean isShown, @Nullable final List<View> views) {
+    public static void hideViews(@Nullable final List<View> views) {
         if (views == null)
             return;
 
@@ -118,7 +147,22 @@ final public class ViewExtensions {
             view.setVisibility(View.INVISIBLE);
     }
 
-    public static void hideViewsCompletely(final boolean isShown, @Nullable final View... views) {
+    public static void hideViewsCompletely(final boolean isHidden, @Nullable final View... views) {
+        if (isHidden)
+            hideViewsCompletely(views);
+        else
+            showViews(views);
+
+    }
+
+    public static void hideViewsCompletely(final boolean isHidden, @Nullable final List<View> views) {
+        if (isHidden)
+            hideViewsCompletely(views);
+        else
+            showViews(views);
+    }
+
+    public static void hideViewsCompletely(@Nullable final View... views) {
         if (views == null)
             return;
 
@@ -126,7 +170,7 @@ final public class ViewExtensions {
             view.setVisibility(View.GONE);
     }
 
-    public static void hideViewsCompletely(final boolean isShown, @Nullable final List<View> views) {
+    public static void hideViewsCompletely(@Nullable final List<View> views) {
         if (views == null)
             return;
 
