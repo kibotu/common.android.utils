@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: "me.tatarka.retrolambda"
 apply plugin: 'android-apt'
 apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: "com.vanniktech.android.javadoc"
 
 android {
 
