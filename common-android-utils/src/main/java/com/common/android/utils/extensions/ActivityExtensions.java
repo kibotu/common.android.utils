@@ -16,6 +16,7 @@ import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static com.common.android.utils.ContextHelper.getActivity;
 import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.ContextHelper.getFragmentActivity;
 
 /**
  * Created by Jan Rabe on 24/09/15.
@@ -98,17 +99,9 @@ final public class ActivityExtensions {
     }
 
     @Nullable
-    public static AppCompatActivity getAppCompatActivity() {
-        if (getContext() instanceof AppCompatActivity)
-            return (AppCompatActivity) getContext();
-        else
-            return null;
-    }
-
-    @Nullable
     public static ActionBar getSupportActionBar() {
-        return getAppCompatActivity() != null
-                ? getAppCompatActivity().getSupportActionBar()
+        return getFragmentActivity() != null
+                ? ((AppCompatActivity) getFragmentActivity()).getSupportActionBar()
                 : null;
     }
 

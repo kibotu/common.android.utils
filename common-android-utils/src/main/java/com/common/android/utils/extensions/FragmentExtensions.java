@@ -19,7 +19,6 @@ import com.common.android.utils.logging.Logger;
 import com.common.android.utils.ui.recyclerView.Orientation;
 
 import static com.common.android.utils.ContextHelper.getFragmentActivity;
-import static com.common.android.utils.extensions.ActivityExtensions.getAppCompatActivity;
 
 /**
  * Created by Jan Rabe on 29/07/15.
@@ -69,11 +68,11 @@ final public class FragmentExtensions {
     }
 
     public static Fragment currentFragment(@IdRes final int container) {
-        return getAppCompatActivity().getSupportFragmentManager().findFragmentById(container);
+        return getFragmentActivity().getSupportFragmentManager().findFragmentById(container);
     }
 
     public static Fragment currentFragment() {
-        return getAppCompatActivity().getSupportFragmentManager().findFragmentById(getFragmentContainerId());
+        return getFragmentActivity().getSupportFragmentManager().findFragmentById(getFragmentContainerId());
     }
 
     @NonNull
@@ -89,7 +88,7 @@ final public class FragmentExtensions {
         if (!LOGGING_ENABLED)
             return;
 
-        final FragmentManager fm = getAppCompatActivity().getSupportFragmentManager();
+        final FragmentManager fm = getFragmentActivity().getSupportFragmentManager();
         Log.v(TAG, "Current BackStack:  " + fm.getBackStackEntryCount());
         for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
             final FragmentManager.BackStackEntry stackEntry = fm.getBackStackEntryAt(entry);
@@ -144,19 +143,19 @@ final public class FragmentExtensions {
     public static void popBackStackImmediate() {
         if (LOGGING_ENABLED)
             Logger.v(TAG, "[popBackStackImmediate]");
-        getAppCompatActivity().getSupportFragmentManager().popBackStackImmediate();
+        getFragmentActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 
     public static void popBackStack() {
         if (LOGGING_ENABLED)
             Logger.v(TAG, "[popBackStack]");
-        getAppCompatActivity().getSupportFragmentManager().popBackStack();
+        getFragmentActivity().getSupportFragmentManager().popBackStack();
     }
 
     public static void clearBackStack() {
         if (LOGGING_ENABLED)
             Logger.v(TAG, "[clearBackStack]");
-        getAppCompatActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getFragmentActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @NonNull
@@ -164,7 +163,7 @@ final public class FragmentExtensions {
         FragmentExtensions.printBackStack();
         if (LOGGING_ENABLED)
             Logger.v(TAG, "[beginTransaction]");
-        return t -> getAppCompatActivity().getSupportFragmentManager().beginTransaction();
+        return t -> getFragmentActivity().getSupportFragmentManager().beginTransaction();
     }
 
     @NonNull

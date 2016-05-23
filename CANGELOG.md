@@ -1,6 +1,7 @@
 Changelog
 ---------
 
+0.5.6
 0.5.5
 
     changed appcompat activity to fragment activity in context helper
