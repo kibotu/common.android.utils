@@ -84,23 +84,85 @@ final public class ViewExtensions {
         throw new IllegalAccessException();
     }
 
-    public static boolean isInvisibleOrGone(@NonNull final View view) {
-        return view.getVisibility() == View.INVISIBLE || view.getVisibility() == View.GONE;
+    // region visibility
+
+    public static void showViews(final boolean isShown, @Nullable final View... views) {
+        if (views == null)
+            return;
+
+        for (final View view : views)
+            view.setVisibility(View.VISIBLE);
     }
 
-    public static void toggleViewsVisibilityGone(@NonNull final View... views) {
+    public static void showViews(final boolean isShown, @Nullable final List<View> views) {
+        if (views == null)
+            return;
+
+        for (final View view : views)
+            view.setVisibility(View.VISIBLE);
+    }
+
+    public static void hideViews(final boolean isShown, @Nullable final View... views) {
+        if (views == null)
+            return;
+
+        for (final View view : views)
+            view.setVisibility(View.INVISIBLE);
+    }
+
+    public static void hideViews(final boolean isShown, @Nullable final List<View> views) {
+        if (views == null)
+            return;
+
+        for (final View view : views)
+            view.setVisibility(View.INVISIBLE);
+    }
+
+    public static void hideViewsCompletely(final boolean isShown, @Nullable final View... views) {
+        if (views == null)
+            return;
+
+        for (final View view : views)
+            view.setVisibility(View.GONE);
+    }
+
+    public static void hideViewsCompletely(final boolean isShown, @Nullable final List<View> views) {
+        if (views == null)
+            return;
+
+        for (final View view : views)
+            view.setVisibility(View.GONE);
+    }
+
+    public static boolean isVisible(@Nullable final View view) {
+        return view != null && view.getVisibility() == View.VISIBLE;
+    }
+
+    public static boolean isInvisibleOrGone(@Nullable final View view) {
+        return view != null && (view.getVisibility() == View.INVISIBLE || view.getVisibility() == View.GONE);
+    }
+
+    public static void toggleViewsVisibilityGone(@Nullable final View... views) {
+        if (views == null)
+            return;
+
         for (final View view : views)
             view.setVisibility(view.getVisibility() == View.GONE
                     ? View.VISIBLE
                     : View.GONE);
     }
 
-    public static void toggleViewsVisibility(@NonNull final View... views) {
+    public static void toggleViewsVisibility(@Nullable final View... views) {
+        if (views == null)
+            return;
+
         for (final View view : views)
             view.setVisibility(view.getVisibility() == View.INVISIBLE
                     ? View.VISIBLE
                     : View.INVISIBLE);
     }
+
+    // endregion
 
 
     public static void loadInto(final String imageURL, final ImageView imageView) {
@@ -195,7 +257,12 @@ final public class ViewExtensions {
     }
 
 
-    public static void setFont(@NonNull final Typeface font, @NonNull final ArrayList<View> views) {
+    public static void setFont(@Nullable final Typeface font, @Nullable final ArrayList<View> views) {
+        if (font == null)
+            return;
+
+        if (views == null)
+            return;
 
         final List<TextView> textViews = new ArrayList<>();
         for (final View view : views) {
@@ -205,45 +272,6 @@ final public class ViewExtensions {
 
         for (final TextView v : textViews)
             v.setTypeface(font);
-    }
-
-    public static void showView(@Nullable final View v, final boolean isShown) {
-        if (v == null)
-            return;
-
-        v.setVisibility(isShown
-                ? View.VISIBLE
-                : View.GONE);
-    }
-
-    public static void showViews(@NonNull final View... views) {
-        for (final View view : views)
-            view.setVisibility(View.VISIBLE);
-    }
-
-    public static void showViews(@NonNull final List<View> views) {
-        for (final View view : views)
-            view.setVisibility(View.VISIBLE);
-    }
-
-    public static void hideViews(@NonNull final View... views) {
-        for (final View view : views)
-            view.setVisibility(View.INVISIBLE);
-    }
-
-    public static void hideViews(@NonNull final List<View> views) {
-        for (final View view : views)
-            view.setVisibility(View.INVISIBLE);
-    }
-
-    public static void hideViewsCompletely(@NonNull final View... views) {
-        for (final View view : views)
-            view.setVisibility(View.GONE);
-    }
-
-    public static void hideViewsCompletely(@NonNull final List<View> views) {
-        for (final View view : views)
-            view.setVisibility(View.GONE);
     }
 
     @NonNull
@@ -471,7 +499,7 @@ final public class ViewExtensions {
         });
     }
 
-    public static void smoothScroll(@android.support.annotation.Nullable final RecyclerView scrollableParent, final int dx, final int dy) {
+    public static void smoothScroll(@Nullable final RecyclerView scrollableParent, final int dx, final int dy) {
         if ((dx == 0 && dy == 0) || scrollableParent == null) {
             return;
         }
@@ -524,11 +552,6 @@ final public class ViewExtensions {
                 return true;
             }
         });
-    }
-
-
-    public static boolean isVisible(@Nullable final View view) {
-        return view != null && view.getVisibility() == View.VISIBLE;
     }
 
     public static void clearFocus() {
