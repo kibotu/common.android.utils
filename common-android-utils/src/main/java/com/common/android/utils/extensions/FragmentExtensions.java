@@ -18,7 +18,8 @@ import com.common.android.utils.interfaces.annotations.Transit;
 import com.common.android.utils.logging.Logger;
 import com.common.android.utils.ui.recyclerView.Orientation;
 
-import static com.common.android.utils.ContextHelper.getAppCompatActivity;
+import static com.common.android.utils.ContextHelper.getFragmentActivity;
+import static com.common.android.utils.extensions.ActivityExtensions.getAppCompatActivity;
 
 /**
  * Created by Jan Rabe on 29/07/15.
@@ -64,7 +65,7 @@ final public class FragmentExtensions {
     // region misc
 
     public static boolean isInRoot() {
-        return getAppCompatActivity().getSupportFragmentManager().getBackStackEntryCount() == 0;
+        return getFragmentActivity().getSupportFragmentManager().getBackStackEntryCount() == 0;
     }
 
     public static Fragment currentFragment(@IdRes final int container) {
