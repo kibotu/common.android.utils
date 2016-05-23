@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+0.5.3
+
+    - jitpack way of adding javadoc
+
 0.5.2
 
     - added java doc plugin
