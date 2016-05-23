@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+0.5.1
+
+    - added amazon remote control listener
+    - defensive null checks in view extension class
+
 0.5.0
 
     - Moved menu to https://github.com/kibotu/MaterialMenu
