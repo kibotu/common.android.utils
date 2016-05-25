@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+0.5.7
+
+    - more null checks in visibility methods
+    
 0.5.6
 0.5.5
 

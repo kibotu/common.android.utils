@@ -136,7 +136,8 @@ final public class ViewExtensions {
             return;
 
         for (final View view : views)
-            view.setVisibility(View.INVISIBLE);
+            if (view != null)
+                view.setVisibility(View.INVISIBLE);
     }
 
     public static void hideViews(@Nullable final List<View> views) {
@@ -144,7 +145,8 @@ final public class ViewExtensions {
             return;
 
         for (final View view : views)
-            view.setVisibility(View.INVISIBLE);
+            if (view != null)
+                view.setVisibility(View.INVISIBLE);
     }
 
     public static void hideViewsCompletely(final boolean isHidden, @Nullable final View... views) {
@@ -167,7 +169,8 @@ final public class ViewExtensions {
             return;
 
         for (final View view : views)
-            view.setVisibility(View.GONE);
+            if (view != null)
+                view.setVisibility(View.GONE);
     }
 
     public static void hideViewsCompletely(@Nullable final List<View> views) {
@@ -175,7 +178,8 @@ final public class ViewExtensions {
             return;
 
         for (final View view : views)
-            view.setVisibility(View.GONE);
+            if (view != null)
+                view.setVisibility(View.GONE);
     }
 
     public static boolean isVisible(@Nullable final View view) {
@@ -191,9 +195,10 @@ final public class ViewExtensions {
             return;
 
         for (final View view : views)
-            view.setVisibility(view.getVisibility() == View.GONE
-                    ? View.VISIBLE
-                    : View.GONE);
+            if (view != null)
+                view.setVisibility(view.getVisibility() == View.GONE
+                        ? View.VISIBLE
+                        : View.GONE);
     }
 
     public static void toggleViewsVisibility(@Nullable final View... views) {
@@ -201,9 +206,10 @@ final public class ViewExtensions {
             return;
 
         for (final View view : views)
-            view.setVisibility(view.getVisibility() == View.INVISIBLE
-                    ? View.VISIBLE
-                    : View.INVISIBLE);
+            if (view != null)
+                view.setVisibility(view.getVisibility() == View.INVISIBLE
+                        ? View.VISIBLE
+                        : View.INVISIBLE);
     }
 
     // endregion
