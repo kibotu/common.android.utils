@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by Jan Rabe on 30/09/15.
@@ -46,6 +47,12 @@ public class ContextHelper {
     public static FragmentActivity getFragmentActivity() {
         return context instanceof FragmentActivity
                 ? (FragmentActivity) context
+                : null;
+    }
+    @Nullable
+    public static AppCompatActivity getAppCompatActivity() {
+        return context instanceof AppCompatActivity
+                ? (AppCompatActivity) context
                 : null;
     }
 
