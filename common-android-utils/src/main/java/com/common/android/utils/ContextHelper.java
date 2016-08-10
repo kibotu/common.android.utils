@@ -9,57 +9,86 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by Jan Rabe on 30/09/15.
  */
 public class ContextHelper {
 
     @Nullable
-    private static Application application;
+    private static WeakReference<Application> application;
 
     @Nullable
-    private static Context context;
+    private static WeakReference<Context> context;
 
-    public ContextHelper() throws IllegalAccessException {
+    private ContextHelper() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 
-    public static void init(@NonNull final Application application) {
-        ContextHelper.application = application;
+    public static void with(@NonNull final Application application) {
+        ContextHelper.application = new WeakReference<>(application);
         application.registerActivityLifecycleCallbacks(createActivityLifecycleCallbacks());
     }
 
+    public static void setApplication(@Nullable Application application) {
+        if (application == null) {
+            ContextHelper.application = null;
+        }
+
+        ContextHelper.application = new WeakReference<>(application);
+    }
+
     public static void setContext(@Nullable final Context context) {
-        ContextHelper.context = context;
+        if (context == null) {
+            ContextHelper.context = null;
+            return;
+        }
+
+        ContextHelper.context = new WeakReference<>(context);
     }
 
     @Nullable
     public static Application getApplication() {
-        return application;
+        return application != null
+                ? application.get()
+                : null;
     }
 
     @Nullable
     public static Context getContext() {
-        return context;
+        return context != null
+                ? context.get()
+                : null;
     }
 
     @Nullable
     public static FragmentActivity getFragmentActivity() {
-        return context instanceof FragmentActivity
-                ? (FragmentActivity) context
+        if (context == null)
+            return null;
+
+        return context.get() instanceof FragmentActivity
+                ? (FragmentActivity) context.get()
                 : null;
     }
+
     @Nullable
     public static AppCompatActivity getAppCompatActivity() {
-        return context instanceof AppCompatActivity
-                ? (AppCompatActivity) context
+        if (context == null)
+            return null;
+
+        return context.get() instanceof AppCompatActivity
+                ? (AppCompatActivity) context.get()
                 : null;
     }
 
     @Nullable
     public static Activity getActivity() {
-        return context instanceof Activity
-                ? (Activity) context
+        if (context == null)
+            return null;
+
+        return context.get() instanceof Activity
+                ? (Activity) context.get()
                 : null;
     }
 
@@ -72,12 +101,12 @@ public class ContextHelper {
 
             @Override
             public void onActivityStarted(Activity activity) {
-
+                setContext(activity);
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
-
+                setContext(activity);
             }
 
             @Override
@@ -100,5 +129,18 @@ public class ContextHelper {
 
             }
         };
+    }
+
+    public static void onTerminate() {
+
+        if (context != null)
+            context.clear();
+
+        context = null;
+
+        if (application != null)
+            application.clear();
+
+        application = null;
     }
 }
