@@ -38,4 +38,9 @@ final public class CollectionExtensions {
     public static boolean isEmpty(@Nullable Map<?, ?> map) {
         return map == null || map.isEmpty();
     }
+
+    public static <T> boolean isEmpty(T[] l) {
+        return l == null || l.length < 1;
+    }
+
 }
