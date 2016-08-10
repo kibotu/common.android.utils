@@ -9,6 +9,9 @@ import android.view.ContextThemeWrapper;
 
 import java.util.Locale;
 
+import static com.common.android.utils.ContextHelper.getActivity;
+import static com.common.android.utils.extensions.ResourceExtensions.getResources;
+
 public class LocaleExtensions {
 
     private static Locale locale;
@@ -37,4 +40,14 @@ public class LocaleExtensions {
             res.updateConfiguration(config, res.getDisplayMetrics());
         }
     }
+
+    public static void restartInLocale(Locale locale) {
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        Resources resources = getResources();
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        getActivity().recreate();
+    }
+
 }
