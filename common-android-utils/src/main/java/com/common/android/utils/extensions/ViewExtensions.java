@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -14,17 +15,24 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RawRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.widget.AppCompatDrawableManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -37,6 +45,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -45,11 +55,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.RemoteViews;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.common.android.utils.ContextHelper;
 import com.common.android.utils.R;
 import com.common.android.utils.interfaces.ChainableCommand;
@@ -63,6 +76,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +90,7 @@ import static com.common.android.utils.extensions.BitmapExtensions.getBitmap;
 import static com.common.android.utils.extensions.DeviceExtensions.hideKeyboard;
 import static com.common.android.utils.extensions.MathExtensions.dpToPx;
 import static com.common.android.utils.extensions.MathExtensions.roundToInt;
+import static com.common.android.utils.extensions.ResourceExtensions.color;
 
 /**
  * Created by Jan Rabe on 24/09/15.
@@ -105,7 +122,8 @@ final public class ViewExtensions {
             return;
 
         for (final View view : views)
-            view.setVisibility(View.VISIBLE);
+            if (view != null)
+                view.setVisibility(View.VISIBLE);
     }
 
     public static void showViews(@Nullable final List<View> views) {
@@ -113,7 +131,8 @@ final public class ViewExtensions {
             return;
 
         for (final View view : views)
-            view.setVisibility(View.VISIBLE);
+            if (view != null)
+                view.setVisibility(View.VISIBLE);
     }
 
     public static void hideViews(final boolean isHidden, @Nullable final View... views) {
@@ -649,5 +668,134 @@ final public class ViewExtensions {
             mmr.setDataSource(videoUrl);
         }
         return Long.parseLong(mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+    }
+
+    public static void changeStatusBarColorRes(@ColorRes final int color) {
+        changeStatusBarColor(color(color));
+    }
+
+    public static void changeStatusBarColor(@ColorInt final int color) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            return;
+
+        final Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(color);
+    }
+
+    public static int getBackgroundColor(@Nullable final View view) {
+        if (view != null && view.getBackground() instanceof ColorDrawable)
+            return ((ColorDrawable) view.getBackground()).getColor();
+
+        return color(android.R.color.transparent);
+    }
+
+    public static void forceRipple(View view) {
+        forceRipple(view, (int) (view.getX() - view.getWidth() / 2f), (int) (view.getY() - view.getHeight() / 2f));
+    }
+
+    /**
+     * see <a href="http://stackoverflow.com/a/38242102">how-to-trigger-ripple-effect-on-android-lollipop-in-specific-location</a>
+     */
+    public static void forceRipple(View view, int x, int y) {
+        Drawable background = view.getBackground();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && background instanceof RippleDrawable) {
+            background.setHotspot(x, y);
+        }
+        view.setPressed(true);
+        // For a quick ripple, you can immediately set false.
+        view.setPressed(false);
+    }
+
+    @Nullable
+    public static Drawable scaleImage(@Nullable Drawable image, float scaleFactor) {
+
+        if ((image == null) || !(image instanceof BitmapDrawable)) {
+            return image;
+        }
+
+        Bitmap b = ((BitmapDrawable) image).getBitmap();
+
+        int sizeX = Math.round(image.getIntrinsicWidth() * scaleFactor);
+        int sizeY = Math.round(image.getIntrinsicHeight() * scaleFactor);
+
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, sizeX, sizeY, false);
+
+        image = new BitmapDrawable(getContext().getResources(), bitmapResized);
+
+        return image;
+
+    }
+
+    public static void useCompatVectorIfNeeded() {
+        int sdkInt = Build.VERSION.SDK_INT;
+        if (sdkInt == 21 || sdkInt == 22) { //vector drawables scale correctly in API level 23
+            try {
+                AppCompatDrawableManager drawableManager = AppCompatDrawableManager.get();
+                Class<?> inflateDelegateClass = Class.forName("android.support.v7.widget.AppCompatDrawableManager$InflateDelegate");
+                Class<?> vdcInflateDelegateClass = Class.forName("android.support.v7.widget.AppCompatDrawableManager$VdcInflateDelegate");
+
+                Constructor<?> constructor = vdcInflateDelegateClass.getDeclaredConstructor();
+                constructor.setAccessible(true);
+                Object vdcInflateDelegate = constructor.newInstance();
+
+                Class<?> args[] = {String.class, inflateDelegateClass};
+                Method addDelegate = AppCompatDrawableManager.class.getDeclaredMethod("addDelegate", args);
+                addDelegate.setAccessible(true);
+                addDelegate.invoke(drawableManager, "vector", vdcInflateDelegate);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * http://stackoverflow.com/a/35633411/957370
+     *
+     * @param imageView
+     * @param vector
+     */
+    public static void setVectorDrawable(@IdRes final int imageView, @DrawableRes final int vector, @LayoutRes final int mainLayoutId) {
+        final RemoteViews remoteViews = new RemoteViews(getContext().getPackageName(), mainLayoutId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            remoteViews.setImageViewResource(imageView, vector);
+        } else {
+            final Drawable d = AppCompatDrawableManager.get().getDrawable(getContext(), vector);
+            final Bitmap b = Bitmap.createBitmap(d.getIntrinsicWidth(), d.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            final Canvas c = new Canvas(b);
+            d.setBounds(0, 0, c.getWidth(), c.getHeight());
+            d.draw(c);
+            remoteViews.setImageViewBitmap(imageView, b);
+        }
+    }
+
+
+    public static void setRoundedImage(@NonNull final ImageView imageView, @DrawableRes final int drawable) {
+        Glide.with(getContext()).load(drawable).asBitmap().centerCrop().into(createRoundImageTarget(imageView));
+    }
+
+    public static void setRoundedImage(@NonNull final ImageView imageView, @NonNull final String url) {
+        Glide.with(getContext()).load(url).asBitmap().centerCrop().into(createRoundImageTarget(imageView));
+    }
+
+    @NonNull
+    private static BitmapImageViewTarget createRoundImageTarget(@NonNull final ImageView imageView) {
+        return new BitmapImageViewTarget(imageView) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                final RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
+                drawable.setCircular(true);
+                imageView.setImageDrawable(drawable);
+            }
+        };
     }
 }
