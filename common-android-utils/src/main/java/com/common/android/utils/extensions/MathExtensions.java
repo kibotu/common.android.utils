@@ -38,9 +38,19 @@ final public class MathExtensions {
         return Math.max(min, Math.min(max, val));
     }
 
-    public static float pxToDp(final int px) {
+    public static int pxToDp(final int px) {
+        final float pixel = px;
+        return (int) (pixel / getDensity());
+    }
+
+    public static float pxToDp(final float px) {
         final float pixel = px;
         return (pixel / getDensity());
+    }
+
+    public static float dpToPx(final float dp) {
+        final float scale = getDensity();
+        return (dp * scale + 0.5f);
     }
 
     public static int dpToPx(final int dp) {
@@ -59,4 +69,5 @@ final public class MathExtensions {
     public static int roundToInt(final double v) {
         return (int) (v + 0.5);
     }
+
 }
