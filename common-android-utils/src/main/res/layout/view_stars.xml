@@ -1,122 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
 
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.common.android.utils.ui.components.HeightSquaredImageView
-                android:scaleType="fitCenter"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_empty"/>
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_empty" />
 
         <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
 
         <com.common.android.utils.ui.components.HeightSquaredImageView
-                android:scaleType="fitCenter"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_empty"/>
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_empty" />
 
         <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
 
         <com.common.android.utils.ui.components.HeightSquaredImageView
-                android:scaleType="fitCenter"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_empty"/>
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_empty" />
 
         <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
 
         <com.common.android.utils.ui.components.HeightSquaredImageView
-                android:scaleType="fitCenter"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_empty"/>
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_empty" />
 
         <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
 
         <com.common.android.utils.ui.components.HeightSquaredImageView
-                android:scaleType="fitCenter"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_empty"/>
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_empty" />
 
     </LinearLayout>
 
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.common.android.utils.ui.components.HorizontalClippingImageView
-                android:id="@+id/full_star0"
-                android:scaleType="fitCenter"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_full"/>
+            android:id="@+id/full_star0"
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_full" />
 
         <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
 
         <com.common.android.utils.ui.components.HorizontalClippingImageView
-                android:id="@+id/full_star1"
-                android:scaleType="fitCenter"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_full"/>
+            android:id="@+id/full_star1"
+            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_full" />
 
         <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
 
         <com.common.android.utils.ui.components.HorizontalClippingImageView
-                android:id="@+id/full_star2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_full"/>
+            android:id="@+id/full_star2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_full" />
 
         <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
 
         <com.common.android.utils.ui.components.HorizontalClippingImageView
-                android:id="@+id/full_star3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_full"/>
+            android:id="@+id/full_star3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_full" />
 
         <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
 
         <com.common.android.utils.ui.components.HorizontalClippingImageView
-                android:id="@+id/full_star4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/star_full"/>
+            android:id="@+id/full_star4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/star_full" />
 
     </LinearLayout>
 

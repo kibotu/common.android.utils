@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import com.common.android.utils.BuildConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,7 @@ public enum KeyEventDelegate implements KeyListener {
 
     instance;
 
-    public static boolean LOGGING_ENABLED = com.orhanobut.wasp.BuildConfig.DEBUG;
+    public static boolean LOGGING_ENABLED = BuildConfig.DEBUG;
 
     public static boolean isLoggingEnabled() {
         return LOGGING_ENABLED;

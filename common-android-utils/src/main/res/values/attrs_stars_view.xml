@@ -1,5 +1,5 @@
 <resources>
     <declare-styleable name="StarsView">
-        <attr name="rating" format="float"/>
+        <attr name="rating" format="float" />
     </declare-styleable>
 </resources>

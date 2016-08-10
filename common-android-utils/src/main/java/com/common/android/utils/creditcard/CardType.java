@@ -13,6 +13,7 @@ import static android.text.TextUtils.isEmpty;
  * Also see:
  * <p>
  * http://www.richardsramblings.com/regex/credit-card-numbers/
+ * https://gist.github.com/claudiosmweb/26d9668f21dbdc787472
  */
 public enum CardType {
 
