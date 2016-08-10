@@ -19,7 +19,7 @@ public class SnackbarExtensions {
         snackbar.setActionTextColor(color(textColor));
         View sbView = snackbar.getView();
         sbView.setBackgroundColor(color(bgColor));
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = (TextView) sbView.findViewById(R.id.snackbar_text);
         textView.setTextColor(color(textColor));
         textView.setMaxLines(2);
         return snackbar;
