@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.common.android.utils.BuildConfig;
+import com.common.android.utils.ContextHelper;
 import com.common.android.utils.R;
 import com.common.android.utils.interfaces.ChainableCommand;
 import com.common.android.utils.interfaces.LogTag;
@@ -184,6 +185,16 @@ final public class FragmentExtensions {
     public static void commit(@NonNull final ChainableCommand<FragmentTransaction> command) {
         if (LOGGING_ENABLED)
             Logger.v(TAG, "[commit]");
+
+        // trying to fix:
+        //
+        // 'Fatal Exception: java.lang.IllegalStateExceptio
+        // Can not perform this action after onSaveInstanceState'
+        //
+        // see http://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html
+        if (!ContextHelper.isRunning.get())
+            return;
+
         command.execute(null).commit(); // intended 'null' so we can decorate in arbitrary order
         printBackStack();
     }

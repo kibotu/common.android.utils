@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 
 import java.lang.ref.WeakReference;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by Jan Rabe on 30/09/15.
@@ -92,31 +93,36 @@ public class ContextHelper {
                 : null;
     }
 
+    public static final AtomicBoolean isRunning = new AtomicBoolean(false);
+
     private static Application.ActivityLifecycleCallbacks createActivityLifecycleCallbacks() {
         return new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 setContext(activity);
+                isRunning.set(true);
             }
 
             @Override
             public void onActivityStarted(Activity activity) {
                 setContext(activity);
+                isRunning.set(true);
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
                 setContext(activity);
+                isRunning.set(true);
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-
+                isRunning.set(false);
             }
 
             @Override
             public void onActivityStopped(Activity activity) {
-
+                isRunning.set(false);
             }
 
             @Override
@@ -126,7 +132,7 @@ public class ContextHelper {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-
+                isRunning.set(false);
             }
         };
     }
@@ -142,5 +148,7 @@ public class ContextHelper {
             application.clear();
 
         application = null;
+
+        isRunning.set(false);
     }
 }
