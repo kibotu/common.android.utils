@@ -36,6 +36,22 @@ public class ObservableRxList<T> {
         for (ListIterator<T> it = list.listIterator(); it.hasNext(); ) {
             final int index = it.nextIndex();
             T next = it.next();
+            if (value.equals(next)) {
+                it.set(value);
+                subject.onNext(new RxListItem<>(ChangeType.UPDATE, index, value));
+                return;
+            }
+        }
+    }
+
+    public boolean contains(T dispenser) {
+        return list.contains(dispenser);
+    }
+
+    public void updateByReference(T value) {
+        for (ListIterator<T> it = list.listIterator(); it.hasNext(); ) {
+            final int index = it.nextIndex();
+            T next = it.next();
             if (value == next) {
                 it.set(value);
                 subject.onNext(new RxListItem<>(ChangeType.UPDATE, index, value));
