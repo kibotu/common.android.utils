@@ -36,9 +36,7 @@ final public class ResourceExtensions {
     }
 
     public static int color(@ColorRes final int color) {
-        return SDK_INT >= Build.VERSION_CODES.M
-                ? ContextCompat.getColor(getContext(), color)
-                : getResources().getColor(color);
+        return ContextCompat.getColor(getContext(), color);
     }
 
     @Nullable
