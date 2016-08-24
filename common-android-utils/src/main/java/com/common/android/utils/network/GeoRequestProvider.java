@@ -42,7 +42,7 @@ public class GeoRequestProvider {
      * http://freegeoip.net/json/{$ip} //10k requests per hour
      */
     @NonNull
-    private static FreeGeoIpService freeGeoIpService() {
+    public static FreeGeoIpService freeGeoIpService() {
 
         final OkHttpClient client = createHttpLoggingInterceptor();
 
