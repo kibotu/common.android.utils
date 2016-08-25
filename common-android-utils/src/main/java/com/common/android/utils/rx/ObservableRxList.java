@@ -21,7 +21,13 @@ public class ObservableRxList<T> {
         this.subject = PublishSubject.create();
     }
 
+    /**
+     * Note: Swallowing <code>null</code> values.
+     */
     public void add(T value) {
+        if (value == null)
+            return;
+
         list.add(value);
         subject.onNext(new RxListItem<>(ChangeType.ADD, list.size() - 1, value));
     }
@@ -74,7 +80,7 @@ public class ObservableRxList<T> {
 
     public void clear() {
         list.clear();
-        subject.onNext(new RxListItem<>(ChangeType.CLEAR, -1, null));
+        subject.onNext(new RxListItem<T>(ChangeType.CLEAR, -1, null));
     }
 
     public void remove(T value) {
