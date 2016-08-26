@@ -50,6 +50,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -797,5 +798,9 @@ final public class ViewExtensions {
                 imageView.setImageDrawable(drawable);
             }
         };
+    }
+
+    public static void setEditTextUnderlineColor(EditText editText, @ColorRes int colorId) {
+        editText.getBackground().setColorFilter(color(colorId), PorterDuff.Mode.SRC_IN);
     }
 }

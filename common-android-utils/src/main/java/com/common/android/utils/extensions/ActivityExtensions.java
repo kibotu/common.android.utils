@@ -1,5 +1,8 @@
 package com.common.android.utils.extensions;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -116,5 +119,20 @@ final public class ActivityExtensions {
 
     public static String prependMarketUrl(@NonNull final String packageName) {
         return "market://details?id=" + packageName;
+    }
+
+    public static <T extends Service> boolean isServiceRunning(@NonNull final Class<T> serviceClass) {
+        final ActivityManager manager = (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isInForeground() {
+        Activity activity = getActivity();
+        return activity != null && !activity.isFinishing() && activity.getWindow() != null;
     }
 }

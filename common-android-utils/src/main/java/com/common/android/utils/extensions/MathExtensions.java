@@ -70,4 +70,24 @@ final public class MathExtensions {
         return (int) (v + 0.5);
     }
 
+    public static float interpolateBetween(float value, float min, float max) {
+        return value * (max - min) + 0.4f;
+    }
+
+    public static float randomRange(float start, float end) {
+        return new Random().nextFloat() * (start - end) + start;
+    }
+
+    public static float nearestNumber(float number, float... numbers) {
+        float distance = Math.abs(numbers[0] - number);
+        int index = 0;
+        for (int c = 1; c < numbers.length; c++) {
+            float cDistance = Math.abs(numbers[c] - number);
+            if (cDistance < distance) {
+                index = c;
+                distance = cDistance;
+            }
+        }
+        return numbers[index];
+    }
 }
