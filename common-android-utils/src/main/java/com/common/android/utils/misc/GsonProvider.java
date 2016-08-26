@@ -13,6 +13,11 @@ public class GsonProvider {
     @NonNull
     private static final Gson gson = new GsonBuilder()
             .disableHtmlEscaping()
+            .create();
+
+    @NonNull
+    private static final Gson gsonPretty = new GsonBuilder()
+            .disableHtmlEscaping()
             .setPrettyPrinting()
             .create();
 
@@ -23,5 +28,10 @@ public class GsonProvider {
     @NonNull
     public static Gson getGson() {
         return gson;
+    }
+
+    @NonNull
+    public static Gson getPrettyPrinting() {
+        return gsonPretty;
     }
 }
