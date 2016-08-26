@@ -29,7 +29,7 @@ final public class Logger {
      * @param logger - Concrete Logger.
      * @param level  - Logging level.
      */
-    private static void setLogger(@NonNull final ILogger logger, @NonNull final Level level) {
+    public static void setLogger(@NonNull final ILogger logger, @NonNull final Level level) {
         Logger.logger = logger;
         Logger.logLevel = level;
     }
