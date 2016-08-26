@@ -3,7 +3,11 @@ package com.common.android.utils.logging;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.common.android.utils.ContextHelper.getContext;
+import static com.common.android.utils.extensions.CollectionExtensions.isEmpty;
 
 /**
  * Static logging facet for concrete device specific logger.
@@ -16,12 +20,21 @@ final public class Logger {
      * Logging level.
      */
     @NonNull
-    private static Level logLevel;
+    private static Level logLevel = Level.DEBUG;
     /**
      * Concrete Logger.
      */
     @Nullable
-    private static ILogger logger;
+    private static final List<ILogger> loggers = new ArrayList<>();
+
+    /**
+     * Constructor.
+     *
+     * @param logger - Concrete Logger.
+     */
+    public static void addLogger(@NonNull final ILogger logger) {
+        Logger.loggers.add(logger);
+    }
 
     /**
      * Constructor.
@@ -29,8 +42,8 @@ final public class Logger {
      * @param logger - Concrete Logger.
      * @param level  - Logging level.
      */
-    public static void setLogger(@NonNull final ILogger logger, @NonNull final Level level) {
-        Logger.logger = logger;
+    private static void addLogger(@NonNull final ILogger logger, @NonNull final Level level) {
+        addLogger(logger);
         Logger.logLevel = level;
     }
 
@@ -50,8 +63,8 @@ final public class Logger {
      * @param logLevel new logging level.
      */
     public static void setLogLevel(@NonNull final Level logLevel) {
-        if (logger == null)
-            setLogger(new LogcatLogger(), logLevel);
+        if (isEmpty(loggers))
+            addLogger(new LogcatLogger());
         else
             Logger.logLevel = logLevel;
     }
@@ -63,8 +76,8 @@ final public class Logger {
      * @return true if logging is allowed.
      */
     private static boolean allowLogging(@NonNull final Level level) {
-        if (logger == null)
-            setLogger(new LogcatLogger(), Level.VERBOSE);
+        if (isEmpty(loggers))
+            addLogger(new LogcatLogger(), Level.VERBOSE);
         return logLevel.compareTo(level) <= 0;
     }
 
@@ -74,7 +87,9 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void v(@NonNull final String tag, @Nullable final String message) {
-        if (allowLogging(Level.VERBOSE)) logger.verbose(tag, "" + message);
+        if (allowLogging(Level.VERBOSE))
+            for (ILogger logger : loggers)
+                logger.verbose(tag, "" + message);
     }
 
     /**
@@ -83,7 +98,8 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void d(@NonNull final String tag, @Nullable final String message) {
-        if (allowLogging(Level.DEBUG)) logger.debug(tag, "" + message);
+        if (allowLogging(Level.DEBUG))
+            for (ILogger logger : loggers) logger.debug(tag, "" + message);
     }
 
     /**
@@ -92,7 +108,9 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void i(@NonNull final String tag, @Nullable final String message) {
-        if (allowLogging(Level.INFO)) logger.information(tag, "" + message);
+        if (allowLogging(Level.INFO))
+            for (ILogger logger : loggers)
+                logger.information(tag, "" + message);
     }
 
     /**
@@ -101,7 +119,9 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void w(@NonNull final String tag, @Nullable final String message) {
-        if (allowLogging(Level.WARNING)) logger.warning(tag, "" + message);
+        if (allowLogging(Level.WARNING))
+            for (ILogger logger : loggers)
+                logger.warning(tag, "" + message);
     }
 
     /**
@@ -110,7 +130,9 @@ final public class Logger {
      * @param message - Actual logging message.
      */
     public static void e(@NonNull final String tag, @Nullable final String message) {
-        if (allowLogging(Level.ERROR)) logger.error(tag, "" + message);
+        if (allowLogging(Level.ERROR))
+            for (ILogger logger : loggers)
+                logger.error(tag, "" + message);
     }
 
     /**
@@ -154,7 +176,9 @@ final public class Logger {
     }
 
     public static void toast(@Nullable final String message) {
-        if (allowLogging(Level.INFO)) logger.toast(message);
+        if (allowLogging(Level.INFO))
+            for (ILogger logger : loggers)
+                logger.toast(message);
     }
 
     /**
