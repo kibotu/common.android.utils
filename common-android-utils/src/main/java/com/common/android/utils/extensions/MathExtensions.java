@@ -75,7 +75,7 @@ final public class MathExtensions {
     }
 
     public static float randomRange(float start, float end) {
-        return new Random().nextFloat() * (start - end) + start;
+        return new Random().nextFloat() * (end - start) + start;
     }
 
     public static float nearestNumber(float number, float... numbers) {
