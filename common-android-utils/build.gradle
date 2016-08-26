@@ -73,6 +73,9 @@ dependencies {
 
     // rx
     compile 'io.reactivex:rxandroid:1.2.1'
+
+    // logentries
+    provided 'com.github.kibotu:le_android:logentries-android-2.2.0'
 }
 
 retrolambda {
