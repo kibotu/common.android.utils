@@ -31,7 +31,7 @@ public class GsonProvider {
     }
 
     @NonNull
-    public static Gson getPrettyPrinting() {
+    public static Gson getGsonPrettyPrinting() {
         return gsonPretty;
     }
 }
