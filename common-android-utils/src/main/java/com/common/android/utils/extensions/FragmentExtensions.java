@@ -144,18 +144,30 @@ final public class FragmentExtensions {
     public static void popBackStackImmediate() {
         if (LOGGING_ENABLED)
             Logger.v(TAG, "[popBackStackImmediate]");
+
+        if (!ContextHelper.isRunning.get())
+            return;
+
         getAppCompatActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 
     public static void popBackStack() {
         if (LOGGING_ENABLED)
             Logger.v(TAG, "[popBackStack]");
+
+        if (!ContextHelper.isRunning.get())
+            return;
+
         getAppCompatActivity().getSupportFragmentManager().popBackStack();
     }
 
     public static void clearBackStack() {
         if (LOGGING_ENABLED)
             Logger.v(TAG, "[clearBackStack]");
+
+        if (!ContextHelper.isRunning.get())
+            return;
+
         getAppCompatActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
